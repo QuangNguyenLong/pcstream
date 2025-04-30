@@ -13,3 +13,5 @@ env.bat
 env.ps1
 dependencies/
 cscope.out
+Testing/
+venv/
