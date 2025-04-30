@@ -8,7 +8,7 @@ extern "C"
 
 #include <pcstream/def.h>
 
-PCSTREAM_RET decode_video(const char *data, const size_t size);
+  PCSTREAM_RET decode_video(const char *data, const size_t size);
 
 #ifdef __cplusplus
 }

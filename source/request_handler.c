@@ -372,8 +372,8 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *this,
 
       template        = seg == 0 ? init : media;
 
-      hull_path =
-          format_template(template, seq_ptr->id, rep_ptr->id, (int)seg);
+      hull_path       = format_template(
+          template, seq_ptr->id, rep_ptr->id, (int)seg);
       hull_url = merge_url_path(base_url, hull_path);
 
       pcs_http_get_to_buffer(hull_url,

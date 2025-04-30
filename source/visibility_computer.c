@@ -29,8 +29,10 @@ pcs_visibility_computer_destroy(pcs_visibility_computer_t *this)
   *this = (pcs_visibility_computer_t){0};
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET pcs_visibility_computer_post_hull(
-    pcs_visibility_computer_t *this, const float *MVP, pcs_mesh_t hull)
+PCSTREAM_RET
+pcs_visibility_computer_post_hull(pcs_visibility_computer_t *this,
+                                  const float *MVP,
+                                  pcs_mesh_t   hull)
 {
   hull.screen_ratio(&hull, MVP, &this->ratio);
   if (this->ratio < 0 || this->ratio > 1.0f)

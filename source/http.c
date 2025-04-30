@@ -8,12 +8,12 @@
 static size_t
 write_callback(void *data, size_t size, size_t nmemb, void *userp)
 {
-  size_t         total_size = 0;
-  pcs_buffer_t  *buf        = PCSTREAM_NULL;
-  char *ptr        = PCSTREAM_NULL;
+  size_t        total_size = 0;
+  pcs_buffer_t *buf        = PCSTREAM_NULL;
+  char         *ptr        = PCSTREAM_NULL;
 
-  total_size                = size * nmemb;
-  buf                       = (pcs_buffer_t *)userp;
+  total_size               = size * nmemb;
+  buf                      = (pcs_buffer_t *)userp;
 
   ptr = realloc(buf->data, buf->size + total_size + 1);
   if (ptr == NULL)
@@ -28,9 +28,9 @@ write_callback(void *data, size_t size, size_t nmemb, void *userp)
 }
 
 PCSTREAM_RET pcs_http_get_to_buffer(const char           *url,
-                                PCSTREAM_HTTP_VERSION ver,
-                                pcs_buffer_t         *des,
-                                PCSTREAM_BW          *dl_speed)
+                                    PCSTREAM_HTTP_VERSION ver,
+                                    pcs_buffer_t         *des,
+                                    PCSTREAM_BW          *dl_speed)
 {
   CURL    *curl = PCSTREAM_NULL;
   CURLcode res  = 0;

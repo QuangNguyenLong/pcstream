@@ -16,8 +16,8 @@ struct pcs_visibility_computer_t
 
   PCSTREAM_RET(*post)
   (pcs_visibility_computer_t *,
-   const float *,   // MVP
-   pcs_mesh_t // box
+   const float *, // MVP
+   pcs_mesh_t     // box
   );
   PCSTREAM_RET (*get)(pcs_visibility_computer_t *, PCSTREAM_RATIO *);
 };
@@ -28,8 +28,10 @@ pcs_visibility_computer_init(pcs_visibility_computer_t *this,
 PCSTREAM_RET
 pcs_visibility_computer_destroy(pcs_visibility_computer_t *this);
 
-PCSTREAM_RET pcs_visibility_computer_post_hull(
-    pcs_visibility_computer_t *this, const float *MVP, pcs_mesh_t hull);
+PCSTREAM_RET
+pcs_visibility_computer_post_hull(pcs_visibility_computer_t *this,
+                                  const float *MVP,
+                                  pcs_mesh_t   hull);
 
 PCSTREAM_RET
 pcs_visibility_computer_get_hull(pcs_visibility_computer_t *this,

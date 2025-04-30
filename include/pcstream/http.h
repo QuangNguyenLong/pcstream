@@ -13,8 +13,8 @@ typedef enum
 
 PCSTREAM_RET
 pcs_http_get_to_buffer(const char           *url,
-                   PCSTREAM_HTTP_VERSION ver,
-                   pcs_buffer_t         *des,
-                   PCSTREAM_BW          *dl_speed);
+                       PCSTREAM_HTTP_VERSION ver,
+                       pcs_buffer_t         *des,
+                       PCSTREAM_BW          *dl_speed);
 
 #endif

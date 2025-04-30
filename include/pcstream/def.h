@@ -1,8 +1,8 @@
 #ifndef PCSTREAM_CORE_H
 #define PCSTREAM_CORE_H
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #define PCSTREAM_RET           uint32_t
 #define PCSTREAM_BW            int64_t // Bytes/s

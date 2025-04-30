@@ -22,9 +22,6 @@ jobs:
     - name: Install codespell
       run: pip3 install codespell
     
-    - name: Install dependencies
-      run: sudo apt-get install libgpac-dev libcurl4-openssl-dev -y
-
     - name: Lint
       run: cmake -D FORMAT_COMMAND=clang-format-18 -P cmake/lint.cmake
 

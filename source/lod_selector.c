@@ -1,8 +1,8 @@
-#include <pcstream/lod_selector.h>
 #include <pcstream/algorithm.h>
+#include <pcstream/lod_selector.h>
 #include <stdlib.h>
 
-PCSTREAM_RET 
+PCSTREAM_RET
 pcs_lod_selector_init(pcs_lod_selector_t *this, int type)
 {
   this->n_ver = 0;
@@ -45,7 +45,7 @@ pcs_lod_selector_init(pcs_lod_selector_t *this, int type)
   }
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET 
+PCSTREAM_RET
 pcs_lod_selector_destroy(pcs_lod_selector_t *this)
 {
   if (this->v != PCSTREAM_NULL)
@@ -103,7 +103,7 @@ pcs_lod_selector_post_lm_based(pcs_lod_selector_t *this,
                                void                *attrib,
                                PCSTREAM_BW          bw)
 {
-    return PCSTREAM_RET_FAIL;
+  return PCSTREAM_RET_FAIL;
 }
 PCSTREAM_RET
 pcs_lod_selector_post_equal(pcs_lod_selector_t *this,
@@ -114,7 +114,7 @@ pcs_lod_selector_post_equal(pcs_lod_selector_t *this,
                             void                *attrib,
                             PCSTREAM_BW          bw)
 {
-    return PCSTREAM_RET_FAIL;
+  return PCSTREAM_RET_FAIL;
 }
 PCSTREAM_RET
 pcs_lod_selector_post_hybrid(pcs_lod_selector_t *this,
@@ -125,25 +125,23 @@ pcs_lod_selector_post_hybrid(pcs_lod_selector_t *this,
                              void                *attrib,
                              PCSTREAM_BW          bw)
 {
-    return PCSTREAM_RET_FAIL;
+  return PCSTREAM_RET_FAIL;
 }
 PCSTREAM_RET
 pcs_lod_selector_get_lm_based(pcs_lod_selector_t *this,
                               PCSTREAM_LOD_VERSION **selections_ptr)
 {
-    return PCSTREAM_RET_FAIL;
+  return PCSTREAM_RET_FAIL;
 }
 PCSTREAM_RET
 pcs_lod_selector_get_equal(pcs_lod_selector_t *this,
                            PCSTREAM_LOD_VERSION **selections_ptr)
 {
-    return PCSTREAM_RET_FAIL;
+  return PCSTREAM_RET_FAIL;
 }
 PCSTREAM_RET
 pcs_lod_selector_get_hybrid(pcs_lod_selector_t *this,
                             PCSTREAM_LOD_VERSION **selections_ptr)
 {
-    return PCSTREAM_RET_FAIL;
+  return PCSTREAM_RET_FAIL;
 }
-
-

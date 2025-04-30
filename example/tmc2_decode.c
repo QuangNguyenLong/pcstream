@@ -4,7 +4,7 @@
 int main(void)
 {
   pcs_buffer_t buff = {0};
-  PCSTREAM_RET ret = 0;
+  PCSTREAM_RET ret  = 0;
 
   pcs_buffer_init(&buff);
 
@@ -14,6 +14,6 @@ int main(void)
                          PCSTREAM_NULL);
 
   ret = decode_video(buff.data, buff.size);
-  
+
   pcs_buffer_destroy(&buff);
 }
