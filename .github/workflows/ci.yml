@@ -11,19 +11,19 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
 
     steps:
     - uses: actions/checkout@v4
 
     - uses: actions/setup-python@v5
-      with: { python-version: "3.12" }
+      with: { python-version: "3.10" }
 
     - name: Install codespell
       run: pip3 install codespell
     
     - name: Lint
-      run: cmake -D FORMAT_COMMAND=clang-format-18 -P cmake/lint.cmake
+      run: cmake -D FORMAT_COMMAND=clang-format-15 -P cmake/lint.cmake
 
         #- name: Spell check
         #  if: always()
@@ -32,7 +32,7 @@ jobs:
   coverage:
     needs: [lint]
 
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
 
     if: github.repository_owner == 'filrg'
 
@@ -68,7 +68,7 @@ jobs:
   sanitize:
     needs: [lint]
 
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
 
     env: { CC: clang-18 }
 
@@ -102,7 +102,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-22.04, ubuntu-24.04]
+        os: [ubuntu-22.04]
 
         type: [shared, static]
 
@@ -119,7 +119,7 @@ jobs:
       run: sudo apt-get install libgpac-dev libcurl4-openssl-dev -y
 
     - name: Install static analyzers
-      if: matrix.os == 'ubuntu-24.04'
+      if: matrix.os == 'ubuntu-22.04'
       run: >-
         sudo apt-get install clang-tidy-18 cppcheck -y -q
 
