@@ -1,0 +1,69 @@
+#include <pcstream/bw_estimator.h>
+#include <pcstream/def.h>
+
+PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *this, int type)
+{
+  PCSTREAM_BW Ra = PCSTREAM_BW_DEFAULT;
+
+  switch (type)
+  {
+  case PCSTREAM_BW_ESTIMATOR_HARMONIC:
+  {
+    this->Ra   = Ra;
+    this->post = pcs_bw_estimator_post_harmonic;
+    this->get  = pcs_bw_estimator_get_harmonic;
+  }
+  break;
+  default:
+  {
+    this->Ra   = Ra;
+    this->post = pcs_bw_estimator_post_harmonic;
+    this->get  = pcs_bw_estimator_get_harmonic;
+  }
+  break;
+  }
+  return PCSTREAM_RET_SUCCESS;
+}
+
+PCSTREAM_RET pcs_bw_estimator_destroy(pcs_bw_estimator_t *this)
+{
+  this->Ra   = PCSTREAM_BW_DEFAULT;
+  this->post = PCSTREAM_NULL;
+  this->get  = PCSTREAM_NULL;
+  return PCSTREAM_RET_SUCCESS;
+}
+
+PCSTREAM_RET
+pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *this,
+                               PCSTREAM_BW *R,
+                               size_t       M)
+{
+  float  sum         = 0.0f;
+  size_t count_valid = 0;
+  this->Ra           = PCSTREAM_BW_DEFAULT;
+
+  if (M == 0)
+    return PCSTREAM_RET_FAIL;
+
+  for (size_t i = 0; i < M; i++)
+  {
+    if (R[i] >= 0)
+    {
+      count_valid++;
+      sum += 1.0f / (float)R[i];
+    }
+  }
+  this->Ra = (PCSTREAM_BW)((float)count_valid / sum);
+
+  return PCSTREAM_RET_SUCCESS;
+}
+
+PCSTREAM_RET pcs_bw_estimator_get_harmonic(pcs_bw_estimator_t *this,
+                                           PCSTREAM_BW *Ra)
+{
+  if (this->Ra == PCSTREAM_BW_DEFAULT)
+    return PCSTREAM_RET_FAIL;
+
+  *Ra = this->Ra;
+  return PCSTREAM_RET_SUCCESS;
+}
