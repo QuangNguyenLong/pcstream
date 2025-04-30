@@ -1,5 +1,5 @@
-#ifndef PCSTREAM_TMC2_DECODER_H
-#define PCSTREAM_TMC2_DECODER_H
+#ifndef _TMC2_DECODER_H
+#define _TMC2_DECODER_H
 
 #ifdef __cplusplus
 extern "C"

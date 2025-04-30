@@ -8,7 +8,7 @@
 #include <PCCFrameContext.h>
 #include <PCCGroupOfFrames.h>
 #include <PCCMemory.h>
-#include <pcstream/tmc2_decoder.h>
+#include <tmc2_decoder.h>
 
 using namespace pcc;
 using namespace std;
