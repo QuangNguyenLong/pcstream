@@ -70,7 +70,7 @@ jobs:
 
     runs-on: ubuntu-22.04
 
-    env: { CC: clang-18 }
+    env: { CC: clang-15 }
 
     steps:
     - uses: actions/checkout@v4
@@ -116,6 +116,7 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Install dependencies
+      if: matrix.os == 'ubuntu-22.04'
       run: sudo apt-get install libgpac-dev libcurl4-openssl-dev -y
 
     - name: Install static analyzers
