@@ -1,12 +1,12 @@
 #ifndef _PLY_H
 #define _PLY_H
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-
-#include <stdint.h>
 
   uint32_t ply_count_vertex(const char *filename);
   uint32_t ply_count_face(const char *filename);

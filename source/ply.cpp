@@ -7,12 +7,12 @@
 #define MSH_PLY_IMPLEMENTATION
 #include <msh_ply.h>
 
-extern bool p_mesh_ply_writer(const char *filename,
-                              float      *pos,
-                              uint32_t    num_verts,
-                              uint32_t   *indices,
-                              uint32_t    num_indices,
-                              int         binary)
+static bool _mesh_ply_writer(const char *filename,
+                             float      *pos,
+                             uint32_t    num_verts,
+                             uint32_t   *indices,
+                             uint32_t    num_indices,
+                             int         binary)
 {
   msh_ply_desc_t descriptors[2] = {0};
   int32_t        nf             = 0;
@@ -55,9 +55,9 @@ extern bool p_mesh_ply_writer(const char *filename,
   return 1;
 }
 
-extern bool p_vert_col_ply_loader(const char    *filename,
-                                  float         *pos,
-                                  unsigned char *rgb)
+static bool _vert_col_ply_loader(const char    *filename,
+                                 float         *pos,
+                                 unsigned char *rgb)
 {
   miniply::PLYReader reader(filename);
   if (!reader.valid())
@@ -91,9 +91,9 @@ extern bool p_vert_col_ply_loader(const char    *filename,
   return 1;
 }
 
-extern bool p_pos_indices_ply_loader(const char *filename,
-                                     float      *pos,
-                                     uint32_t   *indices)
+static bool _pos_indices_ply_loader(const char *filename,
+                                    float      *pos,
+                                    uint32_t   *indices)
 {
   miniply::PLYReader reader(filename);
   if (!reader.valid())
@@ -143,57 +143,53 @@ extern bool p_pos_indices_ply_loader(const char *filename,
   return 1;
 }
 
-extern "C"
+uint32_t ply_count_vertex(const char *filename)
 {
-  uint32_t ply_count_vertex(const char *filename)
+  miniply::PLYReader reader(filename);
+  if (!reader.valid())
   {
-    miniply::PLYReader reader(filename);
-    if (!reader.valid())
-    {
-      return -1;
-    }
-    uint32_t elemIndex =
-        reader.find_element(miniply::kPLYVertexElement);
-    if (elemIndex == miniply::kInvalidIndex)
-      return 0;
-    return reader.get_element(elemIndex)->count;
+    return -1;
   }
-  uint32_t ply_count_face(const char *filename)
+  uint32_t elemIndex =
+      reader.find_element(miniply::kPLYVertexElement);
+  if (elemIndex == miniply::kInvalidIndex)
+    return 0;
+  return reader.get_element(elemIndex)->count;
+}
+uint32_t ply_count_face(const char *filename)
+{
+  miniply::PLYReader reader(filename);
+  if (!reader.valid())
   {
-    miniply::PLYReader reader(filename);
-    if (!reader.valid())
-    {
-      return -1;
-    }
-    uint32_t elemIndex =
-        reader.find_element(miniply::kPLYFaceElement);
-    if (elemIndex == miniply::kInvalidIndex)
-      return 0;
-    return reader.get_element(elemIndex)->count;
+    return -1;
   }
-  // Wrapper implementation
-  int ply_pointcloud_loader(const char    *filename,
-                            float         *pos,
-                            unsigned char *rgb)
-  {
-    return p_vert_col_ply_loader(filename, pos, rgb) ? 1 : 0;
-  }
-  int ply_mesh_loader(const char *filename,
-                      float      *pos,
-                      uint32_t   *indices)
-  {
-    return p_pos_indices_ply_loader(filename, pos, indices) ? 1 : 0;
-  }
-  int ply_mesh_writer(const char *filename,
-                      float      *pos,
-                      uint32_t    num_verts,
-                      uint32_t   *indices,
-                      uint32_t    num_indices,
-                      int         binary)
-  {
-    return p_mesh_ply_writer(
-               filename, pos, num_verts, indices, num_indices, binary)
-             ? 1
-             : 0;
-  }
+  uint32_t elemIndex = reader.find_element(miniply::kPLYFaceElement);
+  if (elemIndex == miniply::kInvalidIndex)
+    return 0;
+  return reader.get_element(elemIndex)->count;
+}
+// Wrapper implementation
+int ply_pointcloud_loader(const char    *filename,
+                          float         *pos,
+                          unsigned char *rgb)
+{
+  return _vert_col_ply_loader(filename, pos, rgb) ? 1 : 0;
+}
+int ply_mesh_loader(const char *filename,
+                    float      *pos,
+                    uint32_t   *indices)
+{
+  return _pos_indices_ply_loader(filename, pos, indices) ? 1 : 0;
+}
+int ply_mesh_writer(const char *filename,
+                    float      *pos,
+                    uint32_t    num_verts,
+                    uint32_t   *indices,
+                    uint32_t    num_indices,
+                    int         binary)
+{
+  return _mesh_ply_writer(
+             filename, pos, num_verts, indices, num_indices, binary)
+           ? 1
+           : 0;
 }

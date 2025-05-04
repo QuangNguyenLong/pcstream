@@ -220,7 +220,7 @@ unsigned int genmpd(struct arguments args)
       entry->start_time = 0;
       entry->duration   = args.segment_duration;
       entry->repeat_count = segments - 2; // minus init and itself
-      entry->nb_parts     = 0;
+      // entry->nb_parts     = 0;
       gf_list_add(timeline->entries, entry);
 
       if (last_duration > 0)

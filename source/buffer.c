@@ -1,16 +1,16 @@
 #include <pcstream/buffer.h>
 
-PCSTREAM_RET pcs_buffer_init(pcs_buffer_t *this)
+PCSTREAM_RET pcs_buffer_init(pcs_buffer_t *self)
 {
-  this->data = PCSTREAM_NULL;
-  this->size = 0;
+  self->data = PCSTREAM_NULL;
+  self->size = 0;
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET pcs_buffer_destroy(pcs_buffer_t *this)
+PCSTREAM_RET pcs_buffer_destroy(pcs_buffer_t *self)
 {
-  if (this->data != PCSTREAM_NULL)
-    free(this->data);
-  this->data = PCSTREAM_NULL;
-  this->size = 0;
+  if (self->data != PCSTREAM_NULL)
+    free(self->data);
+  self->data = PCSTREAM_NULL;
+  self->size = 0;
   return PCSTREAM_RET_SUCCESS;
 }

@@ -2,14 +2,6 @@
 #define PCSTREAM_LOD_SELECTOR_H
 
 #include <pcstream/def.h>
-enum
-{
-  PCSTREAM_LOD_SELECTOR_DP_BASED = 1,
-  PCSTREAM_LOD_SELECTOR_LM_BASED,
-  PCSTREAM_LOD_SELECTOR_EQUAL,
-  PCSTREAM_LOD_SELECTOR_HYBRID,
-};
-
 typedef struct pcs_lod_selector_t pcs_lod_selector_t;
 
 struct pcs_lod_selector_t
@@ -31,12 +23,12 @@ struct pcs_lod_selector_t
 };
 
 PCSTREAM_RET
-pcs_lod_selector_init(pcs_lod_selector_t *this, int type);
+pcs_lod_selector_init(pcs_lod_selector_t *self, int type);
 PCSTREAM_RET
-pcs_lod_selector_destroy(pcs_lod_selector_t *this);
+pcs_lod_selector_destroy(pcs_lod_selector_t *self);
 
 PCSTREAM_RET
-pcs_lod_selector_post_dp_based(pcs_lod_selector_t *this,
+pcs_lod_selector_post_dp_based(pcs_lod_selector_t *self,
                                PCSTREAM_COUNT       n_mod,
                                PCSTREAM_LOD_VERSION n_ver,
                                void                *metadata,
@@ -44,7 +36,7 @@ pcs_lod_selector_post_dp_based(pcs_lod_selector_t *this,
                                void                *attrib,
                                PCSTREAM_BW          bw);
 PCSTREAM_RET
-pcs_lod_selector_post_lm_based(pcs_lod_selector_t *this,
+pcs_lod_selector_post_lm_based(pcs_lod_selector_t *self,
                                PCSTREAM_COUNT       n_mod,
                                PCSTREAM_LOD_VERSION n_ver,
                                void                *metadata,
@@ -52,7 +44,7 @@ pcs_lod_selector_post_lm_based(pcs_lod_selector_t *this,
                                void                *attrib,
                                PCSTREAM_BW          bw);
 PCSTREAM_RET
-pcs_lod_selector_post_equal(pcs_lod_selector_t *this,
+pcs_lod_selector_post_equal(pcs_lod_selector_t *self,
                             PCSTREAM_COUNT       n_mod,
                             PCSTREAM_LOD_VERSION n_ver,
                             void                *metadata,
@@ -60,7 +52,7 @@ pcs_lod_selector_post_equal(pcs_lod_selector_t *this,
                             void                *attrib,
                             PCSTREAM_BW          bw);
 PCSTREAM_RET
-pcs_lod_selector_post_hybrid(pcs_lod_selector_t *this,
+pcs_lod_selector_post_hybrid(pcs_lod_selector_t *self,
                              PCSTREAM_COUNT       n_mod,
                              PCSTREAM_LOD_VERSION n_ver,
                              void                *metadata,
@@ -69,16 +61,16 @@ pcs_lod_selector_post_hybrid(pcs_lod_selector_t *this,
                              PCSTREAM_BW          bw);
 
 PCSTREAM_RET
-pcs_lod_selector_get_dp_based(pcs_lod_selector_t *this,
+pcs_lod_selector_get_dp_based(pcs_lod_selector_t *self,
                               PCSTREAM_LOD_VERSION **selections_ptr);
 PCSTREAM_RET
-pcs_lod_selector_get_lm_based(pcs_lod_selector_t *this,
+pcs_lod_selector_get_lm_based(pcs_lod_selector_t *self,
                               PCSTREAM_LOD_VERSION **selections_ptr);
 PCSTREAM_RET
-pcs_lod_selector_get_equal(pcs_lod_selector_t *this,
+pcs_lod_selector_get_equal(pcs_lod_selector_t *self,
                            PCSTREAM_LOD_VERSION **selections_ptr);
 PCSTREAM_RET
-pcs_lod_selector_get_hybrid(pcs_lod_selector_t *this,
+pcs_lod_selector_get_hybrid(pcs_lod_selector_t *self,
                             PCSTREAM_LOD_VERSION **selections_ptr);
 
 #endif

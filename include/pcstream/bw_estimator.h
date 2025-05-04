@@ -3,10 +3,6 @@
 
 #include <pcstream/def.h>
 #include <stdlib.h>
-enum
-{
-  PCSTREAM_BW_ESTIMATOR_HARMONIC = 1
-};
 
 typedef struct pcs_bw_estimator_t pcs_bw_estimator_t;
 
@@ -26,16 +22,16 @@ struct pcs_bw_estimator_t
   );
 };
 
-PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *this,
-                                   int type);
+PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *self,
+                                   int                 type);
 
-PCSTREAM_RET pcs_bw_estimator_destroy(pcs_bw_estimator_t *this);
+PCSTREAM_RET pcs_bw_estimator_destroy(pcs_bw_estimator_t *self);
 
-PCSTREAM_RET pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *this,
-                                            PCSTREAM_BW *R,
-                                            size_t       M);
+PCSTREAM_RET pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
+                                            PCSTREAM_BW        *R,
+                                            size_t              M);
 
-PCSTREAM_RET pcs_bw_estimator_get_harmonic(pcs_bw_estimator_t *this,
-                                           PCSTREAM_BW *Ra);
+PCSTREAM_RET pcs_bw_estimator_get_harmonic(pcs_bw_estimator_t *self,
+                                           PCSTREAM_BW        *Ra);
 
 #endif

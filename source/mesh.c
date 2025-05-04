@@ -33,32 +33,32 @@ static PCSTREAM_RET _pcs_mesh_alloc(pcs_mesh_t *m,
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET pcs_mesh_init(pcs_mesh_t *this)
+PCSTREAM_RET pcs_mesh_init(pcs_mesh_t *self)
 {
-  this->pos                   = PCSTREAM_NULL;
-  this->num_verts             = 0;
-  this->indices               = PCSTREAM_NULL;
-  this->num_indices           = 0;
+  self->pos                   = PCSTREAM_NULL;
+  self->num_verts             = 0;
+  self->indices               = PCSTREAM_NULL;
+  self->num_indices           = 0;
 
-  this->read_from_buff_serial = pcs_mesh_read_from_buff_serial;
-  this->write_to_buff_serial  = pcs_mesh_write_to_buff_serial;
+  self->read_from_buff_serial = pcs_mesh_read_from_buff_serial;
+  self->write_to_buff_serial  = pcs_mesh_write_to_buff_serial;
 
-  this->write_to_file_ply     = pcs_mesh_write_to_file_ply;
-  this->read_from_file_ply    = pcs_mesh_read_from_file_ply;
+  self->write_to_file_ply     = pcs_mesh_write_to_file_ply;
+  self->read_from_file_ply    = pcs_mesh_read_from_file_ply;
 
-  this->screen_ratio          = pcs_mesh_screen_ratio;
+  self->screen_ratio          = pcs_mesh_screen_ratio;
 
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET pcs_mesh_destroy(pcs_mesh_t *this)
+PCSTREAM_RET pcs_mesh_destroy(pcs_mesh_t *self)
 {
-  _pcs_mesh_free(this);
-  *this = (pcs_mesh_t){0};
+  _pcs_mesh_free(self);
+  *self = (pcs_mesh_t){0};
   return PCSTREAM_RET_SUCCESS;
 }
 
 PCSTREAM_RET
-pcs_mesh_read_from_buff_serial(pcs_mesh_t *this,
+pcs_mesh_read_from_buff_serial(pcs_mesh_t *self,
                                const char    *data,
                                PCSTREAM_COUNT size)
 {
@@ -69,10 +69,10 @@ pcs_mesh_read_from_buff_serial(pcs_mesh_t *this,
   size_t         pos_size = 0;
   size_t         idx_size = 0;
 
-  if (this == PCSTREAM_NULL || data == PCSTREAM_NULL)
+  if (self == PCSTREAM_NULL || data == PCSTREAM_NULL)
     return PCSTREAM_RET_FAIL;
 
-  _pcs_mesh_free(this);
+  _pcs_mesh_free(self);
 
   /* ---------- read vertex count ----------------------------- */
   if ((end - curr) < (ptrdiff_t)sizeof(uint32_t))
@@ -84,7 +84,7 @@ pcs_mesh_read_from_buff_serial(pcs_mesh_t *this,
   if (nv == 0)
     return PCSTREAM_RET_FAIL;
 
-  this->num_verts = nv;
+  self->num_verts = nv;
 
   /* ---------- read vertex positions ------------------------- */
   pos_size        = (size_t)nv * 3u * sizeof(float);
@@ -92,17 +92,17 @@ pcs_mesh_read_from_buff_serial(pcs_mesh_t *this,
   if ((end - curr) < (ptrdiff_t)pos_size)
     return PCSTREAM_RET_FAIL;
 
-  this->pos = (float *)malloc(pos_size);
-  if (this->pos == PCSTREAM_NULL)
+  self->pos = (float *)malloc(pos_size);
+  if (self->pos == PCSTREAM_NULL)
     return PCSTREAM_RET_FAIL;
 
-  memcpy(this->pos, curr, pos_size);
+  memcpy(self->pos, curr, pos_size);
   curr += pos_size;
 
   /* ---------- read index count ------------------------------ */
   if ((end - curr) < (ptrdiff_t)sizeof(uint32_t))
   {
-    _pcs_mesh_free(this);
+    _pcs_mesh_free(self);
     return PCSTREAM_RET_FAIL;
   }
 
@@ -111,29 +111,29 @@ pcs_mesh_read_from_buff_serial(pcs_mesh_t *this,
 
   if (ni == 0)
   {
-    _pcs_mesh_free(this);
+    _pcs_mesh_free(self);
     return PCSTREAM_RET_FAIL;
   }
 
-  this->num_indices = ni;
+  self->num_indices = ni;
 
   /* ---------- read indices array ---------------------------- */
   idx_size          = (size_t)ni * sizeof(uint32_t);
 
   if ((end - curr) < (ptrdiff_t)idx_size)
   {
-    _pcs_mesh_free(this);
+    _pcs_mesh_free(self);
     return PCSTREAM_RET_FAIL;
   }
 
-  this->indices = (uint32_t *)malloc(idx_size);
-  if (this->indices == PCSTREAM_NULL)
+  self->indices = (uint32_t *)malloc(idx_size);
+  if (self->indices == PCSTREAM_NULL)
   {
-    _pcs_mesh_free(this);
+    _pcs_mesh_free(self);
     return PCSTREAM_RET_FAIL;
   }
 
-  memcpy(this->indices, curr, idx_size);
+  memcpy(self->indices, curr, idx_size);
 
   return PCSTREAM_RET_SUCCESS;
 }
@@ -146,7 +146,7 @@ static inline PCSTREAM_COUNT pcs_mesh_serial_size(const pcs_mesh_t *m)
          m->num_indices * sizeof(uint32_t);  /* indices    */
 }
 PCSTREAM_RET
-pcs_mesh_write_to_buff_serial(pcs_mesh_t *this,
+pcs_mesh_write_to_buff_serial(pcs_mesh_t *self,
                               char          **data_out,
                               PCSTREAM_COUNT *size_out)
 {
@@ -156,16 +156,16 @@ pcs_mesh_write_to_buff_serial(pcs_mesh_t *this,
   uint8_t       *buf      = PCSTREAM_NULL;
   uint8_t       *curr     = PCSTREAM_NULL;
 
-  if (!this || !data_out || !size_out)
+  if (!self || !data_out || !size_out)
     return PCSTREAM_RET_FAIL;
 
-  if (this->num_verts == 0 || this->num_indices == 0 || !this->pos ||
-      !this->indices)
+  if (self->num_verts == 0 || self->num_indices == 0 || !self->pos ||
+      !self->indices)
     return PCSTREAM_RET_FAIL;
 
-  need     = pcs_mesh_serial_size(this);
-  pos_size = (size_t)this->num_verts * 3u * sizeof(float);
-  idx_size = (size_t)this->num_indices * sizeof(uint32_t);
+  need     = pcs_mesh_serial_size(self);
+  pos_size = (size_t)self->num_verts * 3u * sizeof(float);
+  idx_size = (size_t)self->num_indices * sizeof(uint32_t);
 
   buf      = (uint8_t *)malloc((size_t)need);
   if (!buf)
@@ -173,51 +173,51 @@ pcs_mesh_write_to_buff_serial(pcs_mesh_t *this,
 
   curr = buf;
 
-  memcpy(curr, &this->num_verts, sizeof(uint32_t));
+  memcpy(curr, &self->num_verts, sizeof(uint32_t));
   curr += sizeof(uint32_t);
 
-  memcpy(curr, this->pos, pos_size);
+  memcpy(curr, self->pos, pos_size);
   curr += pos_size;
 
-  memcpy(curr, &this->num_indices, sizeof(uint32_t));
+  memcpy(curr, &self->num_indices, sizeof(uint32_t));
   curr += sizeof(uint32_t);
 
-  memcpy(curr, this->indices, idx_size);
+  memcpy(curr, self->indices, idx_size);
 
   *data_out = (char *)buf;
   *size_out = need;
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET pcs_mesh_read_from_file_ply(pcs_mesh_t *this,
+PCSTREAM_RET pcs_mesh_read_from_file_ply(pcs_mesh_t *self,
                                          const char *filepath)
 {
   uint32_t nv  = 0;
   uint32_t nf  = 0;
   int      ret = 0;
-  if (this != PCSTREAM_NULL)
-    _pcs_mesh_free(this);
+  if (self != PCSTREAM_NULL)
+    _pcs_mesh_free(self);
 
   nv = (uint32_t)ply_count_vertex(filepath);
   nf = (uint32_t)ply_count_face(filepath);
-  _pcs_mesh_alloc(this, nv, nf * 3);
-  ret = ply_mesh_loader(filepath, this->pos, this->indices);
+  _pcs_mesh_alloc(self, nv, nf * 3);
+  ret = ply_mesh_loader(filepath, self->pos, self->indices);
   if (ret == 0)
     return PCSTREAM_RET_FAIL;
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET pcs_mesh_write_to_file_ply(pcs_mesh_t *this,
+PCSTREAM_RET pcs_mesh_write_to_file_ply(pcs_mesh_t *self,
                                         const char   *filepath,
                                         PCSTREAM_BOOL binary)
 {
   int ret = 0;
-  if (!this || !filepath)
+  if (!self || !filepath)
     return PCSTREAM_RET_FAIL;
   ret = ply_mesh_writer(filepath,
-                        this->pos,
-                        this->num_verts,
-                        this->indices,
-                        this->num_indices,
+                        self->pos,
+                        self->num_verts,
+                        self->indices,
+                        self->num_indices,
                         binary == PCSTREAM_TRUE ? 1 : 0);
   if (ret == 0)
     return PCSTREAM_RET_FAIL;
@@ -354,7 +354,7 @@ _clipped_triangle_area(pcs_vec2f_t p1, pcs_vec2f_t p2, pcs_vec2f_t p3)
   return _polygon_area(polygon, polygon_size);
 }
 
-PCSTREAM_RET pcs_mesh_screen_ratio(pcs_mesh_t *this,
+PCSTREAM_RET pcs_mesh_screen_ratio(pcs_mesh_t *self,
                                    const float *mvp,
                                    float       *screen_ratio)
 {
@@ -363,18 +363,18 @@ PCSTREAM_RET pcs_mesh_screen_ratio(pcs_mesh_t *this,
   pcs_vec3f_t *ndcs     = PCSTREAM_NULL;
 
   *screen_ratio         = 0;
-  vertices              = (pcs_vec3f_t *)this->pos;
-  ndcs = (pcs_vec3f_t *)malloc(sizeof(pcs_vec3f_t) * this->num_verts);
-  for (uint32_t i = 0; i < this->num_verts; i++)
+  vertices              = (pcs_vec3f_t *)self->pos;
+  ndcs = (pcs_vec3f_t *)malloc(sizeof(pcs_vec3f_t) * self->num_verts);
+  for (uint32_t i = 0; i < self->num_verts; i++)
   {
     ndcs[i] = pcs_vec3f_mvp_mul(vertices[i], mvp);
   }
 
-  for (uint32_t i = 0; i < this->num_indices / 3; i++)
+  for (uint32_t i = 0; i < self->num_indices / 3; i++)
   {
-    uint32_t idx0 = this->indices[i * 3];
-    uint32_t idx1 = this->indices[i * 3 + 1];
-    uint32_t idx2 = this->indices[i * 3 + 2];
+    uint32_t idx0 = self->indices[i * 3];
+    uint32_t idx1 = self->indices[i * 3 + 1];
+    uint32_t idx2 = self->indices[i * 3 + 2];
     if (ndcs[idx0].z >= 0 && ndcs[idx0].z <= 1 && ndcs[idx1].z >= 0 &&
         ndcs[idx1].z <= 1 && ndcs[idx2].z >= 0 && ndcs[idx2].z <= 1 &&
         _is_toward((pcs_vec2f_t){ndcs[idx0].x, ndcs[idx0].y},

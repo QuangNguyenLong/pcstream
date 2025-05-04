@@ -12,7 +12,7 @@ struct pcs_buffer_t
   size_t size;
 };
 
-PCSTREAM_RET pcs_buffer_init(pcs_buffer_t *this);
-PCSTREAM_RET pcs_buffer_destroy(pcs_buffer_t *this);
+PCSTREAM_RET pcs_buffer_init(pcs_buffer_t *self);
+PCSTREAM_RET pcs_buffer_destroy(pcs_buffer_t *self);
 
 #endif

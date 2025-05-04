@@ -4,13 +4,6 @@
 #include <pcstream/buffer.h>
 #include <pcstream/def.h>
 
-typedef enum
-{
-  PCSTREAM_HTTP_1_1,
-  PCSTREAM_HTTP_2_0,
-  PCSTREAM_HTTP_3_0
-} PCSTREAM_HTTP_VERSION;
-
 PCSTREAM_RET
 pcs_http_get_to_buffer(const char           *url,
                        PCSTREAM_HTTP_VERSION ver,

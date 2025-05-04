@@ -12,12 +12,14 @@ project(
 
 include(cmake/variables.cmake)
 
-OPTION(USE_MPEG_VPCC_CODEC "Use MPEG-VPCC to encode and decode video" TRUE)
-
-# ---- Build dependencies ----
+option(USE_MPEG_VPCC_CODEC "Use MPEG-VPCC codec to encode and decode video" TRUE)
+option(USE_GOOGLE_DRACO_CODEC "Use Google-Draco codec to encode and decode video" FALSE)
 
 if(USE_MPEG_VPCC_CODEC)
-    include(cmake/dependencies/mpeg-vpcc.cmake)
+    include(dependencies/cmake/mpeg-vpcc.cmake)
+endif()
+if(USE_GOOGLE_DRACO_CODEC)
+    include(dependencies/cmake/google-draco.cmake)
 endif()
 
 # ---- Declare library ----
@@ -29,7 +31,6 @@ file(GLOB PCSTREAM_SHARED_SOURCE
 add_library(pcstream_pcstream ${PCSTREAM_SHARED_SOURCE})
 add_library(pcstream::pcstream ALIAS pcstream_pcstream)
 
-
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GPAC REQUIRED IMPORTED_TARGET gpac)
 pkg_check_modules(LIBCURL REQUIRED IMPORTED_TARGET libcurl)
@@ -37,32 +38,19 @@ pkg_check_modules(LIBCURL REQUIRED IMPORTED_TARGET libcurl)
 find_library(MATH_LIB m REQUIRED)
 
 if(USE_MPEG_VPCC_CODEC)
-    add_dependencies(pcstream_pcstream TMC2)
-    target_include_directories(pcstream_pcstream
+    target_compile_definitions(pcstream_pcstream PRIVATE USE_MPEG_VPCC_CODEC)
+    target_link_libraries(pcstream_pcstream
         PRIVATE
-        ${TMC2_ROOT}/source/lib/PccLibCommon/include
-        ${TMC2_ROOT}/source/lib/PccLibDecoder/include
-        ${TMC2_ROOT}/source/lib/PccLibMetrics/include
-        ${TMC2_ROOT}/source/lib/PccLibConformance/include
-        ${TMC2_ROOT}/source/lib/PccLibBitstreamCommon/include
-        ${TMC2_ROOT}/source/lib/PccLibBitstreamReader/include
-        ${TMC2_ROOT}/source/lib/PccLibConformance/include
-        ${TMC2_ROOT}/dependencies/tbb/include
-        )
-    target_link_libraries(pcstream_pcstream PRIVATE
         PccLibDecoder
         PccLibCommon
         tbb_static
-        PccLibColorConverter
-        PccLibVideoDecoder
-        PccLibHevcParser
-        TLibDecoder
-        TLibCommon
-        PccLibAvcParser
         PccLibBitstreamCommon
         PccLibBitstreamReader
         )
 endif()
+if(USE_GOOGLE_DRACO_CODEC)
+endif()
+
 target_link_libraries(pcstream_pcstream PRIVATE PkgConfig::GPAC PkgConfig::LIBCURL ${MATH_LIB})
 
 include(GenerateExportHeader)

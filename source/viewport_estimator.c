@@ -2,7 +2,7 @@
 #include <pcstream/viewport_estimator.h>
 #include <string.h>
 PCSTREAM_RET pcs_viewport_estimator_init(
-    pcs_viewport_estimator_t *this, long long dt, int type)
+    pcs_viewport_estimator_t *self, long long dt, int type)
 {
   if (dt <= 0)
     return PCSTREAM_RET_FAIL;
@@ -11,26 +11,26 @@ PCSTREAM_RET pcs_viewport_estimator_init(
   {
   case PCSTREAM_VIEWPORT_ESTIMATOR_VELOCITY:
   {
-    this->dt = dt;
+    self->dt = dt;
 
     for (int i = 0; i < 4; i++)
       for (int j = 0; j < 4; j++)
-        this->esMVP[i][j] = 0;
+        self->esMVP[i][j] = 0;
 
-    this->post = pcs_viewport_estimator_post_velocity;
-    this->get  = pcs_viewport_estimator_get_velocity;
+    self->post = pcs_viewport_estimator_post_velocity;
+    self->get  = pcs_viewport_estimator_get_velocity;
   }
   break;
   default:
   {
-    this->dt = dt;
+    self->dt = dt;
 
     for (int i = 0; i < 4; i++)
       for (int j = 0; j < 4; j++)
-        this->esMVP[i][j] = 0;
+        self->esMVP[i][j] = 0;
 
-    this->post = pcs_viewport_estimator_post_velocity;
-    this->get  = pcs_viewport_estimator_get_velocity;
+    self->post = pcs_viewport_estimator_post_velocity;
+    self->get  = pcs_viewport_estimator_get_velocity;
   }
   break;
   }
@@ -38,21 +38,21 @@ PCSTREAM_RET pcs_viewport_estimator_init(
 }
 
 PCSTREAM_RET
-pcs_viewport_estimator_destroy(pcs_viewport_estimator_t *this)
+pcs_viewport_estimator_destroy(pcs_viewport_estimator_t *self)
 {
-  this->dt = 0;
+  self->dt = 0;
 
   for (int i = 0; i < 4; i++)
     for (int j = 0; j < 4; j++)
-      this->esMVP[i][j] = 0;
+      self->esMVP[i][j] = 0;
 
-  this->post = PCSTREAM_NULL;
-  this->get  = PCSTREAM_NULL;
+  self->post = PCSTREAM_NULL;
+  self->get  = PCSTREAM_NULL;
   return PCSTREAM_RET_SUCCESS;
 }
 
 PCSTREAM_RET
-pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *this,
+pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *self,
                                      pcs_vec3f_t Pc,
                                      pcs_vec3f_t Po,
                                      pcs_vec3f_t Vc,
@@ -71,7 +71,7 @@ pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *this,
   pcs_vec3f_t y      = {0, 1, 0};
 
   pvel               = pcs_vec3f_mul_scalar(pcs_vec3f_sub(Pc, Po),
-                              (float)dtec / (float)this->dt);
+                              (float)dtec / (float)self->dt);
 
   Pe                 = pcs_vec3f_add(Pc, pvel);
 
@@ -95,15 +95,15 @@ pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *this,
       {0.0f, 0.0f, 0.0f, 1.0f}
   };
 
-  memcpy(this->esMVP, tmp, sizeof(this->esMVP));
+  memcpy(self->esMVP, tmp, sizeof(self->esMVP));
 
   return PCSTREAM_RET_SUCCESS;
 }
 
 PCSTREAM_RET
-pcs_viewport_estimator_get_velocity(pcs_viewport_estimator_t *this,
+pcs_viewport_estimator_get_velocity(pcs_viewport_estimator_t *self,
                                     float **esMVP_ptr)
 {
-  *esMVP_ptr = &(this->esMVP[0][0]);
+  *esMVP_ptr = &(self->esMVP[0][0]);
   return PCSTREAM_RET_SUCCESS;
 }

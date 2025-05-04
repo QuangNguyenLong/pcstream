@@ -1,0 +1,454 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 149bbe2..266d503 100755
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -5,14 +5,14 @@ SET( TMC2_VERSION_MAJOR 25 )
+ SET( TMC2_VERSION_MINOR 0 )
+ 
+ # Video encoder and decoder library and application:
+-OPTION( USE_JMAPP_VIDEO_CODEC     "Use JM application to encode and decode video"              TRUE  )  # JMAPP  = 0
++OPTION( USE_JMAPP_VIDEO_CODEC     "Use JM application to encode and decode video"              FALSE  )  # JMAPP  = 0
+ OPTION( USE_HMAPP_VIDEO_CODEC     "Use HM application to encode and decode video"              TRUE  )  # HMAPP  = 1
+-OPTION( USE_SHMAPP_VIDEO_CODEC    "Use SHM application to encode and decode video"             FALSE  )  # SHMAPP = 2    
++OPTION( USE_SHMAPP_VIDEO_CODEC    "Use SHM application to encode and decode video"             FALSE  )  # SHMAPP = 2
+ OPTION( USE_JMLIB_VIDEO_CODEC     "Clone, build and use JM video encoder and decoder"          FALSE  )  # JMLIB  = 3
+ OPTION( USE_HMLIB_VIDEO_CODEC     "Clone, build and use HM video encoder and decoder"          TRUE  )  # HMLIB  = 4
+ OPTION( USE_VTMLIB_VIDEO_CODEC    "Clone, build and use VTM video encoder and decoder"         FALSE )   # VTMLIB = 5
+-OPTION( USE_VVLIB_VIDEO_CODEC     "Clone, build and use VVENC/VVDEC video encoder and decoder" FALSE )   # VVENC  = 6  
+-OPTION( USE_FFMPEG_VIDEO_CODEC    "Clone, build and use FFMPEG video encoder and decoder"      FALSE )  # FFMPEG = 7   
++OPTION( USE_VVLIB_VIDEO_CODEC     "Clone, build and use VVENC/VVDEC video encoder and decoder" FALSE )   # VVENC  = 6
++OPTION( USE_FFMPEG_VIDEO_CODEC    "Clone, build and use FFMPEG video encoder and decoder"      FALSE )  # FFMPEG = 7
+ 
+ # Color conversion library:
+ OPTION( USE_HDRTOOLS              "Clone, build and use HDRTools for color conversions"     FALSE )
+@@ -20,7 +20,7 @@ OPTION( USE_HDRTOOLS              "Clone, build and use HDRTools for color conve
+ # Use HM optimized RDO
+ OPTION( USE_HM_PCC_RDO            "Use HM optimized RDO (re-run \"./clear.sh all\" )"       TRUE  )
+ 
+-# Multi-threading and profiling tools 
++# Multi-threading and profiling tools
+ OPTION( ENABLE_TBB                "Enable TBB mutli-threading"                              TRUE  )
+ OPTION( ENABLE_PAPI_PROFILING     "Enable PAPI profiling"                                   FALSE )
+ 
+@@ -37,7 +37,7 @@ set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
+ set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/dependencies/cmake")
+ 
+ IF( ENABLE_PAPI_PROFILING )
+-  INCLUDE( ${CMAKE_SOURCE_DIR}/dependencies/cmake/papi.cmake ) 
++  INCLUDE( ${CMAKE_SOURCE_DIR}/dependencies/cmake/papi.cmake )
+ ENDIF()
+ 
+ SET( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib )
+@@ -74,10 +74,10 @@ ENDIF()
+ IF( USE_SHMAPP_VIDEO_CODEC )
+   INCLUDE( ${CMAKE_SOURCE_DIR}/dependencies/cmake/shm_app.cmake )
+ ENDIF()
+-IF( USE_VVLIB_VIDEO_CODEC )  
++IF( USE_VVLIB_VIDEO_CODEC )
+   INCLUDE( ${CMAKE_SOURCE_DIR}/dependencies/cmake/vvlib.cmake )
+ ENDIF()
+-IF( USE_HDRTOOLS )  
++IF( USE_HDRTOOLS )
+   INCLUDE( ${CMAKE_SOURCE_DIR}/dependencies/cmake/hdrtools.cmake )
+ ENDIF()
+ 
+@@ -97,12 +97,48 @@ ADD_SUBDIRECTORY(source/lib/PccLibEncoder)
+ ADD_SUBDIRECTORY(source/lib/PccLibMetrics)
+ ADD_SUBDIRECTORY(source/lib/PccLibConformance)
+ 
+-ADD_SUBDIRECTORY(source/app/PccAppParser)
+-ADD_SUBDIRECTORY(source/app/PccAppEncoder)
+-ADD_SUBDIRECTORY(source/app/PccAppDecoder)
+-ADD_SUBDIRECTORY(source/app/PccAppMetrics)
+-ADD_SUBDIRECTORY(source/app/PccAppConformance)
+-ADD_SUBDIRECTORY(source/app/PccAppVideoEncoder)
+-ADD_SUBDIRECTORY(source/app/PccAppVideoDecoder)
+-ADD_SUBDIRECTORY(source/app/PccAppColorConverter)
+-ADD_SUBDIRECTORY(source/app/PccAppNormalGenerator)
++# ADD_SUBDIRECTORY(source/app/PccAppParser)
++# ADD_SUBDIRECTORY(source/app/PccAppEncoder)
++# ADD_SUBDIRECTORY(source/app/PccAppDecoder)
++# ADD_SUBDIRECTORY(source/app/PccAppMetrics)
++# ADD_SUBDIRECTORY(source/app/PccAppConformance)
++# ADD_SUBDIRECTORY(source/app/PccAppVideoEncoder)
++# ADD_SUBDIRECTORY(source/app/PccAppVideoDecoder)
++# ADD_SUBDIRECTORY(source/app/PccAppColorConverter)
++# ADD_SUBDIRECTORY(source/app/PccAppNormalGenerator)
++
++include(GNUInstallDirs)
++install(
++  TARGETS
++  PccLibVideoDecoder
++  PccLibVideoEncoder
++  PccLibColorConverter
++  PccLibBitstreamCommon
++  PccLibBitstreamWriter
++  PccLibBitstreamReader
++  PccLibCommon
++  PccLibDecoder
++  PccLibEncoder
++  PccLibMetrics
++  PccLibConformance
++
++  TLibCommon
++  TLibDecoder
++  TLibEncoder
++  TLibVideoIO
++
++  PccLibHevcParser
++  # PccLibAvcParser
++
++  libmd5
++  tbb_static
++
++  EXPORT TMC2Targets
++)
++
++install(
++  EXPORT TMC2Targets
++  NAMESPACE TMC2::
++  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/TMC2
++)
++
+diff --git a/source/lib/PccLibBitstreamCommon/CMakeLists.txt b/source/lib/PccLibBitstreamCommon/CMakeLists.txt
+index 21ae610..296c6e4 100644
+--- a/source/lib/PccLibBitstreamCommon/CMakeLists.txt
++++ b/source/lib/PccLibBitstreamCommon/CMakeLists.txt
+@@ -12,9 +12,9 @@ CHECK_SYMBOL_EXISTS( getrusage sys/resource.h HAVE_GETRUSAGE )
+ CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/include/PCCConfig.h.in
+                 ${CMAKE_CURRENT_SOURCE_DIR}/include/PCCConfig.h )
+ 
+-FILE(GLOB PROJECT_INC_FILES include/*.h 
++FILE(GLOB PROJECT_INC_FILES include/*.h
+                 ${CMAKE_SOURCE_DIR}/dependencies/libmd5/*.h )
+-    
++
+ FILE(GLOB PROJECT_CPP_FILES source/*.cpp
+                 ${CMAKE_SOURCE_DIR}/dependencies/libmd5/*.c )
+ 
+@@ -26,8 +26,13 @@ SOURCE_GROUP( input FILES ${PROJECT_IN_FILES}  )
+ 
+ INCLUDE_DIRECTORIES( include
+                 ${CMAKE_SOURCE_DIR}/dependencies/libmd5)
+- 
++
+ ADD_LIBRARY( ${MYNAME} ${LINKER} ${SRC} ${PROJECT_INC_FILES} ${PROJECT_CPP_FILES} ${PROJECT_IN_FILES} )
+ 
++TARGET_INCLUDE_DIRECTORIES(${MYNAME}
++  PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++)
++
+ SET_TARGET_PROPERTIES( ${MYNAME} PROPERTIES LINKER_LANGUAGE CXX)
+ 
+diff --git a/source/lib/PccLibBitstreamReader/CMakeLists.txt b/source/lib/PccLibBitstreamReader/CMakeLists.txt
+index c11e653..adc0f87 100644
+--- a/source/lib/PccLibBitstreamReader/CMakeLists.txt
++++ b/source/lib/PccLibBitstreamReader/CMakeLists.txt
+@@ -5,11 +5,15 @@ STRING(REPLACE " " "_" MYNAME ${MYNAME})
+ PROJECT(${MYNAME} C CXX)
+ 
+ FILE(GLOB SRC include/*.h source/*.cpp )
+- 
+-INCLUDE_DIRECTORIES( include 
++
++INCLUDE_DIRECTORIES( include
+                      ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include )
+ 
+ ADD_LIBRARY( ${MYNAME} ${LINKER} ${SRC} )
++TARGET_INCLUDE_DIRECTORIES(${MYNAME}
++  PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++)
+ 
+ TARGET_LINK_LIBRARIES(${MYNAME} PccLibBitstreamCommon )
+ 
+diff --git a/source/lib/PccLibBitstreamWriter/CMakeLists.txt b/source/lib/PccLibBitstreamWriter/CMakeLists.txt
+index 96c1385..adc0f87 100644
+--- a/source/lib/PccLibBitstreamWriter/CMakeLists.txt
++++ b/source/lib/PccLibBitstreamWriter/CMakeLists.txt
+@@ -10,6 +10,10 @@ INCLUDE_DIRECTORIES( include
+                      ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include )
+ 
+ ADD_LIBRARY( ${MYNAME} ${LINKER} ${SRC} )
++TARGET_INCLUDE_DIRECTORIES(${MYNAME}
++  PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++)
+ 
+ TARGET_LINK_LIBRARIES(${MYNAME} PccLibBitstreamCommon )
+ 
+diff --git a/source/lib/PccLibColorConverter/CMakeLists.txt b/source/lib/PccLibColorConverter/CMakeLists.txt
+index 023b7ba..5fcc60f 100644
+--- a/source/lib/PccLibColorConverter/CMakeLists.txt
++++ b/source/lib/PccLibColorConverter/CMakeLists.txt
+@@ -4,12 +4,12 @@ GET_FILENAME_COMPONENT(MYNAME ${CMAKE_CURRENT_LIST_DIR} NAME)
+ STRING(REPLACE " " "_" MYNAME ${MYNAME})
+ PROJECT(${MYNAME} C CXX)
+ 
+-FILE(GLOB SRC  include/*.h 
+-               source/*.cpp  
++FILE(GLOB SRC  include/*.h
++               source/*.cpp
+                ${HDRTOOLS_DIR}/projects/HDRConvert/inc/ProjectParameters.h
+                ${HDRTOOLS_DIR}/projects/HDRConvert/src/ProjectParameters.cpp )
+ 
+-INCLUDE_DIRECTORIES( include 
++INCLUDE_DIRECTORIES( include
+                      ${CMAKE_SOURCE_DIR}/source/lib/PccLibCommon/include/
+                      ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include/
+                      ${HDRTOOLS_DIR}/common/inc
+@@ -20,6 +20,10 @@ IF( USE_HDRTOOLS )
+ SET( LIBS ${LIBS} HDRLib )
+ ENDIF()
+ ADD_LIBRARY( ${MYNAME} ${LINKER} ${SRC} )
++TARGET_INCLUDE_DIRECTORIES(${MYNAME}
++  PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++)
+ 
+ TARGET_LINK_LIBRARIES( ${MYNAME} ${LIBS} )
+ 
+diff --git a/source/lib/PccLibCommon/CMakeLists.txt b/source/lib/PccLibCommon/CMakeLists.txt
+index a0069aa..4a4ec46 100644
+--- a/source/lib/PccLibCommon/CMakeLists.txt
++++ b/source/lib/PccLibCommon/CMakeLists.txt
+@@ -16,7 +16,7 @@ FILE(GLOB PROJECT_INC_FILES include/*.h
+                             ${CMAKE_SOURCE_DIR}/dependencies/nanoflann/*.hpp
+                             ${CMAKE_SOURCE_DIR}/dependencies/nanoflann/*.h
+                             ${CMAKE_SOURCE_DIR}/dependencies/libmd5/*.h )
+-FILE(GLOB PROJECT_CPP_FILES source/*.cpp 
++FILE(GLOB PROJECT_CPP_FILES source/*.cpp
+                             ${CMAKE_SOURCE_DIR}/dependencies/libmd5/*.c )
+ FILE(GLOB PROJECT_IN_FILES  *.in )
+ 
+@@ -25,17 +25,21 @@ SOURCE_GROUP( cpp   FILES ${PROJECT_CPP_FILES} )
+ SOURCE_GROUP( input FILES ${PROJECT_IN_FILES}  )
+ 
+ INCLUDE_DIRECTORIES( include
+-                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include 
++                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include
+                      ${CMAKE_SOURCE_DIR}/dependencies/nanoflann
+                      ${CMAKE_SOURCE_DIR}/dependencies/libmd5 )
+-IF ( ENABLE_TBB ) 
++IF ( ENABLE_TBB )
+   INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/dependencies/tbb/include )
+ ENDIF()
+- 
++
+ ADD_LIBRARY( ${MYNAME} ${LINKER} ${SRC} ${PROJECT_INC_FILES} ${PROJECT_CPP_FILES} ${PROJECT_IN_FILES} )
+ IF( ENABLE_PAPI_PROFILING )
+   TARGET_LINK_LIBRARIES(${MYNAME} ${CMAKE_SOURCE_DIR}/dependencies/papi/src/libpapi.a  )
+ ENDIF()
++TARGET_INCLUDE_DIRECTORIES(${MYNAME}
++  PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++)
+ 
+ TARGET_LINK_LIBRARIES(${MYNAME} PccLibBitstreamCommon )
+ 
+diff --git a/source/lib/PccLibConformance/CMakeLists.txt b/source/lib/PccLibConformance/CMakeLists.txt
+index ce18eeb..c5975eb 100644
+--- a/source/lib/PccLibConformance/CMakeLists.txt
++++ b/source/lib/PccLibConformance/CMakeLists.txt
+@@ -12,7 +12,11 @@ INCLUDE_DIRECTORIES( include
+                      ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include )
+ 
+ ADD_LIBRARY( ${MYNAME} ${LINKER} ${SRC} )
++TARGET_INCLUDE_DIRECTORIES(${MYNAME}
++  PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++)
+ 
+ TARGET_LINK_LIBRARIES(${MYNAME} )
+ 
+-SET_TARGET_PROPERTIES( ${MYNAME} PROPERTIES LINKER_LANGUAGE CXX)
+\ No newline at end of file
++SET_TARGET_PROPERTIES( ${MYNAME} PROPERTIES LINKER_LANGUAGE CXX)
+diff --git a/source/lib/PccLibDecoder/CMakeLists.txt b/source/lib/PccLibDecoder/CMakeLists.txt
+index 2d9a6b8..ee576bc 100644
+--- a/source/lib/PccLibDecoder/CMakeLists.txt
++++ b/source/lib/PccLibDecoder/CMakeLists.txt
+@@ -8,19 +8,23 @@ FILE(GLOB SRC include/*.h source/*.cpp
+               ${CMAKE_SOURCE_DIR}/dependencies/nanoflann/*.hpp
+               ${CMAKE_SOURCE_DIR}/dependencies/nanoflann/*.h )
+ 
+-INCLUDE_DIRECTORIES( include 
+-                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibCommon/include  
+-                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include 
+-                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibVideoDecoder/include 
++INCLUDE_DIRECTORIES( include
++                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibCommon/include
++                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include
++                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibVideoDecoder/include
+                      ${CMAKE_SOURCE_DIR}/dependencies/nanoflann
+                      ${CMAKE_SOURCE_DIR}/source/lib/PccLibColorConverter/include  )
+-IF ( ENABLE_TBB ) 
++IF ( ENABLE_TBB )
+   INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/dependencies/tbb/include )
+ ENDIF()
+-                     
++
+ SET( LIBS PccLibCommon PccLibBitstreamCommon PccLibVideoDecoder PccLibColorConverter )
+ 
+ ADD_LIBRARY( ${MYNAME} ${LINKER} ${SRC} )
++TARGET_INCLUDE_DIRECTORIES(${MYNAME}
++  PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++)
+ 
+ TARGET_LINK_LIBRARIES( ${MYNAME} ${LIBS} )
+ 
+diff --git a/source/lib/PccLibEncoder/CMakeLists.txt b/source/lib/PccLibEncoder/CMakeLists.txt
+index 1036fde..0deb57f 100644
+--- a/source/lib/PccLibEncoder/CMakeLists.txt
++++ b/source/lib/PccLibEncoder/CMakeLists.txt
+@@ -4,23 +4,27 @@ GET_FILENAME_COMPONENT(MYNAME ${CMAKE_CURRENT_LIST_DIR} NAME)
+ STRING(REPLACE " " "_" MYNAME ${MYNAME})
+ PROJECT(${MYNAME} C CXX)
+ 
+-FILE(GLOB SRC include/*.h source/*.cpp 
++FILE(GLOB SRC include/*.h source/*.cpp
+               ${CMAKE_SOURCE_DIR}/dependencies/nanoflann/*.hpp
+               ${CMAKE_SOURCE_DIR}/dependencies/nanoflann/*.h )
+ 
+ INCLUDE_DIRECTORIES( include
+-                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibCommon/include  
+-                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include 
+-                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibVideoEncoder/include 
++                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibCommon/include
++                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include
++                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibVideoEncoder/include
+                      ${CMAKE_SOURCE_DIR}/source/lib/PccLibColorConverter/include/
+                      ${CMAKE_SOURCE_DIR}/dependencies/nanoflann )
+-IF ( ENABLE_TBB ) 
++IF ( ENABLE_TBB )
+   INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/dependencies/tbb/include )
+ ENDIF()
+ 
+ SET( LIBS PccLibCommon PccLibBitstreamCommon PccLibVideoEncoder PccLibColorConverter )
+ 
+ ADD_LIBRARY( ${MYNAME} ${LINKER} ${SRC} )
++TARGET_INCLUDE_DIRECTORIES(${MYNAME}
++  PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++)
+ 
+ TARGET_LINK_LIBRARIES( ${MYNAME} ${LIBS} )
+ 
+diff --git a/source/lib/PccLibMetrics/CMakeLists.txt b/source/lib/PccLibMetrics/CMakeLists.txt
+index b99f79b..8f4b277 100644
+--- a/source/lib/PccLibMetrics/CMakeLists.txt
++++ b/source/lib/PccLibMetrics/CMakeLists.txt
+@@ -4,16 +4,20 @@ GET_FILENAME_COMPONENT(MYNAME ${CMAKE_CURRENT_LIST_DIR} NAME)
+ STRING(REPLACE " " "_" MYNAME ${MYNAME})
+ PROJECT(${MYNAME} C CXX)
+ 
+-FILE(GLOB SRC include/*.h source/*.cpp 
++FILE(GLOB SRC include/*.h source/*.cpp
+               ${CMAKE_SOURCE_DIR}/dependencies/nanoflann/*.hpp
+               ${CMAKE_SOURCE_DIR}/dependencies/nanoflann/*.h )
+ 
+ INCLUDE_DIRECTORIES( include
+-                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibCommon/include  
+-                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include 
++                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibCommon/include
++                     ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include
+                      ${CMAKE_SOURCE_DIR}/dependencies/nanoflann )
+ 
+ ADD_LIBRARY( ${MYNAME} ${LINKER} ${SRC} )
++TARGET_INCLUDE_DIRECTORIES(${MYNAME}
++  PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++)
+ 
+ TARGET_LINK_LIBRARIES(${MYNAME} PccLibCommon )
+ 
+diff --git a/source/lib/PccLibVideoDecoder/CMakeLists.txt b/source/lib/PccLibVideoDecoder/CMakeLists.txt
+index 43bf5e7..621c55a 100644
+--- a/source/lib/PccLibVideoDecoder/CMakeLists.txt
++++ b/source/lib/PccLibVideoDecoder/CMakeLists.txt
+@@ -4,11 +4,11 @@ GET_FILENAME_COMPONENT(MYNAME ${CMAKE_CURRENT_LIST_DIR} NAME)
+ STRING(REPLACE " " "_" MYNAME ${MYNAME})
+ PROJECT(${MYNAME} C CXX)
+ 
+-FILE(GLOB SRC  include/*.h 
+-               source/*.cpp  
++FILE(GLOB SRC  include/*.h
++               source/*.cpp
+                ${HM_LIB_SOURCE_DIR}/TAppCommon/* )
+ 
+-INCLUDE_DIRECTORIES( include 
++INCLUDE_DIRECTORIES( include
+                      ${CMAKE_SOURCE_DIR}/source/lib/PccLibCommon/include/
+                      ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include/ )
+ 
+@@ -22,11 +22,11 @@ IF( USE_JMLIB_VIDEO_CODEC )
+                          ${JM_LIB_SOURCE_DIR}/app/ldecod/ )
+     SET( LIBS ${LIBS} ldecod )
+ ENDIF()
+-IF( USE_FFMPEG_VIDEO_CODEC )  
++IF( USE_FFMPEG_VIDEO_CODEC )
+   INCLUDE_DIRECTORIES( ${FFMPEG_INCLUDE} )
+   IF( WIN32 OR MSVC OR MSYS OR MINGW )
+-    LINK_DIRECTORIES( ${FFMPEG_DEV_DIR}/lib ) 
+-  ENDIF()  
++    LINK_DIRECTORIES( ${FFMPEG_DEV_DIR}/lib )
++  ENDIF()
+   SET( LIBS ${LIBS} ${AVCODEC_LIBRARY} ${AVUTIL_LIBRARY} ${AVFORMAT_LIBRARY} )
+ ENDIF()
+ IF( USE_VTMLIB_VIDEO_CODEC )
+@@ -48,6 +48,10 @@ IF( USE_SHMAPP_VIDEO_CODEC )
+   SET( LIBS ${LIBS} PccLibShvcParser )
+ ENDIF()
+ ADD_LIBRARY( ${MYNAME} ${LINKER} ${SRC} )
++TARGET_INCLUDE_DIRECTORIES(${MYNAME}
++  PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++)
+ 
+ If( MSVC )
+ TARGET_LINK_LIBRARIES( ${MYNAME} ${LIBS} ws2_32)
+diff --git a/source/lib/PccLibVideoEncoder/CMakeLists.txt b/source/lib/PccLibVideoEncoder/CMakeLists.txt
+index 7afac81..dc70a09 100644
+--- a/source/lib/PccLibVideoEncoder/CMakeLists.txt
++++ b/source/lib/PccLibVideoEncoder/CMakeLists.txt
+@@ -4,12 +4,12 @@ GET_FILENAME_COMPONENT(MYNAME ${CMAKE_CURRENT_LIST_DIR} NAME)
+ STRING(REPLACE " " "_" MYNAME ${MYNAME})
+ PROJECT(${MYNAME} C CXX)
+ 
+-FILE(GLOB SRC include/*.h 
++FILE(GLOB SRC include/*.h
+               source/*.cpp
+               ${HM_LIB_SOURCE_DIR}/TAppCommon/* )
+ 
+ SET( LIBS PccLibCommon )
+-INCLUDE_DIRECTORIES( include 
++INCLUDE_DIRECTORIES( include
+                      ${CMAKE_SOURCE_DIR}/source/lib/PccLibCommon/include/
+                      ${CMAKE_SOURCE_DIR}/source/lib/PccLibBitstreamCommon/include/ )
+ 
+@@ -25,10 +25,10 @@ ENDIF()
+ IF( USE_FFMPEG_VIDEO_CODEC )
+   INCLUDE_DIRECTORIES( ${FFMPEG_INCLUDE} )
+   IF( WIN32 OR MSVC OR MSYS OR MINGW )
+-    LINK_DIRECTORIES( ${FFMPEG_DEV_DIR}/lib ) 
++    LINK_DIRECTORIES( ${FFMPEG_DEV_DIR}/lib )
+   ENDIF()
+   INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/source/lib/PccLibVideoDecoder/include/ )
+-  SET( LIBS ${LIBS} ${AVCODEC_LIBRARY} ${AVUTIL_LIBRARY} ${AVFORMAT_LIBRARY} PccLibVideoDecoder )    
++  SET( LIBS ${LIBS} ${AVCODEC_LIBRARY} ${AVUTIL_LIBRARY} ${AVFORMAT_LIBRARY} PccLibVideoDecoder )
+ ENDIF()
+ IF( USE_VTMLIB_VIDEO_CODEC )
+     SET( LIBS ${LIBS} CommonLib EncoderLib_vtm DecoderLib_vtm Utilities_vtm )
+@@ -39,6 +39,10 @@ IF( USE_VVLIB_VIDEO_CODEC )
+ ENDIF()
+ 
+ ADD_LIBRARY( ${MYNAME} ${LINKER} ${SRC} )
++TARGET_INCLUDE_DIRECTORIES(${MYNAME}
++  PUBLIC
++    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++)
+ 
+ #TARGET_LINK_LIBRARIES( ${MYNAME} ${LIBS} )
+ If( MSVC )

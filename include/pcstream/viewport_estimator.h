@@ -4,11 +4,6 @@
 #include <pcstream/def.h>
 #include <pcstream/vec3f.h>
 
-enum
-{
-  PCSTREAM_VIEWPORT_ESTIMATOR_VELOCITY = 1
-};
-
 typedef struct pcs_viewport_estimator_t pcs_viewport_estimator_t;
 
 struct pcs_viewport_estimator_t
@@ -31,13 +26,13 @@ struct pcs_viewport_estimator_t
 };
 
 PCSTREAM_RET pcs_viewport_estimator_init(
-    pcs_viewport_estimator_t *this, long long dt, int type);
+    pcs_viewport_estimator_t *self, long long dt, int type);
 
 PCSTREAM_RET
-pcs_viewport_estimator_destroy(pcs_viewport_estimator_t *this);
+pcs_viewport_estimator_destroy(pcs_viewport_estimator_t *self);
 
 PCSTREAM_RET
-pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *this,
+pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *self,
                                      pcs_vec3f_t Pc,
                                      pcs_vec3f_t Po,
                                      pcs_vec3f_t Vc,
@@ -45,7 +40,7 @@ pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *this,
                                      long long   dtec);
 
 PCSTREAM_RET
-pcs_viewport_estimator_get_velocity(pcs_viewport_estimator_t *this,
+pcs_viewport_estimator_get_velocity(pcs_viewport_estimator_t *self,
                                     float **esMVP_ptr);
 
 #endif

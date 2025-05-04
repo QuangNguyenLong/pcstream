@@ -1,26 +1,27 @@
 cmake_minimum_required(VERSION 3.21)
 project(pcstreamApp C)
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(GPAC REQUIRED gpac)
 
-# Automatically get static link flags using pkg-config
-execute_process(
-    COMMAND pkg-config --libs --static gpac
-    OUTPUT_VARIABLE GPAC_STATIC_LIBS
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+include(../cmake/folders.cmake)
 
-# Print the flags to verify
-message(STATUS "GPAC_STATIC_LIBS: ${GPAC_STATIC_LIBS}")
+if(PROJECT_IS_TOP_LEVEL)
+  find_package(pcstream REQUIRED)
+endif()
 
-# genmpd app
-add_executable(genmpd genmpd.c)
-target_link_libraries(genmpd PRIVATE pcstream::pcstream ${GPAC_STATIC_LIBS})
-target_compile_features(genmpd PRIVATE c_std_17)
+add_custom_target(run-app)
 
-# pcs app
-add_executable(pcs pcs.c)
-target_link_libraries(pcs PRIVATE pcstream::pcstream)
-target_compile_features(pcs PRIVATE c_std_17)
+function(add_app NAME)
+  add_executable("${NAME}" "${NAME}.c")
+  target_link_libraries("${NAME}" PRIVATE pcstream::pcstream)
+  target_compile_features("${NAME}" PRIVATE c_std_17)
+  add_custom_target("run_${NAME}" COMMAND "${NAME}" VERBATIM)
+  add_dependencies("run_${NAME}" "${NAME}")
+  add_dependencies(run-app "run_${NAME}")
+endfunction()
 
+add_app(pcs)
+
+# TODO: remember to write a wrapper for gpac/mpd.h core modules.
+# add_example(genmpd)
+
+add_folders(Application)

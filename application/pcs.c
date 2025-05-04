@@ -2,11 +2,17 @@
 #include <pcstream/bw_estimator.h>
 #include <pcstream/lod_selector.h>
 #include <pcstream/request_handler.h>
+#include <pcstream/video_decoder.h>
 #include <pcstream/viewport_estimator.h>
 #include <pcstream/visibility_computer.h>
 #include <stdio.h>
 
-int main(void)
+// argv[1] = "https://127.0.0.1:8080/manifest.mpd"
+// argv[2] = "https://127.0.0.1:8080/manifest-info.mpd"
+// argv[3] = "https://127.0.0.1:8080/manifest-hull.mpd"
+// argv[4] = "https://127.0.0.1:8080"
+
+int main(int argc, char **argv)
 {
   pcs_buffer_t  *info_list_ptr    = PCSTREAM_NULL;
   pcs_buffer_t **hull_list_ptr    = PCSTREAM_NULL;
@@ -29,6 +35,7 @@ int main(void)
   pcs_viewport_estimator_t  vpes        = {0};
   pcs_visibility_computer_t vscp        = {0};
   pcs_lod_selector_t        vssl        = {0};
+  pcs_video_decoder_t      *vddc        = PCSTREAM_NULL;
   PCSTREAM_RATIO           *screen_area = PCSTREAM_NULL;
 
   pcs_request_handler_init(&hd, PCSTREAM_REQUEST_HANDLER_H2);
@@ -40,11 +47,7 @@ int main(void)
   pcs_lod_selector_init(&vssl, PCSTREAM_LOD_SELECTOR_DP_BASED);
 
   // session initialization
-  hd.post_init(&hd,
-               "https://127.0.0.1:8080/manifest.mpd",
-               "https://127.0.0.1:8080/manifest-info.mpd",
-               "https://127.0.0.1:8080/manifest-hull.mpd",
-               "https://127.0.0.1:8080");
+  hd.post_init(&hd, argv[1], argv[2], argv[3], argv[4]);
 
   hd.get_init(&hd, &info_list_ptr, &hull_list_ptr);
 
@@ -64,8 +67,24 @@ int main(void)
   for (PCSTREAM_COUNT i = 0; i < hd.seq_count; i++)
     screen_area[i] = 0;
 
+  vddc = (pcs_video_decoder_t *)malloc(sizeof(pcs_video_decoder_t) *
+                                       hd.seq_count);
+  for (PCSTREAM_COUNT i = 0; i < hd.seq_count; i++)
+    pcs_video_decoder_init(&(vddc[i]), 0);
+
   while (hd.curr_seg != hd.seg_count)
   {
+
+    for (PCSTREAM_COUNT seq = 0; seq < hd.seq_count; seq++)
+    {
+      vddc[seq].post(&(vddc[seq]),
+                     curr_content_ptr[seq].data,
+                     curr_content_ptr[seq].size);
+      // add render, maybe?
+      // If pcs is done, consider writing WEBASM and let webGL render
+      // instead?
+    }
+
     pcs_vec3f_t Pc = {0, 0, 0.1f};
     pcs_vec3f_t Po = {0, 0, 0};
     pcs_vec3f_t Vc = {1, 1, 1};
@@ -103,6 +122,10 @@ int main(void)
     hd.get_segment(&hd, &curr_content_ptr);
   }
   // done, stop session
+
+  for (PCSTREAM_COUNT i = 0; i < hd.seq_count; i++)
+    pcs_video_decoder_destroy(&(vddc[i]));
+  free(vddc);
   free(selects);
   pcs_request_handler_destroy(&hd);
   pcs_bw_estimator_destroy(&bwes);

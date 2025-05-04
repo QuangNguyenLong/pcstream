@@ -39,26 +39,26 @@ struct _node_t
   void (*set)(_node_t *, _pair_float_t, int, int);
   void (*update_dominance)(_node_t *, float, float);
 };
-static void _node_set(_node_t *this,
+static void _node_set(_node_t *self,
                       _pair_float_t cost_val,
                       int           version,
                       int           num_dl)
 {
-  this->cost            = cost_val.cost;
-  this->value           = cost_val.value;
-  this->version         = version;
-  this->num_dl          = num_dl;
+  self->cost            = cost_val.cost;
+  self->value           = cost_val.value;
+  self->version         = version;
+  self->num_dl          = num_dl;
 
-  this->dominance_label = (_pair_float_t *)malloc(
-      sizeof(_pair_float_t) * (unsigned int)this->num_dl);
+  self->dominance_label = (_pair_float_t *)malloc(
+      sizeof(_pair_float_t) * (unsigned int)self->num_dl);
 
-  for (int i = 0; i < this->num_dl; i++)
-    this->dominance_label[i] = (_pair_float_t){0, 0};
+  for (int i = 0; i < self->num_dl; i++)
+    self->dominance_label[i] = (_pair_float_t){0, 0};
 
-  this->index_dl = 0;
+  self->index_dl = 0;
 }
 static void
-_node_update_dominance(_node_t *this, float cost, float value)
+_node_update_dominance(_node_t *self, float cost, float value)
 {
   int   lowc      = 0;
   int   highv     = 0;
@@ -67,63 +67,63 @@ _node_update_dominance(_node_t *this, float cost, float value)
   float min_cost  = 0;
   int   random    = 0;
 
-  if (this->index_dl < this->num_dl - 1)
+  if (self->index_dl < self->num_dl - 1)
   {
-    idl                        = this->index_dl++;
-    this->dominance_label[idl] = (_pair_float_t){cost, value};
+    idl                        = self->index_dl++;
+    self->dominance_label[idl] = (_pair_float_t){cost, value};
     return;
   }
-  max_value = this->dominance_label[0].value;
-  min_cost  = this->dominance_label[0].cost;
+  max_value = self->dominance_label[0].value;
+  min_cost  = self->dominance_label[0].cost;
 
-  for (int i = 1; i < this->index_dl; i++)
+  for (int i = 1; i < self->index_dl; i++)
   {
-    if (this->dominance_label[i].cost < min_cost)
+    if (self->dominance_label[i].cost < min_cost)
     {
-      min_cost = this->dominance_label[i].cost;
+      min_cost = self->dominance_label[i].cost;
       lowc     = i;
     }
-    if (this->dominance_label[i].value > max_value)
+    if (self->dominance_label[i].value > max_value)
     {
-      max_value = this->dominance_label[i].value;
+      max_value = self->dominance_label[i].value;
       highv     = i;
     }
   }
-  random = rand() % this->index_dl;
+  random = rand() % self->index_dl;
   while (random == lowc || random == highv)
-    random = rand() % this->index_dl;
-  this->dominance_label[random] = (_pair_float_t){cost, value};
+    random = rand() % self->index_dl;
+  self->dominance_label[random] = (_pair_float_t){cost, value};
 }
-static PCSTREAM_RET _node_init(_node_t *this)
+static PCSTREAM_RET _node_init(_node_t *self)
 {
-  this->version          = 0;
-  this->cost             = 0;
-  this->minimum_cost     = 0;
-  this->maximum_value    = 0;
-  this->dominance_label  = PCSTREAM_NULL;
-  this->index_dl         = 0;
-  this->num_dl           = 0;
+  self->version          = 0;
+  self->cost             = 0;
+  self->minimum_cost     = 0;
+  self->maximum_value    = 0;
+  self->dominance_label  = PCSTREAM_NULL;
+  self->index_dl         = 0;
+  self->num_dl           = 0;
 
-  this->set              = _node_set;
-  this->update_dominance = _node_update_dominance;
+  self->set              = _node_set;
+  self->update_dominance = _node_update_dominance;
 
   return PCSTREAM_RET_SUCCESS;
 }
-static PCSTREAM_RET _node_destroy(_node_t *this)
+static PCSTREAM_RET _node_destroy(_node_t *self)
 {
-  if (this->dominance_label != PCSTREAM_NULL)
-    free(this->dominance_label);
+  if (self->dominance_label != PCSTREAM_NULL)
+    free(self->dominance_label);
 
-  this->version          = 0;
-  this->cost             = 0;
-  this->minimum_cost     = 0;
-  this->maximum_value    = 0;
-  this->dominance_label  = PCSTREAM_NULL;
-  this->index_dl         = 0;
-  this->num_dl           = 0;
+  self->version          = 0;
+  self->cost             = 0;
+  self->minimum_cost     = 0;
+  self->maximum_value    = 0;
+  self->dominance_label  = PCSTREAM_NULL;
+  self->index_dl         = 0;
+  self->num_dl           = 0;
 
-  this->set              = PCSTREAM_NULL;
-  this->update_dominance = PCSTREAM_NULL;
+  self->set              = PCSTREAM_NULL;
+  self->update_dominance = PCSTREAM_NULL;
 
   return PCSTREAM_RET_SUCCESS;
 }
@@ -140,64 +140,64 @@ struct _path_t
   _path_t (*addition_assign)(_path_t *, _node_t);
   _path_t (*assign)(_path_t *, _path_t);
 };
-static _path_t _path_addition_assign(_path_t *this, _node_t n)
+static _path_t _path_addition_assign(_path_t *self, _node_t n)
 {
-  this->cost += n.cost;
-  this->value += n.value;
-  this->version_choose[this->index++] = n.version;
-  return *this;
+  self->cost += n.cost;
+  self->value += n.value;
+  self->version_choose[self->index++] = n.version;
+  return *self;
 }
-static _path_t _path_assign(_path_t *this, _path_t other)
+static _path_t _path_assign(_path_t *self, _path_t other)
 {
-  this->value = other.value;
-  this->cost  = other.cost;
-  this->index = other.index;
-  this->n_mod = other.n_mod;
+  self->value = other.value;
+  self->cost  = other.cost;
+  self->index = other.index;
+  self->n_mod = other.n_mod;
 
-  if (this->version_choose != PCSTREAM_NULL)
+  if (self->version_choose != PCSTREAM_NULL)
   {
-    free(this->version_choose);
-    this->version_choose = PCSTREAM_NULL;
+    free(self->version_choose);
+    self->version_choose = PCSTREAM_NULL;
   }
-  this->version_choose =
-      (int *)malloc(sizeof(int) * (unsigned int)this->n_mod);
-  for (int i = 0; i < this->n_mod; i++)
-    this->version_choose[i] = other.version_choose[i];
-  return *this;
+  self->version_choose =
+      (int *)malloc(sizeof(int) * (unsigned int)self->n_mod);
+  for (int i = 0; i < self->n_mod; i++)
+    self->version_choose[i] = other.version_choose[i];
+  return *self;
 }
 
-static PCSTREAM_RET _path_init(_path_t *this,
+static PCSTREAM_RET _path_init(_path_t *self,
                                float          cost,
                                float          value,
                                PCSTREAM_COUNT n_mod)
 {
-  this->cost  = cost;
-  this->value = value;
-  this->n_mod = (int)n_mod;
-  this->index = 0;
+  self->cost  = cost;
+  self->value = value;
+  self->n_mod = (int)n_mod;
+  self->index = 0;
 
-  this->version_choose =
-      (int *)malloc(sizeof(int) * (unsigned int)this->n_mod);
+  self->version_choose =
+      (int *)malloc(sizeof(int) * (unsigned int)self->n_mod);
 
-  for (int i = 0; i < this->n_mod; i++)
-    this->version_choose[i] = -1;
+  for (int i = 0; i < self->n_mod; i++)
+    self->version_choose[i] = -1;
 
-  this->addition_assign = _path_addition_assign;
-  this->assign          = _path_assign;
+  self->addition_assign = _path_addition_assign;
+  self->assign          = _path_assign;
 
   return PCSTREAM_RET_SUCCESS;
 }
-static PCSTREAM_RET _path_destroy(_path_t *this)
+static PCSTREAM_RET _path_destroy(_path_t *self)
 {
-  if (this->version_choose != PCSTREAM_NULL)
-    free(this->version_choose);
-  this->cost            = 0;
-  this->value           = 0;
-  this->n_mod           = 0;
-  this->index           = 0;
+  if (self->version_choose != PCSTREAM_NULL)
+    free(self->version_choose);
+  self->cost            = 0;
+  self->value           = 0;
+  self->n_mod           = 0;
+  self->index           = 0;
 
-  this->addition_assign = PCSTREAM_NULL;
-  this->assign          = PCSTREAM_NULL;
+  self->addition_assign = PCSTREAM_NULL;
+  self->assign          = PCSTREAM_NULL;
 
   return PCSTREAM_RET_SUCCESS;
 }
@@ -212,42 +212,42 @@ struct _graph_t
   void (*pulse)(_graph_t *, int, int, _path_t, _path_t *);
 };
 static void
-_graph_pulse(_graph_t *this, int i, int j, _path_t v, _path_t *v_s)
+_graph_pulse(_graph_t *self, int i, int j, _path_t v, _path_t *v_s)
 {
   int check = 0;
   if (i == -1)
   {
-    for (int k = 0; k < this->n_ver; k++)
-      this->pulse(this, i + 1, k, v, v_s);
+    for (int k = 0; k < self->n_ver; k++)
+      self->pulse(self, i + 1, k, v, v_s);
     return;
   }
   check = PCSTREAM_FALSE;
-  if (check_dominance(&this->matrix[i][j], &v) == PCSTREAM_TRUE)
+  if (check_dominance(&self->matrix[i][j], &v) == PCSTREAM_TRUE)
     check = PCSTREAM_TRUE;
 
-  if (check_feasibility(&this->matrix[i][j], &v, &this->Rc) ==
+  if (check_feasibility(&self->matrix[i][j], &v, &self->Rc) ==
       PCSTREAM_TRUE)
     check = PCSTREAM_TRUE;
 
-  if (check_bounds(&this->matrix[i][j], &v, &this->Q_) ==
+  if (check_bounds(&self->matrix[i][j], &v, &self->Q_) ==
       PCSTREAM_FALSE)
     check = PCSTREAM_TRUE;
 
   if (check == PCSTREAM_TRUE)
     return;
 
-  v.addition_assign(&v, this->matrix[i][j]);
-  if (i == this->n_mod - 1)
+  v.addition_assign(&v, self->matrix[i][j]);
+  if (i == self->n_mod - 1)
   {
     *v_s     = v;
-    this->Q_ = v_s->value;
+    self->Q_ = v_s->value;
     return;
   }
-  for (int k = 0; k < this->n_ver; k++)
-    this->pulse(this, i + 1, k, v, v_s);
+  for (int k = 0; k < self->n_ver; k++)
+    self->pulse(self, i + 1, k, v, v_s);
 }
 
-static PCSTREAM_RET _graph_init(_graph_t *this,
+static PCSTREAM_RET _graph_init(_graph_t *self,
                                 void  *cv_buff,
                                 size_t cv_size,
                                 int    n_ver,
@@ -265,17 +265,17 @@ static PCSTREAM_RET _graph_init(_graph_t *this,
   float          sum_min                 = 0;
   float          sum_max                 = 0;
 
-  this->matrix                           = PCSTREAM_NULL;
-  this->n_ver                            = n_ver;
-  this->n_mod                            = n_mod;
-  this->Rc                               = Rc;
-  this->Q_                               = Q_;
-  this->pulse                            = _graph_pulse;
+  self->matrix                           = PCSTREAM_NULL;
+  self->n_ver                            = n_ver;
+  self->n_mod                            = n_mod;
+  self->Rc                               = Rc;
+  self->Q_                               = Q_;
+  self->pulse                            = _graph_pulse;
 
   cost_val                               = (_pair_float_t *)malloc(
       sizeof(_pair_float_t) *
-      (unsigned int)(this->n_ver * this->n_mod));
-  for (int i = 0; i < this->n_ver * this->n_mod; i++)
+      (unsigned int)(self->n_ver * self->n_mod));
+  for (int i = 0; i < self->n_ver * self->n_mod; i++)
     cost_val[i] = (_pair_float_t){0, 0};
 
   data = fmemopen((void *)cv_buff, cv_size, "r");
@@ -291,47 +291,47 @@ static PCSTREAM_RET _graph_init(_graph_t *this,
     cost_val[t].value = v;
   }
 
-  this->matrix = (_node_t **)malloc(sizeof(_node_t *) *
-                                    (unsigned int)this->n_mod);
-  for (int i = 0; i < this->n_mod; i++)
+  self->matrix = (_node_t **)malloc(sizeof(_node_t *) *
+                                    (unsigned int)self->n_mod);
+  for (int i = 0; i < self->n_mod; i++)
   {
-    this->matrix[i] = (_node_t *)malloc(sizeof(_node_t) *
-                                        (unsigned int)this->n_ver);
-    for (int j = 0; j < this->n_ver; j++)
-      _node_init(&(this->matrix[i][j]));
+    self->matrix[i] = (_node_t *)malloc(sizeof(_node_t) *
+                                        (unsigned int)self->n_ver);
+    for (int j = 0; j < self->n_ver; j++)
+      _node_init(&(self->matrix[i][j]));
   }
 
-  for (int i = 0; i < this->n_mod; i++)
-    for (int j = 0; j < this->n_ver; j++)
-      this->matrix[i][j].set(&this->matrix[i][j],
-                             cost_val[i * this->n_ver + j],
+  for (int i = 0; i < self->n_mod; i++)
+    for (int j = 0; j < self->n_ver; j++)
+      self->matrix[i][j].set(&self->matrix[i][j],
+                             cost_val[i * self->n_ver + j],
                              j,
                              number_labels);
   sum_min = 0;
-  for (int i = 0; i < this->n_mod; i++)
-    sum_min += this->matrix[i][0].cost;
+  for (int i = 0; i < self->n_mod; i++)
+    sum_min += self->matrix[i][0].cost;
 
-  for (int i = 0; i < this->n_mod; i++)
+  for (int i = 0; i < self->n_mod; i++)
   {
-    sum_min -= this->matrix[i][0].cost;
-    for (int j = 0; j < this->n_ver; j++)
+    sum_min -= self->matrix[i][0].cost;
+    for (int j = 0; j < self->n_ver; j++)
     {
-      float tmp = this->matrix[i][j].cost + sum_min;
-      this->matrix[i][j].minimum_cost = tmp;
+      float tmp = self->matrix[i][j].cost + sum_min;
+      self->matrix[i][j].minimum_cost = tmp;
     }
   }
 
   sum_max = 0;
-  for (int i = 0; i < this->n_mod; i++)
-    sum_max += this->matrix[i][this->n_ver - 1].value;
+  for (int i = 0; i < self->n_mod; i++)
+    sum_max += self->matrix[i][self->n_ver - 1].value;
 
-  for (int i = 0; i < this->n_mod; i++)
+  for (int i = 0; i < self->n_mod; i++)
   {
-    sum_max -= this->matrix[i][this->n_ver - 1].value;
-    for (int j = 0; j < this->n_ver; j++)
+    sum_max -= self->matrix[i][self->n_ver - 1].value;
+    for (int j = 0; j < self->n_ver; j++)
     {
-      float tmp = this->matrix[i][j].value + sum_max;
-      this->matrix[i][j].maximum_value = tmp;
+      float tmp = self->matrix[i][j].value + sum_max;
+      self->matrix[i][j].maximum_value = tmp;
     }
   }
 
@@ -339,24 +339,24 @@ static PCSTREAM_RET _graph_init(_graph_t *this,
   fclose(data);
   return PCSTREAM_RET_SUCCESS;
 }
-static PCSTREAM_RET _graph_destroy(_graph_t *this)
+static PCSTREAM_RET _graph_destroy(_graph_t *self)
 {
-  if (this->matrix != PCSTREAM_NULL)
+  if (self->matrix != PCSTREAM_NULL)
   {
-    for (int i = 0; i < this->n_mod; i++)
+    for (int i = 0; i < self->n_mod; i++)
     {
-      for (int j = 0; j < this->n_ver; j++)
-        _node_destroy(&(this->matrix[i][j]));
-      free(this->matrix[i]);
+      for (int j = 0; j < self->n_ver; j++)
+        _node_destroy(&(self->matrix[i][j]));
+      free(self->matrix[i]);
     }
-    free(this->matrix);
+    free(self->matrix);
   }
-  this->matrix = PCSTREAM_NULL;
-  this->n_ver  = 0;
-  this->n_mod  = 0;
-  this->Rc     = 0;
-  this->Q_     = 0;
-  this->pulse  = PCSTREAM_NULL;
+  self->matrix = PCSTREAM_NULL;
+  self->n_ver  = 0;
+  self->n_mod  = 0;
+  self->Rc     = 0;
+  self->Q_     = 0;
+  self->pulse  = PCSTREAM_NULL;
   return PCSTREAM_RET_SUCCESS;
 }
 

@@ -50,7 +50,7 @@ PCSTREAM_RET pcs_http_get_to_buffer(const char           *url,
   curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
   curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)des);
 
-  // remove this before doing real stuff
+  // remove self before doing real stuff
   curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
   curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
   curl_easy_setopt(curl, CURLOPT_FTP_SKIP_PASV_IP, 1L);

@@ -1,19 +1,22 @@
 #include <pcstream/buffer.h>
 #include <pcstream/http.h>
-#include <pcstream/tmc2_decoder.h>
-int main(void)
+#include <pcstream/video_decoder.h>
+int main(int argc, char **argv)
 {
-  pcs_buffer_t buff = {0};
-  PCSTREAM_RET ret  = 0;
+  pcs_buffer_t        buff = {0};
+  pcs_gof_t           rec  = {0};
+  pcs_video_decoder_t dc   = {0};
 
+  pcs_gof_init(&rec);
   pcs_buffer_init(&buff);
+  pcs_video_decoder_init(&dc, PCSTREAM_VIDEO_DECODER_MPEG_VPCC);
 
-  pcs_http_get_to_buffer("https://127.0.0.1:8080/3.seg00001.r3.bin",
-                         PCSTREAM_HTTP_2_0,
-                         &buff,
-                         PCSTREAM_NULL);
+  pcs_http_get_to_buffer(
+      (const char *)argv[1], PCSTREAM_HTTP_2_0, &buff, PCSTREAM_NULL);
 
-  ret = decode_video(buff.data, buff.size);
+  dc.post(&dc, buff.data, buff.size);
+  dc.get(&dc, &rec);
 
   pcs_buffer_destroy(&buff);
+  pcs_gof_destroy(&rec);
 }
