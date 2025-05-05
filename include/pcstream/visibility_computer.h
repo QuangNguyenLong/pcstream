@@ -19,17 +19,17 @@ struct pcs_visibility_computer_t
 
 PCSTREAM_RET
 pcs_visibility_computer_init(pcs_visibility_computer_t *self,
-                             int type);
+                             int                        type);
 PCSTREAM_RET
 pcs_visibility_computer_destroy(pcs_visibility_computer_t *self);
 
 PCSTREAM_RET
 pcs_visibility_computer_post_hull(pcs_visibility_computer_t *self,
-                                  const float *MVP,
-                                  pcs_mesh_t   hull);
+                                  const float               *MVP,
+                                  pcs_mesh_t                 hull);
 
 PCSTREAM_RET
 pcs_visibility_computer_get_hull(pcs_visibility_computer_t *self,
-                                 PCSTREAM_RATIO *ratio);
+                                 PCSTREAM_RATIO            *ratio);
 
 #endif

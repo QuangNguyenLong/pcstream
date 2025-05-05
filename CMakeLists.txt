@@ -16,42 +16,53 @@ option(USE_MPEG_VPCC_CODEC "Use MPEG-VPCC codec to encode and decode video" TRUE
 option(USE_GOOGLE_DRACO_CODEC "Use Google-Draco codec to encode and decode video" FALSE)
 
 if(USE_MPEG_VPCC_CODEC)
-    include(dependencies/cmake/mpeg-vpcc.cmake)
+    include(cmake/dependencies/mpeg-vpcc.cmake)
 endif()
 if(USE_GOOGLE_DRACO_CODEC)
-    include(dependencies/cmake/google-draco.cmake)
+    include(cmake/dependencies/google-draco.cmake)
 endif()
 
 # ---- Declare library ----
 
-file(GLOB PCSTREAM_SHARED_SOURCE
-     ${PROJECT_SOURCE_DIR}/source/*
-     )
+file(GLOB PCSTREAM_SHARED_SOURCE ${PROJECT_SOURCE_DIR}/source/*)
 
 add_library(pcstream_pcstream ${PCSTREAM_SHARED_SOURCE})
 add_library(pcstream::pcstream ALIAS pcstream_pcstream)
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(GPAC REQUIRED IMPORTED_TARGET gpac)
-pkg_check_modules(LIBCURL REQUIRED IMPORTED_TARGET libcurl)
+pkg_check_modules(gpac REQUIRED IMPORTED_TARGET gpac)
+pkg_check_modules(curl REQUIRED IMPORTED_TARGET libcurl)
 
-find_library(MATH_LIB m REQUIRED)
+target_link_libraries(
+    pcstream_pcstream PRIVATE
+    PkgConfig::gpac
+    PkgConfig::curl
+    m
+)
 
 if(USE_MPEG_VPCC_CODEC)
     target_compile_definitions(pcstream_pcstream PRIVATE USE_MPEG_VPCC_CODEC)
-    target_link_libraries(pcstream_pcstream
-        PRIVATE
+    target_link_libraries(
+        pcstream_pcstream PRIVATE
         PccLibDecoder
         PccLibCommon
         tbb_static
         PccLibBitstreamCommon
         PccLibBitstreamReader
-        )
+    )
 endif()
 if(USE_GOOGLE_DRACO_CODEC)
+    target_compile_definitions(pcstream_pcstream PRIVATE USE_GOOGLE_DRACO_CODEC)
+    target_include_directories(pcstream_pcstream PRIVATE
+        ${draco_SOURCE_DIR}/src
+        ${CMAKE_BINARY_DIR}
+    )
+    target_link_libraries(
+        pcstream_pcstream PRIVATE
+        draco::draco
+    )
 endif()
 
-target_link_libraries(pcstream_pcstream PRIVATE PkgConfig::GPAC PkgConfig::LIBCURL ${MATH_LIB})
 
 include(GenerateExportHeader)
 generate_export_header(

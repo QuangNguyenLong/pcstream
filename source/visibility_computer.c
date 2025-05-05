@@ -2,7 +2,7 @@
 
 PCSTREAM_RET
 pcs_visibility_computer_init(pcs_visibility_computer_t *self,
-                             int type)
+                             int                        type)
 {
   switch (type)
   {
@@ -31,8 +31,8 @@ pcs_visibility_computer_destroy(pcs_visibility_computer_t *self)
 }
 PCSTREAM_RET
 pcs_visibility_computer_post_hull(pcs_visibility_computer_t *self,
-                                  const float *MVP,
-                                  pcs_mesh_t   hull)
+                                  const float               *MVP,
+                                  pcs_mesh_t                 hull)
 {
   hull.screen_ratio(&hull, MVP, &self->ratio);
   if (self->ratio < 0 || self->ratio > 1.0f)
@@ -44,7 +44,7 @@ pcs_visibility_computer_post_hull(pcs_visibility_computer_t *self,
 }
 PCSTREAM_RET
 pcs_visibility_computer_get_hull(pcs_visibility_computer_t *self,
-                                 PCSTREAM_RATIO *ratio)
+                                 PCSTREAM_RATIO            *ratio)
 {
   if (self->ratio < 0)
     return PCSTREAM_RET_FAIL;

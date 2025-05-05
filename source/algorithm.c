@@ -39,7 +39,7 @@ struct _node_t
   void (*set)(_node_t *, _pair_float_t, int, int);
   void (*update_dominance)(_node_t *, float, float);
 };
-static void _node_set(_node_t *self,
+static void _node_set(_node_t      *self,
                       _pair_float_t cost_val,
                       int           version,
                       int           num_dl)
@@ -166,7 +166,7 @@ static _path_t _path_assign(_path_t *self, _path_t other)
   return *self;
 }
 
-static PCSTREAM_RET _path_init(_path_t *self,
+static PCSTREAM_RET _path_init(_path_t       *self,
                                float          cost,
                                float          value,
                                PCSTREAM_COUNT n_mod)
@@ -248,14 +248,14 @@ _graph_pulse(_graph_t *self, int i, int j, _path_t v, _path_t *v_s)
 }
 
 static PCSTREAM_RET _graph_init(_graph_t *self,
-                                void  *cv_buff,
-                                size_t cv_size,
-                                int    n_ver,
-                                int    n_mod,
-                                float  Rc,
-                                float  Q_,
-                                int    number_labels,
-                                float *weights)
+                                void     *cv_buff,
+                                size_t    cv_size,
+                                int       n_ver,
+                                int       n_mod,
+                                float     Rc,
+                                float     Q_,
+                                int       number_labels,
+                                float    *weights)
 {
   float          c                       = 0;
   float          v                       = 0;

@@ -20,7 +20,9 @@ extern "C"
   PCSTREAM_RET pcs_gof_init(pcs_gof_t *self);
   PCSTREAM_RET pcs_gof_destroy(pcs_gof_t *self);
   PCSTREAM_RET
-  pcs_gof_copy(pcs_gof_t *self, void *src, PCSTREAM_VIDEO_DECODER decoder);
+  pcs_gof_copy(pcs_gof_t             *self,
+               void                  *src,
+               PCSTREAM_VIDEO_DECODER decoder);
 
 #ifdef __cplusplus
 }

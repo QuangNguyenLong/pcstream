@@ -35,8 +35,8 @@ PCSTREAM_RET pcs_bw_estimator_destroy(pcs_bw_estimator_t *self)
 
 PCSTREAM_RET
 pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
-                               PCSTREAM_BW *R,
-                               size_t       M)
+                               PCSTREAM_BW        *R,
+                               size_t              M)
 {
   float  sum         = 0.0f;
   size_t count_valid = 0;
@@ -59,7 +59,7 @@ pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
 }
 
 PCSTREAM_RET pcs_bw_estimator_get_harmonic(pcs_bw_estimator_t *self,
-                                           PCSTREAM_BW *Ra)
+                                           PCSTREAM_BW        *Ra)
 {
   if (self->Ra == PCSTREAM_BW_DEFAULT)
     return PCSTREAM_RET_FAIL;

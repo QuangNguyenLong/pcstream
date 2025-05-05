@@ -53,11 +53,11 @@ pcs_viewport_estimator_destroy(pcs_viewport_estimator_t *self)
 
 PCSTREAM_RET
 pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *self,
-                                     pcs_vec3f_t Pc,
-                                     pcs_vec3f_t Po,
-                                     pcs_vec3f_t Vc,
-                                     pcs_vec3f_t Vo,
-                                     long long   dtec)
+                                     pcs_vec3f_t               Pc,
+                                     pcs_vec3f_t               Po,
+                                     pcs_vec3f_t               Vc,
+                                     pcs_vec3f_t               Vo,
+                                     long long                 dtec)
 {
   pcs_vec3f_t Pe     = {0};
   pcs_vec3f_t pvel   = {0};

@@ -97,7 +97,7 @@ static char *merge_url_path(const char *base, const char *path)
 }
 
 PCSTREAM_RET pcs_request_handler_init(pcs_request_handler_t *self,
-                                      int type)
+                                      int                    type)
 {
   self->seq_count     = 0;
   self->seg_count     = 0;
@@ -195,10 +195,10 @@ PCSTREAM_RET pcs_request_handler_destroy(pcs_request_handler_t *self)
 
 PCSTREAM_RET
 pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
-                                 const char *bin_mpd_url,
-                                 const char *info_mpd_url,
-                                 const char *hull_mpd_url,
-                                 const char *base_url)
+                                 const char            *bin_mpd_url,
+                                 const char            *info_mpd_url,
+                                 const char            *hull_mpd_url,
+                                 const char            *base_url)
 {
   GF_XMLNode                  *bin_xml_root  = PCSTREAM_NULL;
   GF_XMLNode                  *info_xml_root = PCSTREAM_NULL;
@@ -413,7 +413,7 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
 
 PCSTREAM_RET
 pcs_request_handler_post_segment_h2(pcs_request_handler_t *self,
-                                    PCSTREAM_LOD_VERSION *selection)
+                                    PCSTREAM_LOD_VERSION  *selection)
 {
   GF_MPD                *mpd_ptr    = PCSTREAM_NULL;
   GF_MPD_Period         *period_ptr = PCSTREAM_NULL;
@@ -460,8 +460,8 @@ pcs_request_handler_post_segment_h2(pcs_request_handler_t *self,
 }
 PCSTREAM_RET
 pcs_request_handler_get_init_h2(pcs_request_handler_t *self,
-                                pcs_buffer_t  **info_list_ptr,
-                                pcs_buffer_t ***hull_list_ptr)
+                                pcs_buffer_t         **info_list_ptr,
+                                pcs_buffer_t        ***hull_list_ptr)
 {
   if (self->info_list == PCSTREAM_NULL ||
       self->hull_list == PCSTREAM_NULL)

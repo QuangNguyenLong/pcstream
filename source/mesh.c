@@ -58,7 +58,7 @@ PCSTREAM_RET pcs_mesh_destroy(pcs_mesh_t *self)
 }
 
 PCSTREAM_RET
-pcs_mesh_read_from_buff_serial(pcs_mesh_t *self,
+pcs_mesh_read_from_buff_serial(pcs_mesh_t    *self,
                                const char    *data,
                                PCSTREAM_COUNT size)
 {
@@ -146,7 +146,7 @@ static inline PCSTREAM_COUNT pcs_mesh_serial_size(const pcs_mesh_t *m)
          m->num_indices * sizeof(uint32_t);  /* indices    */
 }
 PCSTREAM_RET
-pcs_mesh_write_to_buff_serial(pcs_mesh_t *self,
+pcs_mesh_write_to_buff_serial(pcs_mesh_t     *self,
                               char          **data_out,
                               PCSTREAM_COUNT *size_out)
 {
@@ -206,7 +206,7 @@ PCSTREAM_RET pcs_mesh_read_from_file_ply(pcs_mesh_t *self,
     return PCSTREAM_RET_FAIL;
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET pcs_mesh_write_to_file_ply(pcs_mesh_t *self,
+PCSTREAM_RET pcs_mesh_write_to_file_ply(pcs_mesh_t   *self,
                                         const char   *filepath,
                                         PCSTREAM_BOOL binary)
 {
@@ -354,7 +354,7 @@ _clipped_triangle_area(pcs_vec2f_t p1, pcs_vec2f_t p2, pcs_vec2f_t p3)
   return _polygon_area(polygon, polygon_size);
 }
 
-PCSTREAM_RET pcs_mesh_screen_ratio(pcs_mesh_t *self,
+PCSTREAM_RET pcs_mesh_screen_ratio(pcs_mesh_t  *self,
                                    const float *mvp,
                                    float       *screen_ratio)
 {

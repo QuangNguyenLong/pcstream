@@ -45,24 +45,24 @@ struct pcs_request_handler_t
 };
 
 PCSTREAM_RET pcs_request_handler_init(pcs_request_handler_t *self,
-                                      int type);
+                                      int                    type);
 PCSTREAM_RET pcs_request_handler_destroy(pcs_request_handler_t *self);
 
 PCSTREAM_RET
 pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
-                                 const char *bin_mpd_url,
-                                 const char *info_mpd_url,
-                                 const char *hull_mpd_url,
-                                 const char *base_url);
+                                 const char            *bin_mpd_url,
+                                 const char            *info_mpd_url,
+                                 const char            *hull_mpd_url,
+                                 const char            *base_url);
 
 PCSTREAM_RET
 pcs_request_handler_post_segment_h2(pcs_request_handler_t *self,
-                                    PCSTREAM_LOD_VERSION *selection);
+                                    PCSTREAM_LOD_VERSION  *selection);
 
 PCSTREAM_RET
 pcs_request_handler_get_init_h2(pcs_request_handler_t *self,
-                                pcs_buffer_t  **info_list_ptr,
-                                pcs_buffer_t ***hull_list_ptr);
+                                pcs_buffer_t         **info_list_ptr,
+                                pcs_buffer_t        ***hull_list_ptr);
 PCSTREAM_RET
 pcs_request_handler_get_segment_h2(pcs_request_handler_t *self,
                                    pcs_buffer_t **curr_content_ptr);

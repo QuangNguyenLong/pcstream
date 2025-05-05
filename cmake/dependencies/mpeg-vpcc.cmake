@@ -8,9 +8,9 @@ find_package(Git REQUIRED)  # ensure GIT_EXECUTABLE is available
 FetchContent_Declare(
   tmc2
   GIT_REPOSITORY https://github.com/MPEGGroup/mpeg-pcc-tmc2.git
-  GIT_TAG release-v25.0
-  PATCH_COMMAND ${GIT_EXECUTABLE} apply ${CMAKE_SOURCE_DIR}/dependencies/mpeg-vpcc/patches/tmc2-install.patch
-  && ${CMAKE_COMMAND} -E env bash ${CMAKE_SOURCE_DIR}/dependencies/mpeg-vpcc/patches/replace.sh <SOURCE_DIR>
+  GIT_TAG        release-v25.0
+  PATCH_COMMAND  ${GIT_EXECUTABLE} apply ${CMAKE_SOURCE_DIR}/patches/tmc2-install.patch
+  &&             ${CMAKE_COMMAND} -E env bash ${CMAKE_SOURCE_DIR}/scripts/replace.sh <SOURCE_DIR>
   )
 
 FetchContent_MakeAvailable(tmc2)
