@@ -49,11 +49,13 @@ PCSTREAM_RET
 pcs_lod_selector_destroy(pcs_lod_selector_t *self)
 {
   if (self->v != PCSTREAM_NULL)
+  {
     free(self->v);
-
+  }
   self->v    = PCSTREAM_NULL;
   self->post = PCSTREAM_NULL;
   self->get  = PCSTREAM_NULL;
+  return PCSTREAM_RET_SUCCESS;
 }
 
 PCSTREAM_RET
@@ -63,7 +65,7 @@ pcs_lod_selector_post_dp_based(pcs_lod_selector_t  *self,
                                void                *metadata,
                                size_t               metadata_size,
                                void                *attrib,
-                               PCSTREAM_BW          bw)
+                               PCSTREAM_BW          bandwidth)
 {
   PCSTREAM_RET ret = 0;
 
@@ -78,7 +80,7 @@ pcs_lod_selector_post_dp_based(pcs_lod_selector_t  *self,
                               metadata,
                               metadata_size,
                               (PCSTREAM_RATIO *)attrib,
-                              bw,
+                              bandwidth,
                               self->v);
   return ret;
 }
@@ -88,8 +90,9 @@ pcs_lod_selector_get_dp_based(pcs_lod_selector_t    *self,
                               PCSTREAM_LOD_VERSION **selections_ptr)
 {
   if (self->v == PCSTREAM_NULL)
+  {
     return PCSTREAM_RET_FAIL;
-
+  }
   *selections_ptr = self->v;
   return PCSTREAM_RET_SUCCESS;
 }
@@ -101,7 +104,7 @@ pcs_lod_selector_post_lm_based(pcs_lod_selector_t  *self,
                                void                *metadata,
                                size_t               metadata_size,
                                void                *attrib,
-                               PCSTREAM_BW          bw)
+                               PCSTREAM_BW          bandwidth)
 {
   return PCSTREAM_RET_FAIL;
 }
@@ -112,7 +115,7 @@ pcs_lod_selector_post_equal(pcs_lod_selector_t  *self,
                             void                *metadata,
                             size_t               metadata_size,
                             void                *attrib,
-                            PCSTREAM_BW          bw)
+                            PCSTREAM_BW          bandwidth)
 {
   return PCSTREAM_RET_FAIL;
 }
@@ -123,7 +126,7 @@ pcs_lod_selector_post_hybrid(pcs_lod_selector_t  *self,
                              void                *metadata,
                              size_t               metadata_size,
                              void                *attrib,
-                             PCSTREAM_BW          bw)
+                             PCSTREAM_BW          bandwidth)
 {
   return PCSTREAM_RET_FAIL;
 }

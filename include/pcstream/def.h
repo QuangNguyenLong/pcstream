@@ -1,6 +1,7 @@
 #ifndef PCSTREAM_CORE_H
 #define PCSTREAM_CORE_H
 
+#include "pcstream/pcstream_export.h"
 #include <stddef.h>
 #include <stdint.h>
 
@@ -11,7 +12,7 @@ typedef uint64_t PCSTREAM_COUNT;
 typedef uint8_t  PCSTREAM_LOD_VERSION;
 typedef uint8_t  PCSTREAM_BOOL;
 
-#define PCSTREAM_UNINITIALIZED -1
+#define PCSTREAM_UNINITIALIZED (-1)
 #define PCSTREAM_TRUE          (1)
 #define PCSTREAM_FALSE         (0)
 #define PCSTREAM_MAX_BUFF      0xffff
@@ -27,8 +28,8 @@ typedef uint8_t  PCSTREAM_BOOL;
 #define PCSTREAM_RET_FAIL    0x00
 #define PCSTREAM_RET_SUCCESS 0x01
 
-#define PCSTREAM_FLOAT_ERROR 1e-6f
-
+#define PCSTREAM_FLOAT_ERROR (1e-6F)
+#define PCSTREAM_FLOAT_HALF  (0.5F)
 typedef enum
 {
   PCSTREAM_BW_ESTIMATOR_HARMONIC = 1

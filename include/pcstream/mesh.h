@@ -26,8 +26,8 @@ struct pcs_mesh_t
   (pcs_mesh_t *, const float *, float *);
 };
 
-PCSTREAM_RET pcs_mesh_init(pcs_mesh_t *self);
-PCSTREAM_RET pcs_mesh_destroy(pcs_mesh_t *self);
+PCSTREAM_EXPORT PCSTREAM_RET pcs_mesh_init(pcs_mesh_t *self);
+PCSTREAM_EXPORT PCSTREAM_RET pcs_mesh_destroy(pcs_mesh_t *self);
 
 PCSTREAM_RET
 pcs_mesh_read_from_buff_serial(pcs_mesh_t    *self,

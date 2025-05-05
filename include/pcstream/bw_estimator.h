@@ -48,7 +48,7 @@ struct pcs_bw_estimator_t
    * @details This field stores the estimated bandwidth in bytes per
    * second.
    */
-  PCSTREAM_BW Ra; // (Bytes/s)
+  PCSTREAM_BW dls_es; // (Bytes/s)
 
   /**
    * @brief Method to estimate current network bandwidth.
@@ -84,8 +84,8 @@ struct pcs_bw_estimator_t
  * @param type Type of bandwidth estimator to use.
  * @return `PCSTREAM_RET_SUCCESS` on successful initialization.
  */
-PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *self,
-                                   int                 type);
+PCSTREAM_EXPORT PCSTREAM_RET
+pcs_bw_estimator_init(pcs_bw_estimator_t *self, int type);
 
 /**
  * @brief Destroyer of `pcs_bw_estimator_t`.
@@ -95,7 +95,8 @@ PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *self,
  * @param self Pointer to the `pcs_bw_estimator_t` instance.
  * @return `PCSTREAM_RET_SUCCESS` on successful destruction.
  */
-PCSTREAM_RET pcs_bw_estimator_destroy(pcs_bw_estimator_t *self);
+PCSTREAM_EXPORT PCSTREAM_RET
+             pcs_bw_estimator_destroy(pcs_bw_estimator_t *self);
 
 /**
  * @brief Estimate network bandwidth using harmonic
@@ -105,14 +106,14 @@ PCSTREAM_RET pcs_bw_estimator_destroy(pcs_bw_estimator_t *self);
  * estimator.
  *
  * @param self Pointer to the pcs_bw_estimator_t instance.
- * @param R Array of recorded download speeds.
- * @param M The number of recorded download speeds.
+ * @param dls_arr Array of recorded download speeds.
+ * @param dls_count The number of recorded download speeds.
  * @return PCSTREAM_RET_SUCCESS on successful processing,
  *         PCSTREAM_RET_FAIL on failure.
  */
 PCSTREAM_RET pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
-                                            PCSTREAM_BW        *R,
-                                            size_t              M);
+                                            PCSTREAM_BW *dls_arr,
+                                            size_t       dls_count);
 
 /**
  * @brief Get the estimateid bandwidth using the harmonic mean.
@@ -125,6 +126,6 @@ PCSTREAM_RET pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
  *         PCSTREAM_RET_FAIL if fail.
  */
 PCSTREAM_RET pcs_bw_estimator_get_harmonic(pcs_bw_estimator_t *self,
-                                           PCSTREAM_BW        *Ra);
+                                           PCSTREAM_BW *dls_es);
 
 #endif // PCSTREAM_BW_ESTIMATOR_H

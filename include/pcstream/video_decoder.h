@@ -18,9 +18,10 @@ extern "C"
     PCSTREAM_RET (*get)(pcs_video_decoder_t *, pcs_gof_t *);
   };
 
-  PCSTREAM_RET pcs_video_decoder_init(pcs_video_decoder_t *self,
-                                      int                  type);
-  PCSTREAM_RET pcs_video_decoder_destroy(pcs_video_decoder_t *self);
+  PCSTREAM_EXPORT PCSTREAM_RET
+  pcs_video_decoder_init(pcs_video_decoder_t *self, int type);
+  PCSTREAM_EXPORT PCSTREAM_RET
+  pcs_video_decoder_destroy(pcs_video_decoder_t *self);
 
 #if defined(USE_MPEG_VPCC_CODEC)
   PCSTREAM_RET

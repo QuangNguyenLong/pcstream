@@ -8,15 +8,15 @@ typedef struct pcs_viewport_estimator_t pcs_viewport_estimator_t;
 
 struct pcs_viewport_estimator_t
 {
-  long long dt; // time between 2 consecutive frame (ms)
+  long long deltat; // time between 2 consecutive frame (ms)
   float     esMVP[4][4];
 
   PCSTREAM_RET(*post)
   (pcs_viewport_estimator_t *,
-   pcs_vec3f_t, // Pc
-   pcs_vec3f_t, // Po
-   pcs_vec3f_t, // Vc
-   pcs_vec3f_t, // Vo
+   pcs_vec3f_t, // Pcurr
+   pcs_vec3f_t, // Pold
+   pcs_vec3f_t, // Vcurr
+   pcs_vec3f_t, // Vold
    long long    // dtec = te - tc
   );
   PCSTREAM_RET(*get)
@@ -25,18 +25,18 @@ struct pcs_viewport_estimator_t
   );
 };
 
-PCSTREAM_RET pcs_viewport_estimator_init(
-    pcs_viewport_estimator_t *self, long long dt, int type);
+PCSTREAM_EXPORT PCSTREAM_RET pcs_viewport_estimator_init(
+    pcs_viewport_estimator_t *self, long long deltat, int type);
 
-PCSTREAM_RET
+PCSTREAM_EXPORT PCSTREAM_RET
 pcs_viewport_estimator_destroy(pcs_viewport_estimator_t *self);
 
 PCSTREAM_RET
 pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *self,
-                                     pcs_vec3f_t               Pc,
-                                     pcs_vec3f_t               Po,
-                                     pcs_vec3f_t               Vc,
-                                     pcs_vec3f_t               Vo,
+                                     pcs_vec3f_t               Pcurr,
+                                     pcs_vec3f_t               Pold,
+                                     pcs_vec3f_t               Vcurr,
+                                     pcs_vec3f_t               Vold,
                                      long long                 dtec);
 
 PCSTREAM_RET

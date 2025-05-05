@@ -35,7 +35,7 @@ pcs_visibility_computer_post_hull(pcs_visibility_computer_t *self,
                                   pcs_mesh_t                 hull)
 {
   hull.screen_ratio(&hull, MVP, &self->ratio);
-  if (self->ratio < 0 || self->ratio > 1.0f)
+  if (self->ratio < 0 || self->ratio > 1.0F)
   {
     self->ratio = PCSTREAM_RATIO_DEFAULT;
     return PCSTREAM_RET_FAIL;

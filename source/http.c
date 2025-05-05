@@ -17,8 +17,9 @@ write_callback(void *data, size_t size, size_t nmemb, void *userp)
 
   ptr = realloc(buf->data, buf->size + total_size + 1);
   if (ptr == NULL)
+  {
     return 0; // out of memory
-
+  }
   buf->data = ptr;
   memcpy(&(buf->data[buf->size]), data, total_size);
   buf->size += total_size;
@@ -38,7 +39,9 @@ PCSTREAM_RET pcs_http_get_to_buffer(const char           *url,
   curl          = curl_easy_init();
 
   if (!curl)
+  {
     return PCSTREAM_RET_FAIL;
+  }
 
   curl_easy_setopt(curl, CURLOPT_BUFFERSIZE, 102400L);
   curl_easy_setopt(curl, CURLOPT_URL, url);
@@ -71,9 +74,10 @@ PCSTREAM_RET pcs_http_get_to_buffer(const char           *url,
   res = curl_easy_perform(curl);
 
   if (dl_speed != PCSTREAM_NULL)
+  {
     curl_easy_getinfo(
         curl, CURLINFO_SPEED_DOWNLOAD_T, (curl_off_t *)dl_speed);
-
+  }
   curl_easy_cleanup(curl);
 
   if (res != CURLE_OK)

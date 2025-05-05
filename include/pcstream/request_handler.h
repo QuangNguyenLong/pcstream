@@ -44,9 +44,9 @@ struct pcs_request_handler_t
   (pcs_request_handler_t *, PCSTREAM_BW **);
 };
 
-PCSTREAM_RET pcs_request_handler_init(pcs_request_handler_t *self,
-                                      int                    type);
-PCSTREAM_RET
+PCSTREAM_EXPORT PCSTREAM_RET
+pcs_request_handler_init(pcs_request_handler_t *self, int type);
+PCSTREAM_EXPORT PCSTREAM_RET
 pcs_request_handler_destroy(pcs_request_handler_t *self);
 
 PCSTREAM_RET

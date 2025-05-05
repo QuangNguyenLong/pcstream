@@ -7,6 +7,9 @@
 #include <pcstream/visibility_computer.h>
 #include <stdio.h>
 
+#define PCS_DTEC 1000
+#define PCS_DT   33
+
 // argv[1] = "https://127.0.0.1:8080/manifest.mpd"
 // argv[2] = "https://127.0.0.1:8080/manifest-info.mpd"
 // argv[3] = "https://127.0.0.1:8080/manifest-hull.mpd"
@@ -14,23 +17,27 @@
 
 int main(int argc, char **argv)
 {
+  if (argc < 4)
+  {
+    return -1;
+  }
   pcs_buffer_t  *info_list_ptr    = PCSTREAM_NULL;
   pcs_buffer_t **hull_list_ptr    = PCSTREAM_NULL;
   pcs_buffer_t  *curr_content_ptr = PCSTREAM_NULL;
   PCSTREAM_BW   *dl_speeds_ptr    = PCSTREAM_NULL;
   float         *esMVP_ptr        = PCSTREAM_NULL;
   long long      dtec             = 0;
-  long long      dt               = 0;
-  PCSTREAM_BW    Ra               = 0;
+  long long      deltat           = 0;
+  PCSTREAM_BW    dl_es            = 0;
 
-  dtec = 1000; // 1000ms per each estimation, this should be replaced
-               // be the segment duration
-  dt = 33; // 33ms per frame interval, this should be replaced by 1 /
-           // fps
+  dtec   = PCS_DTEC; // 1000ms per each estimation, this should be
+                   // replaced be the segment duration
+  deltat = PCS_DT; // 33ms per frame interval, this should be
+                   // replaced by 1 / fps
 
   // stuff needs to be free
   PCSTREAM_LOD_VERSION     *selects     = PCSTREAM_NULL;
-  pcs_request_handler_t     hd          = {0};
+  pcs_request_handler_t     hand        = {0};
   pcs_bw_estimator_t        bwes        = {0};
   pcs_viewport_estimator_t  vpes        = {0};
   pcs_visibility_computer_t vscp        = {0};
@@ -38,44 +45,47 @@ int main(int argc, char **argv)
   pcs_video_decoder_t      *vddc        = PCSTREAM_NULL;
   PCSTREAM_RATIO           *screen_area = PCSTREAM_NULL;
 
-  pcs_request_handler_init(&hd, PCSTREAM_REQUEST_HANDLER_H2);
+  pcs_request_handler_init(&hand, PCSTREAM_REQUEST_HANDLER_H2);
   pcs_bw_estimator_init(&bwes, PCSTREAM_BW_ESTIMATOR_HARMONIC);
   pcs_viewport_estimator_init(
-      &vpes, dt, PCSTREAM_VIEWPORT_ESTIMATOR_VELOCITY);
+      &vpes, deltat, PCSTREAM_VIEWPORT_ESTIMATOR_VELOCITY);
   pcs_visibility_computer_init(&vscp,
                                PCSTREAM_VISIBILITY_COMPUTER_HULL);
   pcs_lod_selector_init(&vssl, PCSTREAM_LOD_SELECTOR_DP_BASED);
 
   // session initialization
-  hd.post_init(&hd, argv[1], argv[2], argv[3], argv[4]);
+  hand.post_init(&hand, argv[1], argv[2], argv[3], argv[4]);
 
-  hd.get_init(&hd, &info_list_ptr, &hull_list_ptr);
+  hand.get_init(&hand, &info_list_ptr, &hull_list_ptr);
 
   // first segment
   selects = (PCSTREAM_LOD_VERSION *)malloc(
-      sizeof(PCSTREAM_LOD_VERSION) * hd.seq_count);
-  for (PCSTREAM_COUNT i = 0; i < hd.seq_count; i++)
+      sizeof(PCSTREAM_LOD_VERSION) * hand.seq_count);
+  for (PCSTREAM_COUNT i = 0; i < hand.seq_count; i++)
+  {
     selects[i] = 0;
-
-  hd.post_segment(&hd, selects);
-  hd.get_segment(&hd, &curr_content_ptr);
+  }
+  hand.post_segment(&hand, selects);
+  hand.get_segment(&hand, &curr_content_ptr);
   /*decoder should start working here*/
 
   // loop
-  screen_area =
-      (PCSTREAM_RATIO *)malloc(sizeof(PCSTREAM_RATIO) * hd.seq_count);
-  for (PCSTREAM_COUNT i = 0; i < hd.seq_count; i++)
+  screen_area = (PCSTREAM_RATIO *)malloc(sizeof(PCSTREAM_RATIO) *
+                                         hand.seq_count);
+  for (PCSTREAM_COUNT i = 0; i < hand.seq_count; i++)
+  {
     screen_area[i] = 0;
-
+  }
   vddc = (pcs_video_decoder_t *)malloc(sizeof(pcs_video_decoder_t) *
-                                       hd.seq_count);
-  for (PCSTREAM_COUNT i = 0; i < hd.seq_count; i++)
+                                       hand.seq_count);
+  for (PCSTREAM_COUNT i = 0; i < hand.seq_count; i++)
+  {
     pcs_video_decoder_init(&(vddc[i]), 0);
-
-  while (hd.curr_seg != hd.seg_count)
+  }
+  while (hand.curr_seg != hand.seg_count)
   {
 
-    for (PCSTREAM_COUNT seq = 0; seq < hd.seq_count; seq++)
+    for (PCSTREAM_COUNT seq = 0; seq < hand.seq_count; seq++)
     {
       vddc[seq].post(&(vddc[seq]),
                      curr_content_ptr[seq].data,
@@ -85,49 +95,52 @@ int main(int argc, char **argv)
       // instead?
     }
 
-    pcs_vec3f_t Pc = {0, 0, 0.1f};
-    pcs_vec3f_t Po = {0, 0, 0};
-    pcs_vec3f_t Vc = {1, 1, 1};
-    pcs_vec3f_t Vo = {1, 1, 1};
+    pcs_vec3f_t Pcurr = {0, 0, 0.1F};
+    pcs_vec3f_t Pold  = {0, 0, 0};
+    pcs_vec3f_t Vcurr = {1, 1, 1};
+    pcs_vec3f_t Vold  = {1, 1, 1};
 
-    hd.get_dl_speeds(&hd, &dl_speeds_ptr);
-    bwes.post(&bwes, dl_speeds_ptr, (size_t)hd.seq_count);
-    bwes.get(&bwes, &Ra);
+    hand.get_dl_speeds(&hand, &dl_speeds_ptr);
+    bwes.post(&bwes, dl_speeds_ptr, (size_t)hand.seq_count);
+    bwes.get(&bwes, &dl_es);
 
-    vpes.post(&vpes, Pc, Po, Vc, Vo, dtec);
+    vpes.post(&vpes, Pcurr, Pold, Vcurr, Vold, dtec);
     vpes.get(&vpes, &esMVP_ptr);
 
-    for (PCSTREAM_COUNT seq = 0; seq < hd.seq_count; seq++)
+    for (PCSTREAM_COUNT seq = 0; seq < hand.seq_count; seq++)
     {
-      pcs_mesh_t m = {0};
-      pcs_mesh_init(&m);
+      pcs_mesh_t mesh = {0};
+      pcs_mesh_init(&mesh);
 
-      m.read_from_buff_serial(&m,
-                              hull_list_ptr[seq][hd.curr_seg].data,
-                              hull_list_ptr[seq][hd.curr_seg].size);
-      vscp.post(&vscp, esMVP_ptr, m);
+      mesh.read_from_buff_serial(
+          &mesh,
+          hull_list_ptr[seq][hand.curr_seg].data,
+          hull_list_ptr[seq][hand.curr_seg].size);
+      vscp.post(&vscp, esMVP_ptr, mesh);
       vscp.get(&vscp, &screen_area[seq]);
-      pcs_mesh_destroy(&m);
+      pcs_mesh_destroy(&mesh);
     }
 
     vssl.post(&vssl,
-              hd.seq_count,
-              hd.rep_count,
-              (void *)info_list_ptr[hd.curr_seg].data,
-              info_list_ptr[hd.curr_seg].size,
+              hand.seq_count,
+              hand.rep_count,
+              (void *)info_list_ptr[hand.curr_seg].data,
+              info_list_ptr[hand.curr_seg].size,
               (void *)screen_area,
-              Ra);
+              dl_es);
 
-    hd.post_segment(&hd, selects);
-    hd.get_segment(&hd, &curr_content_ptr);
+    hand.post_segment(&hand, selects);
+    hand.get_segment(&hand, &curr_content_ptr);
   }
   // done, stop session
 
-  for (PCSTREAM_COUNT i = 0; i < hd.seq_count; i++)
+  for (PCSTREAM_COUNT i = 0; i < hand.seq_count; i++)
+  {
     pcs_video_decoder_destroy(&(vddc[i]));
+  }
   free(vddc);
   free(selects);
-  pcs_request_handler_destroy(&hd);
+  pcs_request_handler_destroy(&hand);
   pcs_bw_estimator_destroy(&bwes);
   pcs_viewport_estimator_destroy(&vpes);
   pcs_visibility_computer_destroy(&vscp);

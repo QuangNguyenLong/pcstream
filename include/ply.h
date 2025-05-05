@@ -1,5 +1,5 @@
-#ifndef _PLY_H
-#define _PLY_H
+#ifndef PLY_H_
+#define PLY_H_
 
 #include <stdint.h>
 
@@ -26,4 +26,4 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif
-#endif // _PLY_H
+#endif // PLY_H_

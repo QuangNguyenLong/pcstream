@@ -17,10 +17,9 @@ struct pcs_visibility_computer_t
   PCSTREAM_RET (*get)(pcs_visibility_computer_t *, PCSTREAM_RATIO *);
 };
 
-PCSTREAM_RET
-pcs_visibility_computer_init(pcs_visibility_computer_t *self,
-                             int                        type);
-PCSTREAM_RET
+PCSTREAM_EXPORT PCSTREAM_RET pcs_visibility_computer_init(
+    pcs_visibility_computer_t *self, int type);
+PCSTREAM_EXPORT PCSTREAM_RET
 pcs_visibility_computer_destroy(pcs_visibility_computer_t *self);
 
 PCSTREAM_RET

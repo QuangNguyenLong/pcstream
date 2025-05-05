@@ -15,16 +15,19 @@
   } _pair_##TYPE##_t;
 
 DEFINE_PAIR(float)
-typedef struct _node_t  _node_t;
-typedef struct _path_t  _path_t;
-typedef struct _graph_t _graph_t;
+typedef struct _pcs_node_t  _pcs_node_t;
+typedef struct _pcs_path_t  _pcs_path_t;
+typedef struct _pcs_graph_t _pcs_graph_t;
 
-static PCSTREAM_BOOL    check_dominance(_node_t *v, _path_t *P);
+static PCSTREAM_BOOL        check_dominance(_pcs_node_t *node_v,
+                                            _pcs_path_t *path_P);
+static PCSTREAM_BOOL        check_feasibility(_pcs_node_t *node_v,
+                                              _pcs_path_t *path_P,
+                                              float       *Tval);
 static PCSTREAM_BOOL
-check_feasibility(_node_t *v, _path_t *P, float *T);
-static PCSTREAM_BOOL check_bounds(_node_t *v, _path_t *P, float *C);
+check_bounds(_pcs_node_t *node_v, _pcs_path_t *path_P, float *Cval);
 
-struct _node_t
+struct _pcs_node_t
 {
   int            version;
   float          cost;
@@ -36,13 +39,13 @@ struct _node_t
   int            index_dl;
   int            num_dl;
 
-  void (*set)(_node_t *, _pair_float_t, int, int);
-  void (*update_dominance)(_node_t *, float, float);
+  void (*set)(_pcs_node_t *, _pair_float_t, int, int);
+  void (*update_dominance)(_pcs_node_t *, float, float);
 };
-static void _node_set(_node_t      *self,
-                      _pair_float_t cost_val,
-                      int           version,
-                      int           num_dl)
+static void _pcs_node_set(_pcs_node_t  *self,
+                          _pair_float_t cost_val,
+                          int           version,
+                          int           num_dl)
 {
   self->cost            = cost_val.cost;
   self->value           = cost_val.value;
@@ -57,8 +60,9 @@ static void _node_set(_node_t      *self,
 
   self->index_dl = 0;
 }
-static void
-_node_update_dominance(_node_t *self, float cost, float value)
+static void _pcs_node_update_dominance(_pcs_node_t *self,
+                                       float        cost,
+                                       float        value)
 {
   int   lowc      = 0;
   int   highv     = 0;
@@ -94,7 +98,7 @@ _node_update_dominance(_node_t *self, float cost, float value)
     random = rand() % self->index_dl;
   self->dominance_label[random] = (_pair_float_t){cost, value};
 }
-static PCSTREAM_RET _node_init(_node_t *self)
+static PCSTREAM_RET _pcs_node_init(_pcs_node_t *self)
 {
   self->version          = 0;
   self->cost             = 0;
@@ -104,12 +108,12 @@ static PCSTREAM_RET _node_init(_node_t *self)
   self->index_dl         = 0;
   self->num_dl           = 0;
 
-  self->set              = _node_set;
-  self->update_dominance = _node_update_dominance;
+  self->set              = _pcs_node_set;
+  self->update_dominance = _pcs_node_update_dominance;
 
   return PCSTREAM_RET_SUCCESS;
 }
-static PCSTREAM_RET _node_destroy(_node_t *self)
+static PCSTREAM_RET _pcs_node_destroy(_pcs_node_t *self)
 {
   if (self->dominance_label != PCSTREAM_NULL)
     free(self->dominance_label);
@@ -128,7 +132,7 @@ static PCSTREAM_RET _node_destroy(_node_t *self)
   return PCSTREAM_RET_SUCCESS;
 }
 
-struct _path_t
+struct _pcs_path_t
 {
   float cost;
   float value;
@@ -137,17 +141,19 @@ struct _path_t
   int   index;
   int   n_mod;
 
-  _path_t (*addition_assign)(_path_t *, _node_t);
-  _path_t (*assign)(_path_t *, _path_t);
+  _pcs_path_t (*addition_assign)(_pcs_path_t *, _pcs_node_t);
+  _pcs_path_t (*assign)(_pcs_path_t *, _pcs_path_t);
 };
-static _path_t _path_addition_assign(_path_t *self, _node_t n)
+static _pcs_path_t _pcs_path_addition_assign(_pcs_path_t *self,
+                                             _pcs_node_t  n)
 {
   self->cost += n.cost;
   self->value += n.value;
   self->version_choose[self->index++] = n.version;
   return *self;
 }
-static _path_t _path_assign(_path_t *self, _path_t other)
+static _pcs_path_t _pcs_path_assign(_pcs_path_t *self,
+                                    _pcs_path_t  other)
 {
   self->value = other.value;
   self->cost  = other.cost;
@@ -166,10 +172,10 @@ static _path_t _path_assign(_path_t *self, _path_t other)
   return *self;
 }
 
-static PCSTREAM_RET _path_init(_path_t       *self,
-                               float          cost,
-                               float          value,
-                               PCSTREAM_COUNT n_mod)
+static PCSTREAM_RET _pcs_path_init(_pcs_path_t   *self,
+                                   float          cost,
+                                   float          value,
+                                   PCSTREAM_COUNT n_mod)
 {
   self->cost  = cost;
   self->value = value;
@@ -182,12 +188,12 @@ static PCSTREAM_RET _path_init(_path_t       *self,
   for (int i = 0; i < self->n_mod; i++)
     self->version_choose[i] = -1;
 
-  self->addition_assign = _path_addition_assign;
-  self->assign          = _path_assign;
+  self->addition_assign = _pcs_path_addition_assign;
+  self->assign          = _pcs_path_assign;
 
   return PCSTREAM_RET_SUCCESS;
 }
-static PCSTREAM_RET _path_destroy(_path_t *self)
+static PCSTREAM_RET _pcs_path_destroy(_pcs_path_t *self)
 {
   if (self->version_choose != PCSTREAM_NULL)
     free(self->version_choose);
@@ -202,63 +208,68 @@ static PCSTREAM_RET _path_destroy(_path_t *self)
   return PCSTREAM_RET_SUCCESS;
 }
 
-struct _graph_t
+struct _pcs_graph_t
 {
-  _node_t **matrix;
-  int       n_ver;
-  int       n_mod;
-  float     Rc;
-  float     Q_;
-  void (*pulse)(_graph_t *, int, int, _path_t, _path_t *);
+  _pcs_node_t **matrix;
+  int           n_ver;
+  int           n_mod;
+  float         Rcons;
+  float         Q_val;
+  void (*pulse)(
+      _pcs_graph_t *, int, int, _pcs_path_t, _pcs_path_t *);
 };
-static void
-_graph_pulse(_graph_t *self, int i, int j, _path_t v, _path_t *v_s)
+static void _pcs_graph_pulse(_pcs_graph_t *self,
+                             int           i,
+                             int           j,
+                             _pcs_path_t   node_v,
+                             _pcs_path_t  *v_s)
 {
   int check = 0;
   if (i == -1)
   {
     for (int k = 0; k < self->n_ver; k++)
-      self->pulse(self, i + 1, k, v, v_s);
+      self->pulse(self, i + 1, k, node_v, v_s);
     return;
   }
   check = PCSTREAM_FALSE;
-  if (check_dominance(&self->matrix[i][j], &v) == PCSTREAM_TRUE)
+  if (check_dominance(&self->matrix[i][j], &node_v) == PCSTREAM_TRUE)
     check = PCSTREAM_TRUE;
 
-  if (check_feasibility(&self->matrix[i][j], &v, &self->Rc) ==
-      PCSTREAM_TRUE)
+  if (check_feasibility(&self->matrix[i][j],
+                        &node_v,
+                        &self->Rcons) == PCSTREAM_TRUE)
     check = PCSTREAM_TRUE;
 
-  if (check_bounds(&self->matrix[i][j], &v, &self->Q_) ==
+  if (check_bounds(&self->matrix[i][j], &node_v, &self->Q_val) ==
       PCSTREAM_FALSE)
     check = PCSTREAM_TRUE;
 
   if (check == PCSTREAM_TRUE)
     return;
 
-  v.addition_assign(&v, self->matrix[i][j]);
+  node_v.addition_assign(&node_v, self->matrix[i][j]);
   if (i == self->n_mod - 1)
   {
-    *v_s     = v;
-    self->Q_ = v_s->value;
+    *v_s        = node_v;
+    self->Q_val = v_s->value;
     return;
   }
   for (int k = 0; k < self->n_ver; k++)
-    self->pulse(self, i + 1, k, v, v_s);
+    self->pulse(self, i + 1, k, node_v, v_s);
 }
 
-static PCSTREAM_RET _graph_init(_graph_t *self,
-                                void     *cv_buff,
-                                size_t    cv_size,
-                                int       n_ver,
-                                int       n_mod,
-                                float     Rc,
-                                float     Q_,
-                                int       number_labels,
-                                float    *weights)
+static PCSTREAM_RET _pcs_graph_init(_pcs_graph_t *self,
+                                    void         *cv_buff,
+                                    size_t        cv_size,
+                                    int           n_ver,
+                                    int           n_mod,
+                                    float         Rcons,
+                                    float         Q_val,
+                                    int           number_labels,
+                                    float        *weights)
 {
-  float          c                       = 0;
-  float          v                       = 0;
+  float          node_c                  = 0;
+  float          node_v                  = 0;
   char           line[PCSTREAM_MAX_BUFF] = {0};
   FILE          *data                    = PCSTREAM_NULL;
   _pair_float_t *cost_val                = PCSTREAM_NULL;
@@ -268,9 +279,9 @@ static PCSTREAM_RET _graph_init(_graph_t *self,
   self->matrix                           = PCSTREAM_NULL;
   self->n_ver                            = n_ver;
   self->n_mod                            = n_mod;
-  self->Rc                               = Rc;
-  self->Q_                               = Q_;
-  self->pulse                            = _graph_pulse;
+  self->Rcons                            = Rcons;
+  self->Q_val                            = Q_val;
+  self->pulse                            = _pcs_graph_pulse;
 
   cost_val                               = (_pair_float_t *)malloc(
       sizeof(_pair_float_t) *
@@ -283,22 +294,22 @@ static PCSTREAM_RET _graph_init(_graph_t *self,
 
   for (int t = 0; fgets(line, sizeof(line), data); t++)
   {
-    if (sscanf(line, "%f %f", &c, &v) != 2)
+    if (sscanf(line, "%f %f", &node_c, &node_v) != 2)
       continue;
-    v *= weights[t / n_ver];
+    node_v *= weights[t / n_ver];
 
-    cost_val[t].cost  = c;
-    cost_val[t].value = v;
+    cost_val[t].cost  = node_c;
+    cost_val[t].value = node_v;
   }
 
-  self->matrix = (_node_t **)malloc(sizeof(_node_t *) *
-                                    (unsigned int)self->n_mod);
+  self->matrix = (_pcs_node_t **)malloc(sizeof(_pcs_node_t *) *
+                                        (unsigned int)self->n_mod);
   for (int i = 0; i < self->n_mod; i++)
   {
-    self->matrix[i] = (_node_t *)malloc(sizeof(_node_t) *
-                                        (unsigned int)self->n_ver);
+    self->matrix[i] = (_pcs_node_t *)malloc(
+        sizeof(_pcs_node_t) * (unsigned int)self->n_ver);
     for (int j = 0; j < self->n_ver; j++)
-      _node_init(&(self->matrix[i][j]));
+      _pcs_node_init(&(self->matrix[i][j]));
   }
 
   for (int i = 0; i < self->n_mod; i++)
@@ -339,14 +350,14 @@ static PCSTREAM_RET _graph_init(_graph_t *self,
   fclose(data);
   return PCSTREAM_RET_SUCCESS;
 }
-static PCSTREAM_RET _graph_destroy(_graph_t *self)
+static PCSTREAM_RET _graph_destroy(_pcs_graph_t *self)
 {
   if (self->matrix != PCSTREAM_NULL)
   {
     for (int i = 0; i < self->n_mod; i++)
     {
       for (int j = 0; j < self->n_ver; j++)
-        _node_destroy(&(self->matrix[i][j]));
+        _pcs_node_destroy(&(self->matrix[i][j]));
       free(self->matrix[i]);
     }
     free(self->matrix);
@@ -354,36 +365,45 @@ static PCSTREAM_RET _graph_destroy(_graph_t *self)
   self->matrix = PCSTREAM_NULL;
   self->n_ver  = 0;
   self->n_mod  = 0;
-  self->Rc     = 0;
-  self->Q_     = 0;
+  self->Rcons  = 0;
+  self->Q_val  = 0;
   self->pulse  = PCSTREAM_NULL;
   return PCSTREAM_RET_SUCCESS;
 }
 
-static PCSTREAM_BOOL check_dominance(_node_t *v, _path_t *P)
+static PCSTREAM_BOOL check_dominance(_pcs_node_t *node_v,
+                                     _pcs_path_t *path_P)
 {
-  for (int i = 0; i < v->index_dl; i++)
+  for (int i = 0; i < node_v->index_dl; i++)
   {
-    if (v->dominance_label[i].cost <= P->cost + v->cost &&
-        v->dominance_label[i].value > P->value + v->value)
+    if (node_v->dominance_label[i].cost <=
+            path_P->cost + node_v->cost &&
+        node_v->dominance_label[i].value >
+            path_P->value + node_v->value)
       return PCSTREAM_TRUE;
-    if (v->dominance_label[i].cost < P->cost + v->cost &&
-        v->dominance_label[i].value >= P->value + v->value)
+    if (node_v->dominance_label[i].cost <
+            path_P->cost + node_v->cost &&
+        node_v->dominance_label[i].value >=
+            path_P->value + node_v->value)
       return PCSTREAM_TRUE;
   }
-  v->update_dominance(v, P->cost + v->cost, P->value + v->value);
+  node_v->update_dominance(node_v,
+                           path_P->cost + node_v->cost,
+                           path_P->value + node_v->value);
   return PCSTREAM_FALSE;
 }
-static PCSTREAM_BOOL
-check_feasibility(_node_t *v, _path_t *P, float *T)
+static PCSTREAM_BOOL check_feasibility(_pcs_node_t *node_v,
+                                       _pcs_path_t *path_P,
+                                       float       *Tval)
 {
-  if (P->cost + v->minimum_cost > *T)
+  if (path_P->cost + node_v->minimum_cost > *Tval)
     return PCSTREAM_FALSE;
   return PCSTREAM_TRUE;
 }
-static PCSTREAM_BOOL check_bounds(_node_t *v, _path_t *P, float *C)
+static PCSTREAM_BOOL
+check_bounds(_pcs_node_t *node_v, _pcs_path_t *path_P, float *Cval)
 {
-  if (P->value + v->maximum_value <= *C)
+  if (path_P->value + node_v->maximum_value <= *Cval)
     return PCSTREAM_FALSE;
   return PCSTREAM_TRUE;
 }
@@ -393,30 +413,30 @@ PCSTREAM_RET pcs_dp_based_solution(PCSTREAM_COUNT  n_mod,
                                    void           *metadata,
                                    size_t          metadata_size,
                                    PCSTREAM_RATIO *screen_ratio,
-                                   PCSTREAM_BW     bw,
+                                   PCSTREAM_BW     bandwidth,
                                    PCSTREAM_LOD_VERSION *selection)
 {
-  float    Q_            = 0;
-  _path_t  v             = {0};
-  _path_t  v_s           = {0};
-  _graph_t G             = {0};
-  int      number_labels = 0;
+  float        Q_val         = 0;
+  _pcs_path_t  node_v        = {0};
+  _pcs_path_t  v_s           = {0};
+  _pcs_graph_t G             = {0};
+  int          number_labels = 0;
 
-  number_labels          = PCSTREAM_DP_BASED_NUMBER_LABEL;
+  number_labels              = PCSTREAM_DP_BASED_NUMBER_LABEL;
 
-  _path_init(&v, 0, 0, n_mod);
-  _path_init(&v_s, 0, 0, n_mod);
+  _pcs_path_init(&node_v, 0, 0, n_mod);
+  _pcs_path_init(&v_s, 0, 0, n_mod);
 
-  _graph_init(&G,
-              metadata,
-              metadata_size,
-              (int)n_ver,
-              (int)n_mod,
-              (float)bw,
-              Q_,
-              number_labels,
-              screen_ratio);
-  G.pulse(&G, -1, 0, v, &v_s);
+  _pcs_graph_init(&G,
+                  metadata,
+                  metadata_size,
+                  (int)n_ver,
+                  (int)n_mod,
+                  (float)bandwidth,
+                  Q_val,
+                  number_labels,
+                  screen_ratio);
+  G.pulse(&G, -1, 0, node_v, &v_s);
 
   for (PCSTREAM_COUNT i = 0; i < n_mod; i++)
   {
@@ -428,8 +448,8 @@ PCSTREAM_RET pcs_dp_based_solution(PCSTREAM_COUNT  n_mod,
   }
 
   _graph_destroy(&G);
-  _path_destroy(&v);
-  _path_destroy(&v_s);
+  _pcs_path_destroy(&node_v);
+  _pcs_path_destroy(&v_s);
 
   return PCSTREAM_RET_SUCCESS;
 }

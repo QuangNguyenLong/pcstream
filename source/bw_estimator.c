@@ -4,23 +4,23 @@
 PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *self,
                                    int                 type)
 {
-  *self          = (pcs_bw_estimator_t){0};
-  PCSTREAM_BW Ra = PCSTREAM_BW_DEFAULT;
+  *self              = (pcs_bw_estimator_t){0};
+  PCSTREAM_BW dls_es = PCSTREAM_BW_DEFAULT;
 
   switch (type)
   {
   case PCSTREAM_BW_ESTIMATOR_HARMONIC:
   {
-    self->Ra   = Ra;
-    self->post = pcs_bw_estimator_post_harmonic;
-    self->get  = pcs_bw_estimator_get_harmonic;
+    self->dls_es = dls_es;
+    self->post   = pcs_bw_estimator_post_harmonic;
+    self->get    = pcs_bw_estimator_get_harmonic;
   }
   break;
   default:
   {
-    self->Ra   = Ra;
-    self->post = pcs_bw_estimator_post_harmonic;
-    self->get  = pcs_bw_estimator_get_harmonic;
+    self->dls_es = dls_es;
+    self->post   = pcs_bw_estimator_post_harmonic;
+    self->get    = pcs_bw_estimator_get_harmonic;
   }
   break;
   }
@@ -29,42 +29,45 @@ PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *self,
 
 PCSTREAM_RET pcs_bw_estimator_destroy(pcs_bw_estimator_t *self)
 {
-  *self    = (pcs_bw_estimator_t){0};
-  self->Ra = PCSTREAM_BW_DEFAULT;
+  *self        = (pcs_bw_estimator_t){0};
+  self->dls_es = PCSTREAM_BW_DEFAULT;
   return PCSTREAM_RET_SUCCESS;
 }
 
 PCSTREAM_RET
 pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
-                               PCSTREAM_BW        *R,
-                               size_t              M)
+                               PCSTREAM_BW        *dls_arr,
+                               size_t              dls_count)
 {
-  float  sum         = 0.0f;
+  float  sum         = 0.0F;
   size_t count_valid = 0;
-  self->Ra           = PCSTREAM_BW_DEFAULT;
+  self->dls_es       = PCSTREAM_BW_DEFAULT;
 
-  if (M == 0)
-    return PCSTREAM_RET_FAIL;
-
-  for (size_t i = 0; i < M; i++)
+  if (dls_count == 0)
   {
-    if (R[i] >= 0)
+    return PCSTREAM_RET_FAIL;
+  }
+  for (size_t i = 0; i < dls_count; i++)
+  {
+    if (dls_arr[i] >= 0)
     {
       count_valid++;
-      sum += 1.0f / (float)R[i];
+      sum += 1.0F / (float)dls_arr[i];
     }
   }
-  self->Ra = (PCSTREAM_BW)((float)count_valid / sum);
+  self->dls_es = (PCSTREAM_BW)((float)count_valid / sum);
 
   return PCSTREAM_RET_SUCCESS;
 }
 
 PCSTREAM_RET pcs_bw_estimator_get_harmonic(pcs_bw_estimator_t *self,
-                                           PCSTREAM_BW        *Ra)
+                                           PCSTREAM_BW *dls_es)
 {
-  if (self->Ra == PCSTREAM_BW_DEFAULT)
+  if (self->dls_es == PCSTREAM_BW_DEFAULT)
+  {
     return PCSTREAM_RET_FAIL;
+  }
 
-  *Ra = self->Ra;
+  *dls_es = self->dls_es;
   return PCSTREAM_RET_SUCCESS;
 }

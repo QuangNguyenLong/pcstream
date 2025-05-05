@@ -33,7 +33,7 @@ struct pcs_buffer_t
  * initialized.
  * @return PCSTREAM_RET_SUCCESS on successful initialization.
  */
-PCSTREAM_RET pcs_buffer_init(pcs_buffer_t *self);
+PCSTREAM_EXPORT PCSTREAM_RET pcs_buffer_init(pcs_buffer_t *self);
 
 /**
  * @brief Destroys a pcs_buffer_t instance.
@@ -42,6 +42,6 @@ PCSTREAM_RET pcs_buffer_init(pcs_buffer_t *self);
  * @param self Pointer to the pcs_buffer_t instance to be destroyed.
  * @return PCSTREAM_RET_SUCCESS on successful destruction.
  */
-PCSTREAM_RET pcs_buffer_destroy(pcs_buffer_t *self);
+PCSTREAM_EXPORT PCSTREAM_RET pcs_buffer_destroy(pcs_buffer_t *self);
 
 #endif // PCSTREAM_BUFFER_H

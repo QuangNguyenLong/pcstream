@@ -28,8 +28,8 @@ extern "C"
     (pcs_gof_t *, void *, PCSTREAM_VIDEO_DECODER);
   };
 
-  PCSTREAM_RET pcs_gof_init(pcs_gof_t *self);
-  PCSTREAM_RET pcs_gof_destroy(pcs_gof_t *self);
+  PCSTREAM_EXPORT PCSTREAM_RET pcs_gof_init(pcs_gof_t *self);
+  PCSTREAM_EXPORT PCSTREAM_RET pcs_gof_destroy(pcs_gof_t *self);
   PCSTREAM_RET
   pcs_gof_copy(pcs_gof_t             *self,
                void                  *src,
