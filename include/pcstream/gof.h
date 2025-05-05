@@ -24,7 +24,7 @@ extern "C"
      * the group. */
     pcs_point_cloud_t *frames;
     size_t             size;
-    PCSTREAM_RET (*copy)
+    PCSTREAM_RET(*copy)
     (pcs_gof_t *, void *, PCSTREAM_VIDEO_DECODER);
   };
 
