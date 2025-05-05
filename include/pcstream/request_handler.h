@@ -24,7 +24,7 @@ struct pcs_request_handler_t
 
   pcs_buffer_t        *curr_content; // size = seq_count
 
-  PCSTREAM_BW         *dl_speeds; // in bytes/second, size = seq_count
+  PCSTREAM_BW *dl_speeds; // in bytes/second, size = seq_count
 
   PCSTREAM_RET(*post_init)
   (pcs_request_handler_t *,
@@ -46,7 +46,8 @@ struct pcs_request_handler_t
 
 PCSTREAM_RET pcs_request_handler_init(pcs_request_handler_t *self,
                                       int                    type);
-PCSTREAM_RET pcs_request_handler_destroy(pcs_request_handler_t *self);
+PCSTREAM_RET
+pcs_request_handler_destroy(pcs_request_handler_t *self);
 
 PCSTREAM_RET
 pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
@@ -57,12 +58,12 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
 
 PCSTREAM_RET
 pcs_request_handler_post_segment_h2(pcs_request_handler_t *self,
-                                    PCSTREAM_LOD_VERSION  *selection);
+                                    PCSTREAM_LOD_VERSION *selection);
 
 PCSTREAM_RET
 pcs_request_handler_get_init_h2(pcs_request_handler_t *self,
                                 pcs_buffer_t         **info_list_ptr,
-                                pcs_buffer_t        ***hull_list_ptr);
+                                pcs_buffer_t ***hull_list_ptr);
 PCSTREAM_RET
 pcs_request_handler_get_segment_h2(pcs_request_handler_t *self,
                                    pcs_buffer_t **curr_content_ptr);

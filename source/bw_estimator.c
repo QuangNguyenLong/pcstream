@@ -1,7 +1,8 @@
 #include <pcstream/bw_estimator.h>
 #include <pcstream/def.h>
 
-PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *self, int type)
+PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *self,
+                                   int                 type)
 {
   *self          = (pcs_bw_estimator_t){0};
   PCSTREAM_BW Ra = PCSTREAM_BW_DEFAULT;

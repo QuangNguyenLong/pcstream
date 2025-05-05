@@ -9,8 +9,8 @@ typedef struct pcs_buffer_t pcs_buffer_t;
 /**
  * @struct pcs_buffer_t
  * @brief Structure representing a memory buffer.
- * @details Contains a pointer to the allocated memory and the size of
- * the buffer.
+ * @details Contains a pointer to the allocated memory and the size
+ * of the buffer.
  */
 struct pcs_buffer_t
 {
@@ -29,7 +29,8 @@ struct pcs_buffer_t
  * @brief Initializes a pcs_buffer_t instance.
  * @details Sets the internal fields of the buffer to default values
  * (NULL and 0).
- * @param self Pointer to the pcs_buffer_t instance to be initialized.
+ * @param self Pointer to the pcs_buffer_t instance to be
+ * initialized.
  * @return PCSTREAM_RET_SUCCESS on successful initialization.
  */
 PCSTREAM_RET pcs_buffer_init(pcs_buffer_t *self);

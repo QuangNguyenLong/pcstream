@@ -137,7 +137,8 @@ extern "C"
     return pcs_vec3f_sub(v, pcs_vec3f_mul_scalar(n, 2 * dot));
   }
 
-  static inline pcs_vec3f_t pcs_vec3f_quantize(pcs_vec3f_t v, float q)
+  static inline pcs_vec3f_t pcs_vec3f_quantize(pcs_vec3f_t v,
+                                               float       q)
   {
     return (pcs_vec3f_t){
         quantize(v.x, q), quantize(v.y, q), quantize(v.z, q)};

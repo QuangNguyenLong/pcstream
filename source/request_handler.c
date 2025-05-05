@@ -273,16 +273,16 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
 
   // getting n_seq, n_ver, n_seg ?
 
-  period_ptr    = (GF_MPD_Period *)(gf_list_get(bin_mpd->periods, 0));
+  period_ptr = (GF_MPD_Period *)(gf_list_get(bin_mpd->periods, 0));
 
   n_seq =
       (PCSTREAM_COUNT)(gf_list_count(period_ptr->adaptation_sets));
 
-  seq_ptr = (GF_MPD_AdaptationSet *)(gf_list_get(
+  seq_ptr     = (GF_MPD_AdaptationSet *)(gf_list_get(
       period_ptr->adaptation_sets, 0));
 
-  n_ver =
-      (PCSTREAM_LOD_VERSION)(gf_list_count(seq_ptr->representations));
+  n_ver       = (PCSTREAM_LOD_VERSION)(gf_list_count(
+      seq_ptr->representations));
 
   rep_ptr     = (GF_MPD_Representation *)(gf_list_get(
       seq_ptr->representations, 0));
@@ -348,8 +348,8 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
                                             self->seq_count);
   for (PCSTREAM_COUNT i = 0; i < self->seq_count; i++)
   {
-    self->hull_list[i] = (pcs_buffer_t *)malloc(sizeof(pcs_buffer_t) *
-                                                self->seg_count);
+    self->hull_list[i] = (pcs_buffer_t *)malloc(
+        sizeof(pcs_buffer_t) * self->seg_count);
     for (PCSTREAM_COUNT j = 0; j < self->seg_count; j++)
       pcs_buffer_init(&(self->hull_list[i][j]));
   }
@@ -441,8 +441,8 @@ pcs_request_handler_post_segment_h2(pcs_request_handler_t *self,
     init           = rep_ptr->segment_template->initialization;
 
     template       = seg == 0 ? init : media;
-    bin_path =
-        format_template(template, seq_ptr->id, rep_ptr->id, (int)seg);
+    bin_path       = format_template(
+        template, seq_ptr->id, rep_ptr->id, (int)seg);
     bin_url = merge_url_path(self->base_url, bin_path);
 
     pcs_buffer_destroy(&(self->curr_content[seq]));

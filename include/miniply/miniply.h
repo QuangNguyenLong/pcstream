@@ -16,11 +16,12 @@ included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #ifndef MINIPLY_H
@@ -117,11 +118,12 @@ struct PLYElement
   /// `kInvalidIndex` if it can't be found.
   uint32_t find_property(const char *propName) const;
 
-  /// Return the indices for several properties in one go. Use it like
-  /// this:
+  /// Return the indices for several properties in one go. Use it
+  /// like this:
   /// ```
   /// uint32_t indexes[3];
-  /// if (elem.find_properties(indexes, 3, "foo", "bar", "baz")) { ...
+  /// if (elem.find_properties(indexes, 3, "foo", "bar", "baz")) {
+  /// ...
   /// }
   /// ```
   /// `propIdxs` is where the property indexes will be stored.
@@ -141,28 +143,29 @@ struct PLYElement
                           uint32_t numIdxs,
                           va_list  names) const;
 
-  /// Call this on the element at some point before you load its data,
-  /// when you know that every row's list will have the same length.
-  /// It will replace the single variable-size property with a set of
-  /// new fixed-size properties: one for the list count, followed by
-  /// one for each of the list values. This will allow miniply to load
-  /// and extract the property data a lot more efficiently, giving a
-  /// big performance increase.
+  /// Call this on the element at some point before you load its
+  /// data, when you know that every row's list will have the same
+  /// length. It will replace the single variable-size property with
+  /// a set of new fixed-size properties: one for the list count,
+  /// followed by one for each of the list values. This will allow
+  /// miniply to load and extract the property data a lot more
+  /// efficiently, giving a big performance increase.
   ///
   /// After you've called this, you must use PLYReader's
   /// `extract_columns` method to get the data, rather than
   /// `extract_list_column`.
   ///
   /// The `newPropIdxs` parameter must be an array with at least
-  /// `listSize` entries. If the function returns true, this will have
-  /// been populated with the indices of the new properties that
+  /// `listSize` entries. If the function returns true, this will
+  /// have been populated with the indices of the new properties that
   /// represent the list values (i.e. not including the list count
   /// property, which will have the same index as the old list
   /// property).
   ///
   /// The function returns false if the property index is invalid, or
-  /// the property it refers to is not a list property. In these cases
-  /// it will not modify anything. Otherwise it will return true.
+  /// the property it refers to is not a list property. In these
+  /// cases it will not modify anything. Otherwise it will return
+  /// true.
   bool convert_list_to_fixed_size(uint32_t listPropIdx,
                                   uint32_t listSize,
                                   uint32_t newPropIdxs[]);
@@ -193,8 +196,8 @@ public:
   /// Number of rows in the current element.
   uint32_t          num_rows() const;
 
-  /// Returns the index for the named property in the current element,
-  /// or `kInvalidIndex` if it can't be found.
+  /// Returns the index for the named property in the current
+  /// element, or `kInvalidIndex` if it can't be found.
   uint32_t          find_property(const char *name) const;
 
   /// Equivalent to calling `find_properties` on the current element.
@@ -207,7 +210,8 @@ public:
   /// indexes of the properties to copy; it has `numProps` elements.
   ///
   /// `destType` specifies the data type for values stored in `dest`.
-  /// All property values will be converted to this type if necessary.
+  /// All property values will be converted to this type if
+  /// necessary.
   ///
   /// This function does some checks up front to pick the most
   /// efficient code path for extracting the data. It considers: (a)
@@ -228,8 +232,8 @@ public:
 
   /// The same as `extract_properties`, but does not require rows in
   /// the destination to be contiguous: `destStride` is the number of
-  /// bytes between the start of one row and the start of the next row
-  /// in the destination memory.
+  /// bytes between the start of one row and the start of the next
+  /// row in the destination memory.
   ///
   /// This is useful for when your destination is an array of structs
   /// where you cannot extract all of the properties with a single
@@ -252,9 +256,9 @@ public:
 
   /// Get the sum of all item counts for a list property. This can be
   /// useful to determine how big a destination array you'll need for
-  /// a call to `extract_list_property`. It's equivalent to summing up
-  /// all the values in the array returned by `get_list_counts`, but
-  /// faster.
+  /// a call to `extract_list_property`. It's equivalent to summing
+  /// up all the values in the array returned by `get_list_counts`,
+  /// but faster.
   uint32_t        sum_of_list_counts(uint32_t propIdx) const;
 
   const uint8_t  *get_list_data(uint32_t propIdx) const;
@@ -312,7 +316,7 @@ private:
                                    size_t      &destIndex);
   bool load_binary_list_property(PLYProperty &prop);
   bool load_binary_scalar_property_big_endian(PLYProperty &prop,
-                                              size_t      &destIndex);
+                                              size_t &destIndex);
   bool load_binary_list_property_big_endian(PLYProperty &prop);
 
   bool ascii_value(PLYPropertyType propType, uint8_t value[8]);
@@ -346,8 +350,8 @@ private:
 
 /// Given a polygon with `n` vertices, where `n` > 3, triangulate it
 /// and store the indices for the resulting triangles in `dst`. The
-/// `pos` parameter is the array of all vertex positions for the mesh;
-/// `indices` is the list of `n` indices for the polygon we're
+/// `pos` parameter is the array of all vertex positions for the
+/// mesh; `indices` is the list of `n` indices for the polygon we're
 /// triangulating; and `dst` is where we write the new indices to.
 ///
 /// The triangulation will always produce `n - 2` triangles, so `dst`

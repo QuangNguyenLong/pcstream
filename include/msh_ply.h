@@ -24,13 +24,15 @@
     - MSH_PLY_FREE
 
   You have an option to specify whether you need only
-  encoding/decoding parts of the library. #define MSH_PLY_ENCODER_ONLY
-  - only pull in writing functionality #define MSH_PLY_DECODER_ONLY  -
+  encoding/decoding parts of the library. #define
+  MSH_PLY_ENCODER_ONLY
+  - only pull in writing functionality #define MSH_PLY_DECODER_ONLY -
   only pull in reading functionality
 
   msh_ply_open
   -------------------
-    msh_ply_t* msh_ply_open( const char* filename, const char* mode );
+    msh_ply_t* msh_ply_open( const char* filename, const char* mode
+  );
 
   Creates a new ply file handle and returns pointer to it. 'filename'
   is the path to the ply file and 'mode' describes in what mode file
@@ -96,9 +98,9 @@
     msh_ply_property_t* msh_ply_find_property( const
   msh_ply_element_t* el, const char* property_name );
 
-  Returns a pointer to property if the property of given name has been
-  found in 'pf'. Returns NULL otherwise. Can be called after header
-  has been parsed!
+  Returns a pointer to property if the property of given name has
+  been found in 'pf'. Returns NULL otherwise. Can be called after
+  header has been parsed!
 
   msh_ply_close
   -------------------
@@ -149,11 +151,9 @@
 
   msh_ply_desc_t descriptors[2];
   descriptors[0] = { .element_name = "vertex",
-                     .property_names = (const char*[]){"x", "y", "z"},
-                     .num_properties = 3,
-                     .data_type = MSH_PLY_FLOAT,
-                     .data = &mesh->vertices,
-                     .data_count = &mesh->n_vertices };
+                     .property_names = (const char*[]){"x", "y",
+  "z"}, .num_properties = 3, .data_type = MSH_PLY_FLOAT, .data =
+  &mesh->vertices, .data_count = &mesh->n_vertices };
 
   descriptors[1] = { .element_name = "face",
                      .property_names = (const
@@ -199,9 +199,8 @@
 
   msh_ply_desc_t descriptors[2];
   descriptors[0] = { .element_name = "vertex",
-                     .property_names = (const char*[]){"x", "y", "z"},
-                     .num_properties = 3,
-                     .data_type = MSH_PLY_FLOAT };
+                     .property_names = (const char*[]){"x", "y",
+  "z"}, .num_properties = 3, .data_type = MSH_PLY_FLOAT };
   descriptors[1] = { .element_name = "vertex",
                      .property_names = (const
   char*[]){"vertex_indices"}, .num_properties = 1, .data_type =
@@ -239,10 +238,10 @@
     - string.h
     - stdio.h
     - stdbool.h
-    Note that this file will not pull them in automatically to prevent
-  pulling same files multiple time. If you do not like this behaviour
-  and want this file to pull in c headers, simply define following
-  before including the library:
+    Note that this file will not pull them in automatically to
+  prevent pulling same files multiple time. If you do not like this
+  behaviour and want this file to pull in c headers, simply define
+  following before including the library:
 
     #define MSH_PLY_INCLUDE_LIBC_HEADERS
 
@@ -262,13 +261,11 @@
   (like stdio etc.) -> Read from memory / Pass pointers to fopen? [ ]
   Better ascii support - check Vilya Harvey's miniply [ ] Getting raw
   data for the list property - Add different function. [ ] Check for
-  duplicates in user-provided descriptor set. [ ] Writing optimization
-    [ ] Profile lucy writing
-  [ ] Error reporting
-    [ ] Revise when errors are reported
-    [ ] Just have a switch statement instead of static array
-  [ ] Write C++ support(?)
-  [ ] Add static function definition macro
+  duplicates in user-provided descriptor set. [ ] Writing
+  optimization [ ] Profile lucy writing [ ] Error reporting [ ]
+  Revise when errors are reported [ ] Just have a switch statement
+  instead of static array [ ] Write C++ support(?) [ ] Add static
+  function definition macro
 
   ==============================================================================
   REFERENCES:
@@ -376,10 +373,12 @@ extern "C"
   MSH_PLY_DEF int32_t    msh_ply_add_descriptor(msh_ply_t      *pf,
                                                 msh_ply_desc_t *desc);
   MSH_PLY_DEF int32_t    msh_ply_parse_header(msh_ply_t *pf);
-  MSH_PLY_DEF bool       msh_ply_has_properties(const msh_ply_t      *pf,
-                                                const msh_ply_desc_t *desc);
+  MSH_PLY_DEF bool
+  msh_ply_has_properties(const msh_ply_t      *pf,
+                         const msh_ply_desc_t *desc);
   MSH_PLY_DEF msh_ply_element_t *
-  msh_ply_find_element(const msh_ply_t *pf, const char *element_name);
+  msh_ply_find_element(const msh_ply_t *pf,
+                       const char      *element_name);
   MSH_PLY_DEF msh_ply_property_t *
   msh_ply_find_property(const msh_ply_element_t *el,
                         const char              *property_name);
@@ -431,16 +430,18 @@ extern "C"
                                             size_t      elem_size);
 
 #define msh_ply_array__grow_formula(x) ((2 * (x) + 5))
-#define msh_ply_array__hdr(a) \
-  ((msh_ply_array_hdr_t *)((char *)(a) - sizeof(msh_ply_array_hdr_t)))
+#define msh_ply_array__hdr(a)            \
+  ((msh_ply_array_hdr_t *)((char *)(a) - \
+                           sizeof(msh_ply_array_hdr_t)))
 
 #define msh_ply_array_len(a) \
   ((a) ? (msh_ply_array__hdr((a))->len) : 0)
 #define msh_ply_array_cap(a) \
   ((a) ? (msh_ply_array__hdr((a))->cap) : 0)
 #define msh_ply_array_front(a) ((a) ? (a) : NULL)
-#define msh_ply_array_back(a) \
-  (msh_ply_array_len((a)) ? ((a) + msh_ply_array_len((a)) - 1) : NULL)
+#define msh_ply_array_back(a)                                  \
+  (msh_ply_array_len((a)) ? ((a) + msh_ply_array_len((a)) - 1) \
+                          : NULL)
 
 #define msh_ply_array_free(a) \
   ((a) ? (MSH_PLY_FREE(msh_ply_array__hdr(a)), (a) = NULL) : 0)
@@ -564,7 +565,8 @@ static const char *msh_ply_error_msgs[MSH_PLY_NUM_OF_ERRORS] = {
     "MSH_PLY: Invalid descriptor: Desciptor pointer is NULL.",
     "MSH_PLY: Invalid descriptor: Element name pointer is NULL.",
     "MSH_PLY: Invalid descriptor: Property names pointer is NULL.",
-    "MSH_PLY: Invalid descriptor: One of the property names is NULL.",
+    "MSH_PLY: Invalid descriptor: One of the property names is "
+    "NULL.",
     "MSH_PLY: Invalid descriptor: Number of requested properties is "
     "zero or less "
     "than zero.",
@@ -595,7 +597,8 @@ MSH_PLY_PRIVATE void *msh_ply__array_grow(const void *array,
   size_t old_cap = msh_ply_array_cap(array);
   size_t new_cap = (size_t)msh_ply_array__grow_formula(old_cap);
   new_cap = (size_t)MSH_PLY_MAX(new_cap, MSH_PLY_MAX(new_len, 16));
-  size_t new_size = sizeof(msh_ply_array_hdr_t) + new_cap * elem_size;
+  size_t new_size =
+      sizeof(msh_ply_array_hdr_t) + new_cap * elem_size;
   msh_ply_array_hdr_t *new_hdr;
 
   if (array)
@@ -764,8 +767,8 @@ MSH_PLY_DEF int32_t msh_ply_add_descriptor(msh_ply_t      *pf,
   return MSH_PLY_NO_ERR;
 }
 
-MSH_PLY_PRIVATE MSH_PLY_INLINE void
-msh_ply__swap_bytes(uint8_t *buffer, int32_t type_size, int32_t count)
+MSH_PLY_PRIVATE MSH_PLY_INLINE void msh_ply__swap_bytes(
+    uint8_t *buffer, int32_t type_size, int32_t count)
 {
   for (int32_t i = 0; i < count; ++i)
   {
@@ -956,7 +959,8 @@ MSH_PLY_PRIVATE MSH_PLY_INLINE void msh_ply__string_to_property_type(
     *pr_type = MSH_PLY_INT16;
     *pr_size = 2;
   }
-  else if (!strcmp("uint16", type_str) || !strcmp("ushort", type_str))
+  else if (!strcmp("uint16", type_str) ||
+           !strcmp("ushort", type_str))
   {
     *pr_type = MSH_PLY_UINT16;
     *pr_size = 2;
@@ -971,7 +975,8 @@ MSH_PLY_PRIVATE MSH_PLY_INLINE void msh_ply__string_to_property_type(
     *pr_type = MSH_PLY_UINT32;
     *pr_size = 4;
   }
-  else if (!strcmp("float32", type_str) || !strcmp("float", type_str))
+  else if (!strcmp("float32", type_str) ||
+           !strcmp("float", type_str))
   {
     *pr_type = MSH_PLY_FLOAT;
     *pr_size = 4;
@@ -1392,7 +1397,8 @@ msh_ply__can_precalculate_sizes(msh_ply_element_t *el)
   return can_precalculate;
 }
 
-MSH_PLY_PRIVATE int32_t msh_ply__synchronize_list_sizes(msh_ply_t *pf)
+MSH_PLY_PRIVATE int32_t
+msh_ply__synchronize_list_sizes(msh_ply_t *pf)
 {
   int32_t error_code = MSH_PLY_NO_ERR;
   for (size_t k = 0; k < msh_ply_array_len(pf->descriptors); ++k)
@@ -1621,8 +1627,9 @@ msh_ply__ascii_to_value(char **dst, char *src, const int32_t type)
 MSH_PLY_PRIVATE int32_t msh_ply__get_element_data_ascii(
     msh_ply_t *pf, const msh_ply_element_t *el, void **storage)
 {
-  int32_t err_code       = MSH_PLY_NO_ERR;
-  int32_t num_properties = (int32_t)msh_ply_array_len(el->properties);
+  int32_t err_code = MSH_PLY_NO_ERR;
+  int32_t num_properties =
+      (int32_t)msh_ply_array_len(el->properties);
 
   fseek(pf->_fp, el->file_anchor, SEEK_SET);
   char *dest = (char *)*storage;
@@ -1723,12 +1730,12 @@ msh_ply__get_element_data(msh_ply_t               *pf,
 
 MSH_PLY_PRIVATE int32_t
 msh_ply__get_properties_byte_size(msh_ply_element_t *el,
-                                  const char       **properties_names,
-                                  int32_t            num_properties,
-                                  msh_ply_type_id_t  type,
-                                  msh_ply_type_id_t  list_type,
-                                  size_t            *data_size,
-                                  size_t            *list_size)
+                                  const char      **properties_names,
+                                  int32_t           num_properties,
+                                  msh_ply_type_id_t type,
+                                  msh_ply_type_id_t list_type,
+                                  size_t           *data_size,
+                                  size_t           *list_size)
 {
   int32_t n_found              = 0;
   size_t  total_data_byte_size = 0;
@@ -2016,11 +2023,12 @@ MSH_PLY_PRIVATE int32_t msh_ply__get_property_from_element(
           }
           else
           {
-            precalc_dst_stride = pr->list_count * requested_byte_size;
+            precalc_dst_stride =
+                pr->list_count * requested_byte_size;
           }
           precalc_dst_list_row_size += requested_list_byte_size;
           precalc_dst_row_size += precalc_dst_stride;
-          pr->offset      = precalc_src_row_size + pr->list_byte_size;
+          pr->offset = precalc_src_row_size + pr->list_byte_size;
           pr->list_offset = precalc_src_row_size;
         }
         precalc_src_row_size +=
@@ -2184,7 +2192,8 @@ MSH_PLY_PRIVATE int32_t msh_ply__get_property_from_element(
           {
             void *dst_ptr = (dst_list + dst_list_offset);
             void *src_ptr = (src + prh->list_offset);
-            msh_ply__data_assign(dst_ptr, src_ptr, prh->list_type, 1);
+            msh_ply__data_assign(
+                dst_ptr, src_ptr, prh->list_type, 1);
             dst_list_offset += requested_list_byte_size;
             if (swap_endianness)
             {
@@ -2207,8 +2216,8 @@ MSH_PLY_PRIVATE int32_t msh_ply__get_property_from_element(
   return MSH_PLY_NO_ERR;
 }
 
-MSH_PLY_DEF int32_t
-msh_ply_get_property_from_element(msh_ply_t *pf, msh_ply_desc_t *desc)
+MSH_PLY_DEF int32_t msh_ply_get_property_from_element(
+    msh_ply_t *pf, msh_ply_desc_t *desc)
 {
   assert(pf);
   assert(desc);
@@ -2368,11 +2377,11 @@ msh_ply__add_property_to_element(msh_ply_t   *pf,
       pr.list_type      = list_type;
       pr.byte_size      = msh_ply__type_to_byte_size(pr.type);
       pr.list_byte_size = msh_ply__type_to_byte_size(pr.list_type);
-      pr.list_count  = (list_type == MSH_PLY_INVALID) ? 1 : size_hint;
-      pr.data        = *data;
-      pr.list_data   = (list_data != NULL) ? *list_data : NULL;
-      pr.offset      = pr.byte_size * i;
-      pr.stride      = pr.byte_size * num_properties;
+      pr.list_count = (list_type == MSH_PLY_INVALID) ? 1 : size_hint;
+      pr.data       = *data;
+      pr.list_data  = (list_data != NULL) ? *list_data : NULL;
+      pr.offset     = pr.byte_size * i;
+      pr.stride     = pr.byte_size * num_properties;
       pr.list_offset = pr.list_byte_size * i;
       pr.list_stride = pr.list_byte_size * num_properties;
       pr.total_byte_size =
@@ -2519,7 +2528,8 @@ MSH_PLY_PRIVATE int32_t msh_ply__write_header(const msh_ply_t *pf)
 
         if (pr->list_type == MSH_PLY_INVALID)
         {
-          fprintf(pf->_fp, "property %s %s\n", pr_type_str, pr->name);
+          fprintf(
+              pf->_fp, "property %s %s\n", pr_type_str, pr->name);
         }
         else
         {
@@ -2539,7 +2549,8 @@ MSH_PLY_PRIVATE int32_t msh_ply__write_header(const msh_ply_t *pf)
   return MSH_PLY_NO_ERR;
 }
 
-MSH_PLY_PRIVATE int32_t msh_ply__write_data_ascii(const msh_ply_t *pf)
+MSH_PLY_PRIVATE int32_t
+msh_ply__write_data_ascii(const msh_ply_t *pf)
 {
   for (size_t i = 0; i < msh_ply_array_len(pf->elements); ++i)
   {
@@ -2954,11 +2965,12 @@ included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ------------------------------------------------------------------------------
 
@@ -2974,19 +2986,19 @@ means.
 
 In jurisdictions that recognize copyright laws, the author or authors
 of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
+software to the public domain. We make this dedication for the
+benefit of the public at large and to the detriment of our heirs and
 successors. We intend this dedication to be an overt act of
 relinquishment in perpetuity of all present and future rights to this
 software under copyright law.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ------------------------------------------------------------------------------
 */

@@ -26,9 +26,9 @@ static PCSTREAM_RET _pcs_mesh_alloc(pcs_mesh_t *m,
   if (m != PCSTREAM_NULL)
     _pcs_mesh_free(m);
 
-  m->pos         = (float *)malloc(sizeof(float) * 3 * num_verts);
-  m->num_verts   = num_verts;
-  m->indices     = (uint32_t *)malloc(sizeof(uint32_t) * num_indices);
+  m->pos       = (float *)malloc(sizeof(float) * 3 * num_verts);
+  m->num_verts = num_verts;
+  m->indices   = (uint32_t *)malloc(sizeof(uint32_t) * num_indices);
   m->num_indices = num_indices;
   return PCSTREAM_RET_SUCCESS;
 }
@@ -138,7 +138,8 @@ pcs_mesh_read_from_buff_serial(pcs_mesh_t    *self,
   return PCSTREAM_RET_SUCCESS;
 }
 
-static inline PCSTREAM_COUNT pcs_mesh_serial_size(const pcs_mesh_t *m)
+static inline PCSTREAM_COUNT
+pcs_mesh_serial_size(const pcs_mesh_t *m)
 {
   return sizeof(uint32_t) +                  /* num verts  */
          3u * m->num_verts * sizeof(float) + /* positions  */
@@ -291,8 +292,10 @@ _intersection(pcs_vec2f_t p1, pcs_vec2f_t p2, int edge)
   return inter;
 }
 
-static int
-_clip_polygon(pcs_vec2f_t *in, int in_len, pcs_vec2f_t *out, int edge)
+static int _clip_polygon(pcs_vec2f_t *in,
+                         int          in_len,
+                         pcs_vec2f_t *out,
+                         int          edge)
 {
   int         out_len     = 0;
   pcs_vec2f_t prev        = {0};
@@ -332,8 +335,9 @@ _clip_polygon(pcs_vec2f_t *in, int in_len, pcs_vec2f_t *out, int edge)
   return out_len;
 }
 
-static float
-_clipped_triangle_area(pcs_vec2f_t p1, pcs_vec2f_t p2, pcs_vec2f_t p3)
+static float _clipped_triangle_area(pcs_vec2f_t p1,
+                                    pcs_vec2f_t p2,
+                                    pcs_vec2f_t p3)
 {
   pcs_vec2f_t polygon[10]  = {0};
   int         polygon_size = 0;
@@ -364,7 +368,8 @@ PCSTREAM_RET pcs_mesh_screen_ratio(pcs_mesh_t  *self,
 
   *screen_ratio         = 0;
   vertices              = (pcs_vec3f_t *)self->pos;
-  ndcs = (pcs_vec3f_t *)malloc(sizeof(pcs_vec3f_t) * self->num_verts);
+  ndcs =
+      (pcs_vec3f_t *)malloc(sizeof(pcs_vec3f_t) * self->num_verts);
   for (uint32_t i = 0; i < self->num_verts; i++)
   {
     ndcs[i] = pcs_vec3f_mvp_mul(vertices[i], mvp);
@@ -375,8 +380,9 @@ PCSTREAM_RET pcs_mesh_screen_ratio(pcs_mesh_t  *self,
     uint32_t idx0 = self->indices[i * 3];
     uint32_t idx1 = self->indices[i * 3 + 1];
     uint32_t idx2 = self->indices[i * 3 + 2];
-    if (ndcs[idx0].z >= 0 && ndcs[idx0].z <= 1 && ndcs[idx1].z >= 0 &&
-        ndcs[idx1].z <= 1 && ndcs[idx2].z >= 0 && ndcs[idx2].z <= 1 &&
+    if (ndcs[idx0].z >= 0 && ndcs[idx0].z <= 1 &&
+        ndcs[idx1].z >= 0 && ndcs[idx1].z <= 1 &&
+        ndcs[idx2].z >= 0 && ndcs[idx2].z <= 1 &&
         _is_toward((pcs_vec2f_t){ndcs[idx0].x, ndcs[idx0].y},
                    (pcs_vec2f_t){ndcs[idx1].x, ndcs[idx1].y},
                    (pcs_vec2f_t){ndcs[idx2].x, ndcs[idx2].y}))
