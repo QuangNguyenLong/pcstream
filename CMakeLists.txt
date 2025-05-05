@@ -24,10 +24,14 @@ endif()
 
 # ---- Declare library ----
 
-file(GLOB PCSTREAM_SHARED_SOURCE ${PROJECT_SOURCE_DIR}/source/*)
+file(GLOB PCSTREAM_SHARED_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/source/*)
 
 add_library(pcstream_pcstream ${PCSTREAM_SHARED_SOURCE})
 add_library(pcstream::pcstream ALIAS pcstream_pcstream)
+
+target_include_directories(pcstream_pcstream PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/source/internal
+)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(gpac REQUIRED IMPORTED_TARGET gpac)
