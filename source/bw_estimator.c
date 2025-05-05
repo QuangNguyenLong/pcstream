@@ -3,6 +3,7 @@
 
 PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *self, int type)
 {
+  *self          = (pcs_bw_estimator_t){0};
   PCSTREAM_BW Ra = PCSTREAM_BW_DEFAULT;
 
   switch (type)
@@ -27,9 +28,8 @@ PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *self, int type)
 
 PCSTREAM_RET pcs_bw_estimator_destroy(pcs_bw_estimator_t *self)
 {
-  self->Ra   = PCSTREAM_BW_DEFAULT;
-  self->post = PCSTREAM_NULL;
-  self->get  = PCSTREAM_NULL;
+  *self    = (pcs_bw_estimator_t){0};
+  self->Ra = PCSTREAM_BW_DEFAULT;
   return PCSTREAM_RET_SUCCESS;
 }
 

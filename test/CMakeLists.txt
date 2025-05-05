@@ -13,11 +13,33 @@ endif()
 
 # ---- Tests ----
 
-add_executable(pcstream_test source/pcstream_test.c)
-target_link_libraries(pcstream_test PRIVATE pcstream::pcstream)
-target_compile_features(pcstream_test PRIVATE c_std_17)
+set(TEST_ASSETS ${CMAKE_SOURCE_DIR}/assets/test)
 
-add_test(NAME pcstream_test COMMAND pcstream_test)
+function(pcstream_add_test NAME ARGS)
+  add_executable("${NAME}" "source/${NAME}.c")
+  target_link_libraries("${NAME}" PRIVATE pcstream::pcstream)
+  target_compile_features("${NAME}" PRIVATE c_std_17)
+  add_test(NAME ${NAME} COMMAND ${NAME} ${ARGS})
+endfunction()
+
+pcstream_add_test(
+    algorithm_test
+    ${TEST_ASSETS}/algorithm/info.init.txt
+    )
+# pcstream_add_test(buffer_test)
+# pcstream_add_test(bw_estimator_test)
+# pcstream_add_test(gof_test)
+# pcstream_add_test(http_test)
+# pcstream_add_test(lod_selector_test)
+# pcstream_add_test(mesh_test)
+# pcstream_add_test(pcstream_test)
+# pcstream_add_test(point_cloud_test)
+# pcstream_add_test(request_handler_test)
+# pcstream_add_test(vec2f_test)
+# pcstream_add_test(vec3f_test)
+# pcstream_add_test(video_decoder_test)
+# pcstream_add_test(viewport_estimator_test)
+# pcstream_add_test(visibility_computer_test)
 
 # ---- End-of-file commands ----
 

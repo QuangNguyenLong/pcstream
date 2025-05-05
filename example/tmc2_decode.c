@@ -3,6 +3,8 @@
 #include <pcstream/video_decoder.h>
 int main(int argc, char **argv)
 {
+    if(argc < 2)
+        return -1;
   pcs_buffer_t        buff = {0};
   pcs_gof_t           rec  = {0};
   pcs_video_decoder_t dc   = {0};
@@ -19,4 +21,5 @@ int main(int argc, char **argv)
 
   pcs_buffer_destroy(&buff);
   pcs_gof_destroy(&rec);
+  return 0;
 }

@@ -10,8 +10,16 @@ extern "C"
 #endif
   typedef struct pcs_gof_t pcs_gof_t;
 
+  /**
+   * @struct pcs_gof_t
+   * @brief Structure represents a group of frames.
+   * @details This structure holds a collection of frames and provides
+   * functions to manage and manipulate them. It includes the frames
+   * themselves (`pcs_point_cloud_t`) and the size of the group.
+   */
   struct pcs_gof_t
   {
+      /** @brief Pointer to the array of frames (pcs_point_cloud_t) in the group. */
     pcs_point_cloud_t *frames;
     size_t             size;
     PCSTREAM_RET (*copy)(pcs_gof_t *, void *, PCSTREAM_VIDEO_DECODER);

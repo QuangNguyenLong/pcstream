@@ -1,5 +1,5 @@
-#ifndef PCSTREAM_MATH_H
-#define PCSTREAM_MATH_H
+#ifndef PCSTREAM_ALGORITHM_H
+#define PCSTREAM_ALGORITHM_H
 
 #include <pcstream/def.h>
 

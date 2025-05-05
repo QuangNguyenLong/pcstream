@@ -16,4 +16,4 @@ ESCAPED_SOURCE_DIR=$(echo "$SOURCE_DIR" | sed 's_/_\\/_g')
 find "$SOURCE_DIR" -type f \( -name "CMakeLists.txt" -or -name "*.cmake" \) \
     -exec sed -i "s/\${CMAKE_SOURCE_DIR}/${ESCAPED_SOURCE_DIR}/g" {} \;
 
-echo "✅ Patched and replaced CMAKE_SOURCE_DIR with $SOURCE_DIR"
+echo "Patched and replaced CMAKE_SOURCE_DIR with $SOURCE_DIR"
