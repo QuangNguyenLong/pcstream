@@ -41,12 +41,18 @@ target_link_libraries(
 )
 
 if(USE_MPEG_VPCC_CODEC)
+    set(_tbb_target "")
+    if(TARGET tbb_static)
+        set(_tbb_target tbb_static)
+    elseif(TARGET tbb)
+        set(_tbb_target tbb)
+    endif()
     target_compile_definitions(pcstream_pcstream PRIVATE USE_MPEG_VPCC_CODEC)
     target_link_libraries(
         pcstream_pcstream PRIVATE
         PccLibDecoder
         PccLibCommon
-        tbb_static
+        ${_tbb_target}
         PccLibBitstreamCommon
         PccLibBitstreamReader
     )
