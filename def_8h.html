@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>pcstream/def.h file | pcstream</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">pcstream</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="dir_fc66559d6087c67822ddd6f54919033e.html">pcstream</a>/</span>def.h <span class="m-thin">file</span>
+        </h1>
+        <p><span></span></p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#enum-members">Enums</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#define-members">Defines</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt id="a984e79dddf28e6269331ce09d511263d">
+              <span class="m-doc-wrap-bumper">enum <a href="#a984e79dddf28e6269331ce09d511263d" class="m-doc-self">PCSTREAM_BW_ESTIMATOR</a> { </span><span class="m-doc-wrap"><a href="#a984e79dddf28e6269331ce09d511263dae10c5e639466864e292eb232d99c70b8" class="m-doc">PCSTREAM_BW_ESTIMATOR_HARMONIC</a> = 1 }</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aa9e3f91c8c47441bf853ece8d33e2722">
+              <span class="m-doc-wrap-bumper">enum <a href="#aa9e3f91c8c47441bf853ece8d33e2722" class="m-doc-self">PCSTREAM_HTTP_VERSION</a> { </span><span class="m-doc-wrap"><a href="#aa9e3f91c8c47441bf853ece8d33e2722a24acdf82a5a9b4b6f8a4474637db3328" class="m-doc">PCSTREAM_HTTP_1_1</a>,
+              <a href="#aa9e3f91c8c47441bf853ece8d33e2722a68b0de0cc94c5567fbc56bfa32dfe243" class="m-doc">PCSTREAM_HTTP_2_0</a>,
+              <a href="#aa9e3f91c8c47441bf853ece8d33e2722afc1fdcf60256e754bd011d5e02fac0a3" class="m-doc">PCSTREAM_HTTP_3_0</a> }</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a617ba679a2830c9d2ac3e64ffb0df11f">
+              <span class="m-doc-wrap-bumper">enum <a href="#a617ba679a2830c9d2ac3e64ffb0df11f" class="m-doc-self">PCSTREAM_LOD_SELECTOR</a> { </span><span class="m-doc-wrap"><a href="#a617ba679a2830c9d2ac3e64ffb0df11fa24c20d23de2c108bdf531fb4353b7b26" class="m-doc">PCSTREAM_LOD_SELECTOR_DP_BASED</a> = 1,
+              <a href="#a617ba679a2830c9d2ac3e64ffb0df11fa37a7b39400b200365f8dc0b24efce161" class="m-doc">PCSTREAM_LOD_SELECTOR_LM_BASED</a>,
+              <a href="#a617ba679a2830c9d2ac3e64ffb0df11fa615e9be9465ef96fa09a78ffacb661f5" class="m-doc">PCSTREAM_LOD_SELECTOR_EQUAL</a>,
+              <a href="#a617ba679a2830c9d2ac3e64ffb0df11fab4e3cbd621c26d7042c08549839b77ef" class="m-doc">PCSTREAM_LOD_SELECTOR_HYBRID</a> }</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ad1ae103b71c7e45f4ff2bab31ba4e7de">
+              <span class="m-doc-wrap-bumper">enum <a href="#ad1ae103b71c7e45f4ff2bab31ba4e7de" class="m-doc-self">PCSTREAM_REQUEST_HANDLER</a> { </span><span class="m-doc-wrap"><a href="#ad1ae103b71c7e45f4ff2bab31ba4e7dea771a21ddbf81a09fccb053b3cdf5f900" class="m-doc">PCSTREAM_REQUEST_HANDLER_H2</a> = 1 }</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a16816e6d359c9a99298c8747a0d8e725">
+              <span class="m-doc-wrap-bumper">enum <a href="#a16816e6d359c9a99298c8747a0d8e725" class="m-doc-self">PCSTREAM_VIEWPORT_ESTIMATOR</a> { </span><span class="m-doc-wrap"><a href="#a16816e6d359c9a99298c8747a0d8e725a650e0e1f652bbd0a4f46be5c60a89ed1" class="m-doc">PCSTREAM_VIEWPORT_ESTIMATOR_VELOCITY</a> = 1 }</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a83bca010b971444364bb60026f354fc7">
+              <span class="m-doc-wrap-bumper">enum <a href="#a83bca010b971444364bb60026f354fc7" class="m-doc-self">PCSTREAM_VISIBILITY</a> { </span><span class="m-doc-wrap"><a href="#a83bca010b971444364bb60026f354fc7ad40d24df157ab68decd03e29e49fc065" class="m-doc">PCSTREAM_VISIBILITY_COMPUTER_HULL</a> = 1 }</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a508fd5aef6dea375e8411ad23d924e89">
+              <span class="m-doc-wrap-bumper">enum <a href="#a508fd5aef6dea375e8411ad23d924e89" class="m-doc-self">PCSTREAM_VIDEO_DECODER</a> { </span><span class="m-doc-wrap"><a href="#a508fd5aef6dea375e8411ad23d924e89a7d94f96423cd6ff6602f7e143f2af22e" class="m-doc">PCSTREAM_VIDEO_DECODER_MPEG_VPCC</a>,
+              <a href="#a508fd5aef6dea375e8411ad23d924e89ae172bb574a68310d73e1cb15df31aa14" class="m-doc">PCSTREAM_VIDEO_DECODER_MPEG_GPCC</a>,
+              <a href="#a508fd5aef6dea375e8411ad23d924e89a1d27d75eecbfafc9ab358d6e5fd9e2c9" class="m-doc">PCSTREAM_VIDEO_DECODER_GOOGLE_DRACO</a>,
+              <a href="#a508fd5aef6dea375e8411ad23d924e89ae236bef979fedfb4ea21e3a804161243" class="m-doc">PCSTREAM_VIDEO_DECODER_PCL</a>,
+              <a href="#a508fd5aef6dea375e8411ad23d924e89a7a3f77d3b9f35841b0728f47a56401dc" class="m-doc">PCSTREAM_VIDEO_DECODER_COUNT</a> }</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt id="ada92d5e1802d5a800155adab1a4eba3c">
+              using <a href="#ada92d5e1802d5a800155adab1a4eba3c" class="m-doc-self">PCSTREAM_RET</a> = uint32_t
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a002995d29c523aa35c7efebecd70208b">
+              using <a href="#a002995d29c523aa35c7efebecd70208b" class="m-doc-self">PCSTREAM_BW</a> = int64_t
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a996efe04a8e0127c323c09e3e57a6cf8">
+              using <a href="#a996efe04a8e0127c323c09e3e57a6cf8" class="m-doc-self">PCSTREAM_RATIO</a> = float
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a6127bb05a6c5f6c6b6eb0feaaa532173">
+              using <a href="#a6127bb05a6c5f6c6b6eb0feaaa532173" class="m-doc-self">PCSTREAM_COUNT</a> = uint64_t
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aca7cde8e9c2689f52c9d7066f0f6f04a">
+              using <a href="#aca7cde8e9c2689f52c9d7066f0f6f04a" class="m-doc-self">PCSTREAM_LOD_VERSION</a> = uint8_t
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab594c7fe6be3f49ad9a67d9a52f5698c">
+              using <a href="#ab594c7fe6be3f49ad9a67d9a52f5698c" class="m-doc-self">PCSTREAM_BOOL</a> = uint8_t
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a2ba73986f07f67947c8afd28719a7bbb">
+              using <a href="#a2ba73986f07f67947c8afd28719a7bbb" class="m-doc-self">pcs_mpeg_vpcc_coord_t</a> = int16_t
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a2067da3aaab7819af65fb0ecf31d37e8">
+              using <a href="#a2067da3aaab7819af65fb0ecf31d37e8" class="m-doc-self">pcs_mpeg_gpcc_coord_t</a> = float
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a5ab102fad112539d9fcc4f867a5dde38">
+              using <a href="#a5ab102fad112539d9fcc4f867a5dde38" class="m-doc-self">pcs_google_draco_coord_t</a> = float
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a0224206d7d876acf937315c31b5f0007">
+              using <a href="#a0224206d7d876acf937315c31b5f0007" class="m-doc-self">pcs_pcl_coord_t</a> = float
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt id="a5dc2db53d1be8a737fc95bcd62bda8e2">
+              <span class="m-doc-wrap-bumper">#define <a href="#a5dc2db53d1be8a737fc95bcd62bda8e2" class="m-doc-self">PCSTREAM_UNINITIALIZED</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="acc240f99b7a726c591c91f92215a7102">
+              <span class="m-doc-wrap-bumper">#define <a href="#acc240f99b7a726c591c91f92215a7102" class="m-doc-self">PCSTREAM_TRUE</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a61406e26a4c5690e3a6498afaa13b792">
+              <span class="m-doc-wrap-bumper">#define <a href="#a61406e26a4c5690e3a6498afaa13b792" class="m-doc-self">PCSTREAM_FALSE</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="acf019b3047dfdf22bdfd598111b4276a">
+              <span class="m-doc-wrap-bumper">#define <a href="#acf019b3047dfdf22bdfd598111b4276a" class="m-doc-self">PCSTREAM_MAX_BUFF</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a9400f9d5efb1eff14a6a76abb2c11ad7">
+              <span class="m-doc-wrap-bumper">#define <a href="#a9400f9d5efb1eff14a6a76abb2c11ad7" class="m-doc-self">PCSTREAM_BW_DEFAULT</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a6ac1b3a95b32b178c671f7c67243a483">
+              <span class="m-doc-wrap-bumper">#define <a href="#a6ac1b3a95b32b178c671f7c67243a483" class="m-doc-self">PCSTREAM_RATIO_DEFAULT</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aa339faab7425c64a0a4cd68e6e9e089d">
+              <span class="m-doc-wrap-bumper">#define <a href="#aa339faab7425c64a0a4cd68e6e9e089d" class="m-doc-self">PCSTREAM_NULL</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ac64b4091eaa690d0f3f2f9304645d907">
+              <span class="m-doc-wrap-bumper">#define <a href="#ac64b4091eaa690d0f3f2f9304645d907" class="m-doc-self">PCSTREAM_RET_FAIL</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab8150e0ed149ab1c10ecc09b937fa01f">
+              <span class="m-doc-wrap-bumper">#define <a href="#ab8150e0ed149ab1c10ecc09b937fa01f" class="m-doc-self">PCSTREAM_RET_SUCCESS</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ae750f942df10a5dfebe8d8b77087d9cf">
+              <span class="m-doc-wrap-bumper">#define <a href="#ae750f942df10a5dfebe8d8b77087d9cf" class="m-doc-self">PCSTREAM_FLOAT_ERROR</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a3f46bde98bf53a0bda411a772fafb309">
+              <span class="m-doc-wrap-bumper">#define <a href="#a3f46bde98bf53a0bda411a772fafb309" class="m-doc-self">PCSTREAM_FLOAT_HALF</a></span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>pcstream. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
