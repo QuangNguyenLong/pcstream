@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 149bbe2..266d503 100755
+index 149bbe2..5992a30 100755
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -5,14 +5,14 @@ SET( TMC2_VERSION_MAJOR 25 )
@@ -52,7 +52,7 @@ index 149bbe2..266d503 100755
    INCLUDE( ${CMAKE_SOURCE_DIR}/dependencies/cmake/hdrtools.cmake )
  ENDIF()
  
-@@ -97,12 +97,48 @@ ADD_SUBDIRECTORY(source/lib/PccLibEncoder)
+@@ -97,12 +97,56 @@ ADD_SUBDIRECTORY(source/lib/PccLibEncoder)
  ADD_SUBDIRECTORY(source/lib/PccLibMetrics)
  ADD_SUBDIRECTORY(source/lib/PccLibConformance)
  
@@ -76,6 +76,14 @@ index 149bbe2..266d503 100755
 +# ADD_SUBDIRECTORY(source/app/PccAppNormalGenerator)
 +
 +include(GNUInstallDirs)
++
++set(_tbb_target)
++if(TARGET tbb_static)
++  set(_tbb_target tbb_static)
++elseif(TARGET tbb)
++  set(_tbb_target tbb)
++endif()
++
 +install(
 +  TARGETS
 +  PccLibVideoDecoder
@@ -99,7 +107,7 @@ index 149bbe2..266d503 100755
 +  # PccLibAvcParser
 +
 +  libmd5
-+  tbb_static
++  ${_tbb_target}
 +
 +  EXPORT TMC2Targets
 +)
