@@ -100,21 +100,18 @@ $(document).ready(function(){initNavTree('structpcs__bw__estimator__t.html','');
  <a href="structpcs__bw__estimator__t.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="bw__estimator_8h_source.html">bw_estimator.h</a>&gt;</code></p>
-<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for pcs_bw_estimator_t:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="structpcs__bw__estimator__t__coll__graph.png" border="0" usemap="#apcs__bw__estimator__t_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:a41863c2831c407b776374d2b6982f184" id="r_a41863c2831c407b776374d2b6982f184"><td class="memItemLeft" align="right" valign="top"><a class="el" href="def_8h.html#a002995d29c523aa35c7efebecd70208b">PCSTREAM_BW</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpcs__bw__estimator__t.html#a41863c2831c407b776374d2b6982f184">dls_es</a></td></tr>
 <tr class="memdesc:a41863c2831c407b776374d2b6982f184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimated bandwidth.  <br /></td></tr>
 <tr class="separator:a41863c2831c407b776374d2b6982f184"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a6129653a203d81d3f3d242003ca4dd" id="r_a1a6129653a203d81d3f3d242003ca4dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structpcs__bw__estimator__t.html">pcs_bw_estimator_t</a> <a class="el" href="def_8h.html#a002995d29c523aa35c7efebecd70208b">PCSTREAM_BW</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpcs__bw__estimator__t.html#a1a6129653a203d81d3f3d242003ca4dd">size_t</a></td></tr>
-<tr class="separator:a1a6129653a203d81d3f3d242003ca4dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6918450b7fa77b1485b219db4bfc90d6" id="r_a6918450b7fa77b1485b219db4bfc90d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="def_8h.html#ada92d5e1802d5a800155adab1a4eba3c">PCSTREAM_RET</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpcs__bw__estimator__t.html#a6918450b7fa77b1485b219db4bfc90d6">post</a> )(<a class="el" href="structpcs__bw__estimator__t.html">pcs_bw_estimator_t</a> *, <a class="el" href="def_8h.html#a002995d29c523aa35c7efebecd70208b">PCSTREAM_BW</a> *, size_t)</td></tr>
+<tr class="memdesc:a6918450b7fa77b1485b219db4bfc90d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to estimate current network bandwidth.  <br /></td></tr>
+<tr class="separator:a6918450b7fa77b1485b219db4bfc90d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71c875e07f7284068692b11d2efaa7ec" id="r_a71c875e07f7284068692b11d2efaa7ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="def_8h.html#ada92d5e1802d5a800155adab1a4eba3c">PCSTREAM_RET</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpcs__bw__estimator__t.html#a71c875e07f7284068692b11d2efaa7ec">get</a> )(<a class="el" href="structpcs__bw__estimator__t.html">pcs_bw_estimator_t</a> *, <a class="el" href="def_8h.html#a002995d29c523aa35c7efebecd70208b">PCSTREAM_BW</a> *)</td></tr>
+<tr class="memdesc:a71c875e07f7284068692b11d2efaa7ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter for the estimated bandwidth <code>Ra</code>.  <br /></td></tr>
+<tr class="separator:a71c875e07f7284068692b11d2efaa7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Structure representing a bandwidth estimator. </p>
@@ -133,9 +130,9 @@ Data Fields</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><a class="code hl_function" href="bw__estimator_8h.html#a255602558592d21fd9e0fe5afe14a7ab">pcs_bw_estimator_init</a>(&amp;bwes, <a class="code hl_enumvalue" href="def_8h.html#a984e79dddf28e6269331ce09d511263dae10c5e639466864e292eb232d99c70b8">PCSTREAM_BW_ESTIMATOR_HARMONIC</a>);</div>
 <div class="line"> </div>
-<div class="line">bwes.post(&amp;bwes, dl_speeds, <span class="keyword">sizeof</span>(dl_speeds));</div>
+<div class="line">bwes.<a class="code hl_variable" href="structpcs__bw__estimator__t.html#a6918450b7fa77b1485b219db4bfc90d6">post</a>(&amp;bwes, dl_speeds, <span class="keyword">sizeof</span>(dl_speeds));</div>
 <div class="line"> </div>
-<div class="line">bwes.get(&amp;bwes, &amp;Ra);</div>
+<div class="line">bwes.<a class="code hl_variable" href="structpcs__bw__estimator__t.html#a71c875e07f7284068692b11d2efaa7ec">get</a>(&amp;bwes, &amp;Ra);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Use the estimated bandwidth (Ra)</span></div>
 <div class="line"> </div>
@@ -145,6 +142,8 @@ Data Fields</h2></td></tr>
 <div class="ttc" id="adef_8h_html_a002995d29c523aa35c7efebecd70208b"><div class="ttname"><a href="def_8h.html#a002995d29c523aa35c7efebecd70208b">PCSTREAM_BW</a></div><div class="ttdeci">int64_t PCSTREAM_BW</div><div class="ttdef"><b>Definition</b> def.h:9</div></div>
 <div class="ttc" id="adef_8h_html_a984e79dddf28e6269331ce09d511263dae10c5e639466864e292eb232d99c70b8"><div class="ttname"><a href="def_8h.html#a984e79dddf28e6269331ce09d511263dae10c5e639466864e292eb232d99c70b8">PCSTREAM_BW_ESTIMATOR_HARMONIC</a></div><div class="ttdeci">@ PCSTREAM_BW_ESTIMATOR_HARMONIC</div><div class="ttdef"><b>Definition</b> def.h:35</div></div>
 <div class="ttc" id="astructpcs__bw__estimator__t_html"><div class="ttname"><a href="structpcs__bw__estimator__t.html">pcs_bw_estimator_t</a></div><div class="ttdoc">Structure representing a bandwidth estimator.</div><div class="ttdef"><b>Definition</b> bw_estimator.h:45</div></div>
+<div class="ttc" id="astructpcs__bw__estimator__t_html_a6918450b7fa77b1485b219db4bfc90d6"><div class="ttname"><a href="structpcs__bw__estimator__t.html#a6918450b7fa77b1485b219db4bfc90d6">pcs_bw_estimator_t::post</a></div><div class="ttdeci">PCSTREAM_RET(* post)(pcs_bw_estimator_t *, PCSTREAM_BW *, size_t)</div><div class="ttdoc">Method to estimate current network bandwidth.</div><div class="ttdef"><b>Definition</b> bw_estimator.h:59</div></div>
+<div class="ttc" id="astructpcs__bw__estimator__t_html_a71c875e07f7284068692b11d2efaa7ec"><div class="ttname"><a href="structpcs__bw__estimator__t.html#a71c875e07f7284068692b11d2efaa7ec">pcs_bw_estimator_t::get</a></div><div class="ttdeci">PCSTREAM_RET(* get)(pcs_bw_estimator_t *, PCSTREAM_BW *)</div><div class="ttdoc">Getter for the estimated bandwidth Ra.</div><div class="ttdef"><b>Definition</b> bw_estimator.h:66</div></div>
 </div><!-- fragment --> </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a41863c2831c407b776374d2b6982f184" name="a41863c2831c407b776374d2b6982f184"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a41863c2831c407b776374d2b6982f184">&#9670;&#160;</a></span>dls_es</h2>
@@ -163,17 +162,37 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a id="a1a6129653a203d81d3f3d242003ca4dd" name="a1a6129653a203d81d3f3d242003ca4dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a6129653a203d81d3f3d242003ca4dd">&#9670;&#160;</a></span>size_t</h2>
+<a id="a71c875e07f7284068692b11d2efaa7ec" name="a71c875e07f7284068692b11d2efaa7ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71c875e07f7284068692b11d2efaa7ec">&#9670;&#160;</a></span>get</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structpcs__bw__estimator__t.html">pcs_bw_estimator_t</a> <a class="el" href="def_8h.html#a002995d29c523aa35c7efebecd70208b">PCSTREAM_BW</a> pcs_bw_estimator_t::size_t</td>
+          <td class="memname"><a class="el" href="def_8h.html#ada92d5e1802d5a800155adab1a4eba3c">PCSTREAM_RET</a>(* pcs_bw_estimator_t::get) (<a class="el" href="structpcs__bw__estimator__t.html">pcs_bw_estimator_t</a> *, <a class="el" href="def_8h.html#a002995d29c523aa35c7efebecd70208b">PCSTREAM_BW</a> *)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Getter for the estimated bandwidth <code>Ra</code>. </p>
+<p>This method retrieves the current bandwidth estimation. </p>
+
+</div>
+</div>
+<a id="a6918450b7fa77b1485b219db4bfc90d6" name="a6918450b7fa77b1485b219db4bfc90d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6918450b7fa77b1485b219db4bfc90d6">&#9670;&#160;</a></span>post</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="def_8h.html#ada92d5e1802d5a800155adab1a4eba3c">PCSTREAM_RET</a>(* pcs_bw_estimator_t::post) (<a class="el" href="structpcs__bw__estimator__t.html">pcs_bw_estimator_t</a> *, <a class="el" href="def_8h.html#a002995d29c523aa35c7efebecd70208b">PCSTREAM_BW</a> *, size_t)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Method to estimate current network bandwidth. </p>
+<p>This method is responsible for processing the provided download speeds and updating the estimated bandwidth based on the estimator type. </p>
 
 </div>
 </div>
