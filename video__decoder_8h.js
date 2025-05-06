@@ -1,6 +1,6 @@
 var video__decoder_8h =
 [
     [ "pcs_video_decoder_t", "structpcs__video__decoder__t.html", "structpcs__video__decoder__t" ],
-    [ "pcs_video_decoder_destroy", "video__decoder_8h.html#ac29e0a512d4b6b084c135085601c69f3", null ],
-    [ "pcs_video_decoder_init", "video__decoder_8h.html#a0498aeba81d776db1990b0cf45c6ac36", null ]
+    [ "pcs_video_decoder_destroy", "video__decoder_8h.html#acbeb2d83e8ba16034b20cc511bd88403", null ],
+    [ "pcs_video_decoder_init", "video__decoder_8h.html#aec3e19c053b3d2ab55afb7b33f44687c", null ]
 ];

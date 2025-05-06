@@ -1,10 +1,8 @@
 var structpcs__lod__selector__t =
 [
-    [ "n_mod", "structpcs__lod__selector__t.html#aa215d6cd1d4a5ae855c752ef4a6eb193", null ],
-    [ "n_ver", "structpcs__lod__selector__t.html#ad035a99ac735b14196d48ba0fbd101e0", null ],
-    [ "PCSTREAM_BW", "structpcs__lod__selector__t.html#a7cae0f6e7caa4e0abf7ef3dd9464ec52", null ],
-    [ "PCSTREAM_COUNT", "structpcs__lod__selector__t.html#a2ae132699dfab8cf8866da282f979d71", null ],
-    [ "PCSTREAM_LOD_VERSION", "structpcs__lod__selector__t.html#ad95c638d79f9f9baa42af0966b6ab3b7", null ],
-    [ "size_t", "structpcs__lod__selector__t.html#a1e907dac50a34e3f4cc4b192273c1d72", null ],
-    [ "v", "structpcs__lod__selector__t.html#a2c13fbc1285bd3514e845cd4807aefc8", null ]
+    [ "get", "structpcs__lod__selector__t.html#adc71a86926e8e7b033bcdc0fd8183bba", null ],
+    [ "n_mod", "structpcs__lod__selector__t.html#ad63058463766296d498c378abd0d42f9", null ],
+    [ "n_ver", "structpcs__lod__selector__t.html#a17ab05d0c71a79e31357bb4b71b7aac3", null ],
+    [ "post", "structpcs__lod__selector__t.html#aee1bbfeed8c6cdf0366e62d245a5884c", null ],
+    [ "v", "structpcs__lod__selector__t.html#ac87f0df9ae7295d825ea7bf159d5eaf9", null ]
 ];

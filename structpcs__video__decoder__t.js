@@ -1,6 +1,6 @@
 var structpcs__video__decoder__t =
 [
-    [ "get", "structpcs__video__decoder__t.html#a7df00aa9c1c21a3fcb30a9756bb8e9f8", null ],
-    [ "reconstruct", "structpcs__video__decoder__t.html#abafa505c5d6250261b21c0311bef988f", null ],
-    [ "size_t", "structpcs__video__decoder__t.html#a36291c508c4a2d3094187cb67107ade9", null ]
+    [ "get", "structpcs__video__decoder__t.html#a87d019a566139ab00a55415b177a7cbc", null ],
+    [ "post", "structpcs__video__decoder__t.html#a6dbff575b783159475d896b0080ca570", null ],
+    [ "reconstruct", "structpcs__video__decoder__t.html#abafa505c5d6250261b21c0311bef988f", null ]
 ];

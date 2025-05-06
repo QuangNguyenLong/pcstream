@@ -9,7 +9,4 @@ digraph "pcs_video_decoder_t"
   Node2 [id="Node000002",label="pcs_gof_t",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$structpcs__gof__t.html",tooltip="Structure represents a group of frames."];
   Node3 -> Node2 [id="edge2_Node000002_Node000003",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" frames",fontcolor="grey" ];
   Node3 [id="Node000003",label="pcs_point_cloud_t",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$structpcs__point__cloud__t.html",tooltip=" "];
-  Node3 -> Node3 [id="edge3_Node000003_Node000003",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" PCSTREAM_VIDEO_DECODER",fontcolor="grey" ];
-  Node2 -> Node2 [id="edge4_Node000002_Node000002",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" PCSTREAM_VIDEO_DECODER",fontcolor="grey" ];
-  Node1 -> Node1 [id="edge5_Node000001_Node000001",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" size_t",fontcolor="grey" ];
 }

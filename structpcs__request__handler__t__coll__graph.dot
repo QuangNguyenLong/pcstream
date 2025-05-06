@@ -7,5 +7,4 @@ digraph "pcs_request_handler_t"
   Node1 [id="Node000001",label="pcs_request_handler_t",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
   Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" curr_content\nhull_list\ninfo_list",fontcolor="grey" ];
   Node2 [id="Node000002",label="pcs_buffer_t",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$structpcs__buffer__t.html",tooltip="Structure representing a memory buffer."];
-  Node1 -> Node1 [id="edge2_Node000001_Node000001",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" curr_content_ptr\nhull_list_ptr\ninfo_list_ptr",fontcolor="grey" ];
 }

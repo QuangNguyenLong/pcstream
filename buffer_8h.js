@@ -1,6 +1,6 @@
 var buffer_8h =
 [
     [ "pcs_buffer_t", "structpcs__buffer__t.html", "structpcs__buffer__t" ],
-    [ "pcs_buffer_destroy", "buffer_8h.html#afbffe59605fe67f9c6d2ae909b2fa74b", null ],
-    [ "pcs_buffer_init", "buffer_8h.html#aa23e2811d25cafb4e5e0aecdb9b1be95", null ]
+    [ "pcs_buffer_destroy", "buffer_8h.html#a5a9118ec452380cb216e97afdcec3c08", null ],
+    [ "pcs_buffer_init", "buffer_8h.html#a2fec8422bf8c68480ee82aa005b314c8", null ]
 ];

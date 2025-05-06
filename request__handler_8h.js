@@ -1,11 +1,11 @@
 var request__handler_8h =
 [
     [ "pcs_request_handler_t", "structpcs__request__handler__t.html", "structpcs__request__handler__t" ],
-    [ "pcs_request_handler_destroy", "request__handler_8h.html#a9a9511c65b5ceb394fd7ead96c776a41", null ],
-    [ "pcs_request_handler_get_dl_speeds_h2", "request__handler_8h.html#abcba3357ff055d5c7bccc0124e5f26ac", null ],
-    [ "pcs_request_handler_get_init_h2", "request__handler_8h.html#aca4182f753f621e07778d073a7a94d2c", null ],
-    [ "pcs_request_handler_get_segment_h2", "request__handler_8h.html#aad4ee0ebcb50923975328951b80e4a44", null ],
-    [ "pcs_request_handler_init", "request__handler_8h.html#af102518d08983468ea27a1e7eb4443bb", null ],
-    [ "pcs_request_handler_post_init_h2", "request__handler_8h.html#ad4ac2991510f8ee74ba5476b0e0cea59", null ],
-    [ "pcs_request_handler_post_segment_h2", "request__handler_8h.html#ab54c9ec58304f2bea90a4c8c2dd067cb", null ]
+    [ "pcs_request_handler_destroy", "request__handler_8h.html#ac09e5bdc647c64dc853a5510d95618bf", null ],
+    [ "pcs_request_handler_get_dl_speeds_h2", "request__handler_8h.html#a56294e4ba39a1b3a49ff9f1917e68319", null ],
+    [ "pcs_request_handler_get_init_h2", "request__handler_8h.html#af63bd14670daffbc02abb97f937fe559", null ],
+    [ "pcs_request_handler_get_segment_h2", "request__handler_8h.html#afc3c7fbaab26b6f1b843b8feffed5edb", null ],
+    [ "pcs_request_handler_init", "request__handler_8h.html#ac099eadb38f29af53e4a4bb8ccdf16b7", null ],
+    [ "pcs_request_handler_post_init_h2", "request__handler_8h.html#a10abd573a2c8a0253a24267f7ded4e43", null ],
+    [ "pcs_request_handler_post_segment_h2", "request__handler_8h.html#ab81da0a96a6088be2fe35a65365f48b5", null ]
 ];

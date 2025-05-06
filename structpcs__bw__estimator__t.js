@@ -1,6 +1,6 @@
 var structpcs__bw__estimator__t =
 [
-    [ "dls_es", "structpcs__bw__estimator__t.html#a41863c2831c407b776374d2b6982f184", null ],
-    [ "get", "structpcs__bw__estimator__t.html#a71c875e07f7284068692b11d2efaa7ec", null ],
-    [ "post", "structpcs__bw__estimator__t.html#a6918450b7fa77b1485b219db4bfc90d6", null ]
+    [ "dls_es", "structpcs__bw__estimator__t.html#add8fc0b6eb19d66847916aca5fbf8442", null ],
+    [ "get", "structpcs__bw__estimator__t.html#a40f67282ed75431e22cc4cf84cee9bbb", null ],
+    [ "post", "structpcs__bw__estimator__t.html#abae66288a1cdc9a28b8e5cae94671f30", null ]
 ];
