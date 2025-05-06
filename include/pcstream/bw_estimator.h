@@ -56,22 +56,14 @@ struct pcs_bw_estimator_t
    * provided download speeds and updating the estimated bandwidth
    * based on the estimator type.
    */
-  PCSTREAM_RET(*post)
-  (pcs_bw_estimator_t *,
-   PCSTREAM_BW *, // Average download speed per request
-                  // (Bytes/s)
-   size_t         // Request count
-  );
+  PCSTREAM_RET (*post)(pcs_bw_estimator_t *, PCSTREAM_BW *, size_t);
 
   /**
    * @brief Getter for the estimated bandwidth `Ra`.
    * @details This method retrieves the current bandwidth
    * estimation.
    */
-  PCSTREAM_RET(*get)
-  (pcs_bw_estimator_t *, //
-   PCSTREAM_BW *         // Available network bandwidth (Mbps)
-  );
+  PCSTREAM_RET (*get)(pcs_bw_estimator_t *, PCSTREAM_BW *);
 };
 
 /**
