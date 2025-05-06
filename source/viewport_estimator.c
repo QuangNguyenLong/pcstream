@@ -1,8 +1,9 @@
 #include <pcstream/vec3f.h>
 #include <pcstream/viewport_estimator.h>
 #include <string.h>
-PCSTREAM_RET pcs_viewport_estimator_init(
-    pcs_viewport_estimator_t *self, long long deltat, int type)
+pcs_ret_t pcs_viewport_estimator_init(pcs_viewport_estimator_t *self,
+                                      long long deltat,
+                                      int       type)
 {
   if (deltat <= 0)
     return PCSTREAM_RET_FAIL;
@@ -45,7 +46,7 @@ PCSTREAM_RET pcs_viewport_estimator_init(
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET
+pcs_ret_t
 pcs_viewport_estimator_destroy(pcs_viewport_estimator_t *self)
 {
   self->deltat = 0;
@@ -63,7 +64,7 @@ pcs_viewport_estimator_destroy(pcs_viewport_estimator_t *self)
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET
+pcs_ret_t
 pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *self,
                                      pcs_vec3f_t               Pcurr,
                                      pcs_vec3f_t               Pold,
@@ -112,7 +113,7 @@ pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *self,
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET
+pcs_ret_t
 pcs_viewport_estimator_get_velocity(pcs_viewport_estimator_t *self,
                                     float **esMVP_ptr)
 {

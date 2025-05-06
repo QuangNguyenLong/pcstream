@@ -8,7 +8,7 @@
 #if defined(USE_GOOGLE_DRACO_CODEC)
 #endif
 
-PCSTREAM_RET _pcs_point_cloud_free(pcs_point_cloud_t *pc)
+pcs_ret_t _pcs_point_cloud_free(pcs_point_cloud_t *pc)
 {
   if (pc->positions != PCSTREAM_NULL)
     free(pc->positions);
@@ -20,7 +20,7 @@ PCSTREAM_RET _pcs_point_cloud_free(pcs_point_cloud_t *pc)
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET _pcs_point_cloud_alloc(pcs_point_cloud_t     *pc,
+pcs_ret_t _pcs_point_cloud_alloc(pcs_point_cloud_t     *pc,
                                     size_t                 size,
                                     PCSTREAM_VIDEO_DECODER decoder)
 {
@@ -62,7 +62,7 @@ PCSTREAM_RET _pcs_point_cloud_alloc(pcs_point_cloud_t     *pc,
 }
 
 #if defined(USE_MPEG_VPCC_CODEC)
-static PCSTREAM_RET
+static pcs_ret_t
 _pcs_point_cloud_copy_mpeg_vpcc(pcs_point_cloud_t *des, void *src)
 {
   pcc::PCCPointSet3 *pcc_src = PCSTREAM_NULL;
@@ -85,14 +85,14 @@ _pcs_point_cloud_copy_mpeg_vpcc(pcs_point_cloud_t *des, void *src)
 }
 #endif
 
-PCSTREAM_RET pcs_point_cloud_init(pcs_point_cloud_t *self)
+pcs_ret_t pcs_point_cloud_init(pcs_point_cloud_t *self)
 {
   *self      = (pcs_point_cloud_t){0};
   self->copy = pcs_point_cloud_copy;
 
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET pcs_point_cloud_destroy(pcs_point_cloud_t *self)
+pcs_ret_t pcs_point_cloud_destroy(pcs_point_cloud_t *self)
 {
   _pcs_point_cloud_free(self);
   *self = (pcs_point_cloud_t){0};
@@ -100,7 +100,7 @@ PCSTREAM_RET pcs_point_cloud_destroy(pcs_point_cloud_t *self)
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET pcs_point_cloud_copy(pcs_point_cloud_t     *self,
+pcs_ret_t pcs_point_cloud_copy(pcs_point_cloud_t     *self,
                                   void                  *src,
                                   PCSTREAM_VIDEO_DECODER decoder)
 {

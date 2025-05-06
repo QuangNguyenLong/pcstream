@@ -1,6 +1,6 @@
 #include <pcstream/visibility_computer.h>
 
-PCSTREAM_RET
+pcs_ret_t
 pcs_visibility_computer_init(pcs_visibility_computer_t *self,
                              int                        type)
 {
@@ -23,13 +23,13 @@ pcs_visibility_computer_init(pcs_visibility_computer_t *self,
   }
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET
+pcs_ret_t
 pcs_visibility_computer_destroy(pcs_visibility_computer_t *self)
 {
   *self = (pcs_visibility_computer_t){0};
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET
+pcs_ret_t
 pcs_visibility_computer_post_hull(pcs_visibility_computer_t *self,
                                   const float               *MVP,
                                   pcs_mesh_t                 hull)
@@ -42,9 +42,9 @@ pcs_visibility_computer_post_hull(pcs_visibility_computer_t *self,
   }
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET
+pcs_ret_t
 pcs_visibility_computer_get_hull(pcs_visibility_computer_t *self,
-                                 PCSTREAM_RATIO            *ratio)
+                                 pcs_ratio_t               *ratio)
 {
   if (self->ratio < 0)
     return PCSTREAM_RET_FAIL;

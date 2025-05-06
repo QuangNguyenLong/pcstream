@@ -103,9 +103,9 @@ static void cmd_ply2bin(const char *in_ply, const char *out_bin)
 static void
 cmd_bin2ply(const char *in_bin, const char *out_ply, int ascii_flag)
 {
-  pcs_mesh_t    mesh    = {0};
-  pcs_buffer_t  in_buff = {0};
-  PCSTREAM_BOOL is_bin  = 0;
+  pcs_mesh_t   mesh    = {0};
+  pcs_buffer_t in_buff = {0};
+  pcs_bool_t   is_bin  = 0;
 
   is_bin = ascii_flag == 0 ? PCSTREAM_TRUE : PCSTREAM_FALSE;
 

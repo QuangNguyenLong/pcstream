@@ -4,10 +4,10 @@
 #include <pcstream/buffer.h>
 #include <pcstream/def.h>
 
-PCSTREAM_EXPORT PCSTREAM_RET
+PCSTREAM_EXPORT pcs_ret_t
 pcs_http_get_to_buffer(const char           *url,
                        PCSTREAM_HTTP_VERSION ver,
                        pcs_buffer_t         *des,
-                       PCSTREAM_BW          *dl_speed);
+                       pcs_bw_t             *dl_speed);
 
 #endif

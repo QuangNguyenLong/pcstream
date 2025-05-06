@@ -5,12 +5,12 @@
 #include <stddef.h>
 #include <stdint.h>
 
-typedef uint32_t PCSTREAM_RET;
-typedef int64_t  PCSTREAM_BW; // Bytes/s
-typedef float    PCSTREAM_RATIO;
-typedef uint64_t PCSTREAM_COUNT;
-typedef uint8_t  PCSTREAM_LOD_VERSION;
-typedef uint8_t  PCSTREAM_BOOL;
+typedef uint32_t pcs_ret_t;
+typedef int64_t  pcs_bw_t; // Bytes/s
+typedef float    pcs_ratio_t;
+typedef uint64_t pcs_count_t;
+typedef uint8_t  pcs_lod_version_t;
+typedef uint8_t  pcs_bool_t;
 
 #define PCSTREAM_UNINITIALIZED (-1)
 #define PCSTREAM_TRUE          (1)

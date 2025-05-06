@@ -25,8 +25,8 @@ typedef struct pcs_bw_estimator_t pcs_bw_estimator_t;
  * Example usage:
  *
  * @code
- *    PCSTREAM_BW Ra = 0;
- *    PCSTREAM_BW dl_speeds[] = {123, 456, 789};
+ *    pcs_bw_t Ra = 0;
+ *    pcs_bw_t dl_speeds[] = {123, 456, 789};
  *    pcs_bw_estimator_t bwes = {0};
  *
  *    pcs_bw_estimator_init(&bwes, PCSTREAM_BW_ESTIMATOR_HARMONIC);
@@ -48,7 +48,7 @@ struct pcs_bw_estimator_t
    * @details This field stores the estimated bandwidth in bytes per
    * second.
    */
-  PCSTREAM_BW dls_es; // (Bytes/s)
+  pcs_bw_t dls_es; // (Bytes/s)
 
   /**
    * @brief Method to estimate current network bandwidth.
@@ -56,14 +56,14 @@ struct pcs_bw_estimator_t
    * provided download speeds and updating the estimated bandwidth
    * based on the estimator type.
    */
-  PCSTREAM_RET (*post)(pcs_bw_estimator_t *, PCSTREAM_BW *, size_t);
+  pcs_ret_t (*post)(pcs_bw_estimator_t *, pcs_bw_t *, size_t);
 
   /**
    * @brief Getter for the estimated bandwidth `Ra`.
    * @details This method retrieves the current bandwidth
    * estimation.
    */
-  PCSTREAM_RET (*get)(pcs_bw_estimator_t *, PCSTREAM_BW *);
+  pcs_ret_t (*get)(pcs_bw_estimator_t *, pcs_bw_t *);
 };
 
 /**
@@ -76,7 +76,7 @@ struct pcs_bw_estimator_t
  * @param type Type of bandwidth estimator to use.
  * @return `PCSTREAM_RET_SUCCESS` on successful initialization.
  */
-PCSTREAM_EXPORT PCSTREAM_RET
+PCSTREAM_EXPORT pcs_ret_t
 pcs_bw_estimator_init(pcs_bw_estimator_t *self, int type);
 
 /**
@@ -87,8 +87,8 @@ pcs_bw_estimator_init(pcs_bw_estimator_t *self, int type);
  * @param self Pointer to the `pcs_bw_estimator_t` instance.
  * @return `PCSTREAM_RET_SUCCESS` on successful destruction.
  */
-PCSTREAM_EXPORT PCSTREAM_RET
-             pcs_bw_estimator_destroy(pcs_bw_estimator_t *self);
+PCSTREAM_EXPORT pcs_ret_t
+          pcs_bw_estimator_destroy(pcs_bw_estimator_t *self);
 
 /**
  * @brief Estimate network bandwidth using harmonic
@@ -103,9 +103,9 @@ PCSTREAM_EXPORT PCSTREAM_RET
  * @return PCSTREAM_RET_SUCCESS on successful processing,
  *         PCSTREAM_RET_FAIL on failure.
  */
-PCSTREAM_RET pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
-                                            PCSTREAM_BW *dls_arr,
-                                            size_t       dls_count);
+pcs_ret_t pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
+                                         pcs_bw_t           *dls_arr,
+                                         size_t dls_count);
 
 /**
  * @brief Get the estimateid bandwidth using the harmonic mean.
@@ -117,7 +117,7 @@ PCSTREAM_RET pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
  * @return PCSTREAM_RET_SUCCESS on successful retrieval,
  *         PCSTREAM_RET_FAIL if fail.
  */
-PCSTREAM_RET pcs_bw_estimator_get_harmonic(pcs_bw_estimator_t *self,
-                                           PCSTREAM_BW *dls_es);
+pcs_ret_t pcs_bw_estimator_get_harmonic(pcs_bw_estimator_t *self,
+                                        pcs_bw_t           *dls_es);
 
 #endif // PCSTREAM_BW_ESTIMATOR_H

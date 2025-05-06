@@ -24,11 +24,11 @@ int main(int argc, char **argv)
   pcs_buffer_t  *info_list_ptr    = PCSTREAM_NULL;
   pcs_buffer_t **hull_list_ptr    = PCSTREAM_NULL;
   pcs_buffer_t  *curr_content_ptr = PCSTREAM_NULL;
-  PCSTREAM_BW   *dl_speeds_ptr    = PCSTREAM_NULL;
+  pcs_bw_t   *dl_speeds_ptr    = PCSTREAM_NULL;
   float         *esMVP_ptr        = PCSTREAM_NULL;
   long long      dtec             = 0;
   long long      deltat           = 0;
-  PCSTREAM_BW    dl_es            = 0;
+  pcs_bw_t    dl_es            = 0;
 
   dtec   = PCS_DTEC; // 1000ms per each estimation, this should be
                    // replaced be the segment duration
@@ -36,14 +36,14 @@ int main(int argc, char **argv)
                    // replaced by 1 / fps
 
   // stuff needs to be free
-  PCSTREAM_LOD_VERSION     *selects     = PCSTREAM_NULL;
+  pcs_lod_version_t     *selects     = PCSTREAM_NULL;
   pcs_request_handler_t     hand        = {0};
   pcs_bw_estimator_t        bwes        = {0};
   pcs_viewport_estimator_t  vpes        = {0};
   pcs_visibility_computer_t vscp        = {0};
   pcs_lod_selector_t        vssl        = {0};
   pcs_video_decoder_t      *vddc        = PCSTREAM_NULL;
-  PCSTREAM_RATIO           *screen_area = PCSTREAM_NULL;
+  pcs_ratio_t           *screen_area = PCSTREAM_NULL;
 
   pcs_request_handler_init(&hand, PCSTREAM_REQUEST_HANDLER_H2);
   pcs_bw_estimator_init(&bwes, PCSTREAM_BW_ESTIMATOR_HARMONIC);
@@ -59,9 +59,9 @@ int main(int argc, char **argv)
   hand.get_init(&hand, &info_list_ptr, &hull_list_ptr);
 
   // first segment
-  selects = (PCSTREAM_LOD_VERSION *)malloc(
-      sizeof(PCSTREAM_LOD_VERSION) * hand.seq_count);
-  for (PCSTREAM_COUNT i = 0; i < hand.seq_count; i++)
+  selects = (pcs_lod_version_t *)malloc(
+      sizeof(pcs_lod_version_t) * hand.seq_count);
+  for (pcs_count_t i = 0; i < hand.seq_count; i++)
   {
     selects[i] = 0;
   }
@@ -70,22 +70,22 @@ int main(int argc, char **argv)
   /*decoder should start working here*/
 
   // loop
-  screen_area = (PCSTREAM_RATIO *)malloc(sizeof(PCSTREAM_RATIO) *
+  screen_area = (pcs_ratio_t *)malloc(sizeof(pcs_ratio_t) *
                                          hand.seq_count);
-  for (PCSTREAM_COUNT i = 0; i < hand.seq_count; i++)
+  for (pcs_count_t i = 0; i < hand.seq_count; i++)
   {
     screen_area[i] = 0;
   }
   vddc = (pcs_video_decoder_t *)malloc(sizeof(pcs_video_decoder_t) *
                                        hand.seq_count);
-  for (PCSTREAM_COUNT i = 0; i < hand.seq_count; i++)
+  for (pcs_count_t i = 0; i < hand.seq_count; i++)
   {
     pcs_video_decoder_init(&(vddc[i]), 0);
   }
   while (hand.curr_seg != hand.seg_count)
   {
 
-    for (PCSTREAM_COUNT seq = 0; seq < hand.seq_count; seq++)
+    for (pcs_count_t seq = 0; seq < hand.seq_count; seq++)
     {
       vddc[seq].post(&(vddc[seq]),
                      curr_content_ptr[seq].data,
@@ -107,7 +107,7 @@ int main(int argc, char **argv)
     vpes.post(&vpes, Pcurr, Pold, Vcurr, Vold, dtec);
     vpes.get(&vpes, &esMVP_ptr);
 
-    for (PCSTREAM_COUNT seq = 0; seq < hand.seq_count; seq++)
+    for (pcs_count_t seq = 0; seq < hand.seq_count; seq++)
     {
       pcs_mesh_t mesh = {0};
       pcs_mesh_init(&mesh);
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
   }
   // done, stop session
 
-  for (PCSTREAM_COUNT i = 0; i < hand.seq_count; i++)
+  for (pcs_count_t i = 0; i < hand.seq_count; i++)
   {
     pcs_video_decoder_destroy(&(vddc[i]));
   }

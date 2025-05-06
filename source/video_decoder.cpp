@@ -17,7 +17,7 @@
 #include <draco/compression/decode.h>
 #endif
 
-PCSTREAM_RET pcs_video_decoder_init(pcs_video_decoder_t *self,
+pcs_ret_t pcs_video_decoder_init(pcs_video_decoder_t *self,
                                     int                  type)
 {
   *self = (pcs_video_decoder_t){0};
@@ -52,7 +52,7 @@ PCSTREAM_RET pcs_video_decoder_init(pcs_video_decoder_t *self,
 
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET pcs_video_decoder_destroy(pcs_video_decoder_t *self)
+pcs_ret_t pcs_video_decoder_destroy(pcs_video_decoder_t *self)
 {
   pcs_gof_destroy(&(self->reconstruct));
   *self = (pcs_video_decoder_t){0};
@@ -140,7 +140,7 @@ _mpeg_vpcc_decode_video(pcc::PCCDecoderParameters &decoder_params,
   return 1;
 }
 
-static PCSTREAM_RET
+static pcs_ret_t
 _decode_video(const char *data, const size_t size, pcs_gof_t *recons)
 {
   pcc::PCCDecoderParameters decoder_params;
@@ -155,14 +155,14 @@ _decode_video(const char *data, const size_t size, pcs_gof_t *recons)
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET
+pcs_ret_t
 pcs_video_decoder_post_mpeg_vpcc(pcs_video_decoder_t *self,
                                  const char          *data,
                                  const size_t         size)
 {
   return _decode_video(data, size, &(self->reconstruct));
 }
-PCSTREAM_RET
+pcs_ret_t
 pcs_video_decoder_get_mpeg_vpcc(pcs_video_decoder_t *self,
                                 pcs_gof_t           *reconstruct)
 {
@@ -172,14 +172,14 @@ pcs_video_decoder_get_mpeg_vpcc(pcs_video_decoder_t *self,
 #endif
 
 #if defined(USE_GOOGLE_DRACO_CODEC)
-PCSTREAM_RET
+pcs_ret_t
 pcs_video_decoder_post_google_draco(pcs_video_decoder_t *self,
                                     const char          *data,
                                     const size_t         size)
 {
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET
+pcs_ret_t
 pcs_video_decoder_get_google_draco(pcs_video_decoder_t *self,
                                    pcs_gof_t           *reconstruct)
 {

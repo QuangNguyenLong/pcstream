@@ -6,71 +6,65 @@ typedef struct pcs_lod_selector_t pcs_lod_selector_t;
 
 struct pcs_lod_selector_t
 {
-  PCSTREAM_LOD_VERSION *v;
-  PCSTREAM_COUNT        n_ver;
-  PCSTREAM_COUNT        n_mod;
+  pcs_lod_version_t *v;
+  pcs_count_t        n_ver;
+  pcs_count_t        n_mod;
 
-  PCSTREAM_RET(*post)
-  (pcs_lod_selector_t *,
-   PCSTREAM_COUNT,
-   PCSTREAM_LOD_VERSION,
-   void *,
-   size_t,
-   void *,
-   PCSTREAM_BW);
-  PCSTREAM_RET(*get)
-  (pcs_lod_selector_t *, PCSTREAM_LOD_VERSION **);
+  pcs_ret_t (*post)(pcs_lod_selector_t *,
+                    pcs_count_t,
+                    pcs_lod_version_t,
+                    void *,
+                    size_t,
+                    void *,
+                    pcs_bw_t);
+  pcs_ret_t (*get)(pcs_lod_selector_t *, pcs_lod_version_t **);
 };
 
-PCSTREAM_EXPORT PCSTREAM_RET
+PCSTREAM_EXPORT pcs_ret_t
 pcs_lod_selector_init(pcs_lod_selector_t *self, int type);
-PCSTREAM_EXPORT PCSTREAM_RET
-pcs_lod_selector_destroy(pcs_lod_selector_t *self);
+PCSTREAM_EXPORT pcs_ret_t
+          pcs_lod_selector_destroy(pcs_lod_selector_t *self);
 
-PCSTREAM_RET
-pcs_lod_selector_post_dp_based(pcs_lod_selector_t  *self,
-                               PCSTREAM_COUNT       n_mod,
-                               PCSTREAM_LOD_VERSION n_ver,
-                               void                *metadata,
-                               size_t               metadata_size,
-                               void                *attrib,
-                               PCSTREAM_BW          bandwidth);
-PCSTREAM_RET
-pcs_lod_selector_post_lm_based(pcs_lod_selector_t  *self,
-                               PCSTREAM_COUNT       n_mod,
-                               PCSTREAM_LOD_VERSION n_ver,
-                               void                *metadata,
-                               size_t               metadata_size,
-                               void                *attrib,
-                               PCSTREAM_BW          bandwidth);
-PCSTREAM_RET
-pcs_lod_selector_post_equal(pcs_lod_selector_t  *self,
-                            PCSTREAM_COUNT       n_mod,
-                            PCSTREAM_LOD_VERSION n_ver,
-                            void                *metadata,
-                            size_t               metadata_size,
-                            void                *attrib,
-                            PCSTREAM_BW          bandwidth);
-PCSTREAM_RET
-pcs_lod_selector_post_hybrid(pcs_lod_selector_t  *self,
-                             PCSTREAM_COUNT       n_mod,
-                             PCSTREAM_LOD_VERSION n_ver,
-                             void                *metadata,
-                             size_t               metadata_size,
-                             void                *attrib,
-                             PCSTREAM_BW          bandwidth);
+pcs_ret_t pcs_lod_selector_post_dp_based(pcs_lod_selector_t *self,
+                                         pcs_count_t         n_mod,
+                                         pcs_lod_version_t   n_ver,
+                                         void    *metadata,
+                                         size_t   metadata_size,
+                                         void    *attrib,
+                                         pcs_bw_t bandwidth);
+pcs_ret_t pcs_lod_selector_post_lm_based(pcs_lod_selector_t *self,
+                                         pcs_count_t         n_mod,
+                                         pcs_lod_version_t   n_ver,
+                                         void    *metadata,
+                                         size_t   metadata_size,
+                                         void    *attrib,
+                                         pcs_bw_t bandwidth);
+pcs_ret_t pcs_lod_selector_post_equal(pcs_lod_selector_t *self,
+                                      pcs_count_t         n_mod,
+                                      pcs_lod_version_t   n_ver,
+                                      void               *metadata,
+                                      size_t   metadata_size,
+                                      void    *attrib,
+                                      pcs_bw_t bandwidth);
+pcs_ret_t pcs_lod_selector_post_hybrid(pcs_lod_selector_t *self,
+                                       pcs_count_t         n_mod,
+                                       pcs_lod_version_t   n_ver,
+                                       void               *metadata,
+                                       size_t   metadata_size,
+                                       void    *attrib,
+                                       pcs_bw_t bandwidth);
 
-PCSTREAM_RET
-pcs_lod_selector_get_dp_based(pcs_lod_selector_t    *self,
-                              PCSTREAM_LOD_VERSION **selections_ptr);
-PCSTREAM_RET
-pcs_lod_selector_get_lm_based(pcs_lod_selector_t    *self,
-                              PCSTREAM_LOD_VERSION **selections_ptr);
-PCSTREAM_RET
-pcs_lod_selector_get_equal(pcs_lod_selector_t    *self,
-                           PCSTREAM_LOD_VERSION **selections_ptr);
-PCSTREAM_RET
-pcs_lod_selector_get_hybrid(pcs_lod_selector_t    *self,
-                            PCSTREAM_LOD_VERSION **selections_ptr);
+pcs_ret_t
+pcs_lod_selector_get_dp_based(pcs_lod_selector_t *self,
+                              pcs_lod_version_t **selections_ptr);
+pcs_ret_t
+pcs_lod_selector_get_lm_based(pcs_lod_selector_t *self,
+                              pcs_lod_version_t **selections_ptr);
+pcs_ret_t
+pcs_lod_selector_get_equal(pcs_lod_selector_t *self,
+                           pcs_lod_version_t **selections_ptr);
+pcs_ret_t
+pcs_lod_selector_get_hybrid(pcs_lod_selector_t *self,
+                            pcs_lod_version_t **selections_ptr);
 
 #endif

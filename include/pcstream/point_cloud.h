@@ -18,17 +18,18 @@ extern "C"
     unsigned char *colors; // len = 3 * size
     // float         *normals;
     size_t         size; // number of points
-    PCSTREAM_RET(*copy)
-    (pcs_point_cloud_t *, void *, PCSTREAM_VIDEO_DECODER);
+    pcs_ret_t (*copy)(pcs_point_cloud_t *,
+                      void *,
+                      PCSTREAM_VIDEO_DECODER);
   };
 
-  PCSTREAM_EXPORT PCSTREAM_RET
+  PCSTREAM_EXPORT pcs_ret_t
   pcs_point_cloud_init(pcs_point_cloud_t *self);
-  PCSTREAM_EXPORT PCSTREAM_RET
-               pcs_point_cloud_destroy(pcs_point_cloud_t *self);
-  PCSTREAM_RET pcs_point_cloud_copy(pcs_point_cloud_t     *self,
-                                    void                  *src,
-                                    PCSTREAM_VIDEO_DECODER decoder);
+  PCSTREAM_EXPORT pcs_ret_t
+            pcs_point_cloud_destroy(pcs_point_cloud_t *self);
+  pcs_ret_t pcs_point_cloud_copy(pcs_point_cloud_t     *self,
+                                 void                  *src,
+                                 PCSTREAM_VIDEO_DECODER decoder);
 
 #ifdef __cplusplus
 }

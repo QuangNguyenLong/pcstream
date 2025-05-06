@@ -27,28 +27,28 @@ int main(int argc, char **argv)
   {
     return -1;
   }
-  PCSTREAM_COUNT       n_mod               = 0;
-  PCSTREAM_COUNT       n_ver               = 0;
-  char                 metadata[BUFF_SIZE] = {0};
-  size_t               metadata_size       = 0;
-  PCSTREAM_RATIO       screen_ratio[]      = {0.1F,
-                                              0.2F,
-                                              0.05F,
-                                              0.05F,
-                                              0.05F,
-                                              0.05F,
-                                              0.0F,
-                                              0.0F,
-                                              0.2F,
-                                              0.3F};
-  PCSTREAM_BW          bw                  = 0;
-  PCSTREAM_LOD_VERSION selection[N_MOD]    = {0};
+  pcs_count_t       n_mod               = 0;
+  pcs_count_t       n_ver               = 0;
+  char              metadata[BUFF_SIZE] = {0};
+  size_t            metadata_size       = 0;
+  pcs_ratio_t       screen_ratio[]      = {0.1F,
+                                           0.2F,
+                                           0.05F,
+                                           0.05F,
+                                           0.05F,
+                                           0.05F,
+                                           0.0F,
+                                           0.0F,
+                                           0.2F,
+                                           0.3F};
+  pcs_bw_t          bw                  = 0;
+  pcs_lod_version_t selection[N_MOD]    = {0};
 
-  PCSTREAM_RET         ret                 = 0;
+  pcs_ret_t         ret                 = 0;
 
-  n_mod                                    = N_MOD;
-  n_ver                                    = N_VER;
-  bw                                       = CURRENT_BW;
+  n_mod                                 = N_MOD;
+  n_ver                                 = N_VER;
+  bw                                    = CURRENT_BW;
 
   metadata_size =
       read_file((const char *)argv[1], metadata, sizeof(metadata));

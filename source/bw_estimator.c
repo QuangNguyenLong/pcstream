@@ -1,11 +1,10 @@
 #include <pcstream/bw_estimator.h>
 #include <pcstream/def.h>
 
-PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *self,
-                                   int                 type)
+pcs_ret_t pcs_bw_estimator_init(pcs_bw_estimator_t *self, int type)
 {
-  *self              = (pcs_bw_estimator_t){0};
-  PCSTREAM_BW dls_es = PCSTREAM_BW_DEFAULT;
+  *self           = (pcs_bw_estimator_t){0};
+  pcs_bw_t dls_es = PCSTREAM_BW_DEFAULT;
 
   switch (type)
   {
@@ -27,17 +26,16 @@ PCSTREAM_RET pcs_bw_estimator_init(pcs_bw_estimator_t *self,
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET pcs_bw_estimator_destroy(pcs_bw_estimator_t *self)
+pcs_ret_t pcs_bw_estimator_destroy(pcs_bw_estimator_t *self)
 {
   *self        = (pcs_bw_estimator_t){0};
   self->dls_es = PCSTREAM_BW_DEFAULT;
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET
-pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
-                               PCSTREAM_BW        *dls_arr,
-                               size_t              dls_count)
+pcs_ret_t pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
+                                         pcs_bw_t           *dls_arr,
+                                         size_t dls_count)
 {
   float  sum         = 0.0F;
   size_t count_valid = 0;
@@ -55,13 +53,13 @@ pcs_bw_estimator_post_harmonic(pcs_bw_estimator_t *self,
       sum += 1.0F / (float)dls_arr[i];
     }
   }
-  self->dls_es = (PCSTREAM_BW)((float)count_valid / sum);
+  self->dls_es = (pcs_bw_t)((float)count_valid / sum);
 
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET pcs_bw_estimator_get_harmonic(pcs_bw_estimator_t *self,
-                                           PCSTREAM_BW *dls_es)
+pcs_ret_t pcs_bw_estimator_get_harmonic(pcs_bw_estimator_t *self,
+                                        pcs_bw_t           *dls_es)
 {
   if (self->dls_es == PCSTREAM_BW_DEFAULT)
   {

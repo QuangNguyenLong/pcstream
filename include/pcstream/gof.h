@@ -24,16 +24,14 @@ extern "C"
      * the group. */
     pcs_point_cloud_t *frames;
     size_t             size;
-    PCSTREAM_RET(*copy)
-    (pcs_gof_t *, void *, PCSTREAM_VIDEO_DECODER);
+    pcs_ret_t (*copy)(pcs_gof_t *, void *, PCSTREAM_VIDEO_DECODER);
   };
 
-  PCSTREAM_EXPORT PCSTREAM_RET pcs_gof_init(pcs_gof_t *self);
-  PCSTREAM_EXPORT PCSTREAM_RET pcs_gof_destroy(pcs_gof_t *self);
-  PCSTREAM_RET
-  pcs_gof_copy(pcs_gof_t             *self,
-               void                  *src,
-               PCSTREAM_VIDEO_DECODER decoder);
+  PCSTREAM_EXPORT pcs_ret_t pcs_gof_init(pcs_gof_t *self);
+  PCSTREAM_EXPORT pcs_ret_t pcs_gof_destroy(pcs_gof_t *self);
+  pcs_ret_t                 pcs_gof_copy(pcs_gof_t             *self,
+                                         void                  *src,
+                                         PCSTREAM_VIDEO_DECODER decoder);
 
 #ifdef __cplusplus
 }

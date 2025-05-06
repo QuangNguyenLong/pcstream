@@ -6,7 +6,7 @@
 #include <PCCPointSet.h>
 #endif
 
-static PCSTREAM_RET _pcs_gof_free(pcs_gof_t *gof)
+static pcs_ret_t _pcs_gof_free(pcs_gof_t *gof)
 {
   if (gof->frames != PCSTREAM_NULL)
   {
@@ -19,7 +19,7 @@ static PCSTREAM_RET _pcs_gof_free(pcs_gof_t *gof)
   return PCSTREAM_RET_SUCCESS;
 }
 
-static PCSTREAM_RET _pcs_gof_alloc(pcs_gof_t *gof, size_t size)
+static pcs_ret_t _pcs_gof_alloc(pcs_gof_t *gof, size_t size)
 {
   if (gof == PCSTREAM_NULL)
     return PCSTREAM_RET_FAIL;
@@ -36,7 +36,7 @@ static PCSTREAM_RET _pcs_gof_alloc(pcs_gof_t *gof, size_t size)
 }
 
 #if defined(USE_MPEG_VPCC_CODEC)
-PCSTREAM_RET _pcs_gof_copy_mpeg_vpcc(pcs_gof_t *gof, void *src)
+pcs_ret_t _pcs_gof_copy_mpeg_vpcc(pcs_gof_t *gof, void *src)
 {
   pcc::PCCGroupOfFrames *pcc_gof     = PCSTREAM_NULL;
   size_t                 frame_count = 0;
@@ -54,20 +54,20 @@ PCSTREAM_RET _pcs_gof_copy_mpeg_vpcc(pcs_gof_t *gof, void *src)
 }
 #endif
 
-PCSTREAM_RET pcs_gof_init(pcs_gof_t *self)
+pcs_ret_t pcs_gof_init(pcs_gof_t *self)
 {
   *self      = (pcs_gof_t){0};
   self->copy = pcs_gof_copy;
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET pcs_gof_destroy(pcs_gof_t *self)
+pcs_ret_t pcs_gof_destroy(pcs_gof_t *self)
 {
   _pcs_gof_free(self);
   *self = (pcs_gof_t){0};
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET
+pcs_ret_t
 pcs_gof_copy(pcs_gof_t *self, void *src, PCSTREAM_VIDEO_DECODER decoder)
 {
   switch (decoder)

@@ -12,42 +12,39 @@ struct pcs_mesh_t
   uint32_t *indices;
   uint32_t  num_indices;
 
-  PCSTREAM_RET(*read_from_buff_serial)
-  (pcs_mesh_t *, const char *, PCSTREAM_COUNT);
-  PCSTREAM_RET(*write_to_buff_serial)
-  (pcs_mesh_t *, char **, PCSTREAM_COUNT *);
+  pcs_ret_t (*read_from_buff_serial)(pcs_mesh_t *,
+                                     const char *,
+                                     pcs_count_t);
+  pcs_ret_t (*write_to_buff_serial)(pcs_mesh_t *,
+                                    char **,
+                                    pcs_count_t *);
 
-  PCSTREAM_RET(*write_to_file_ply)
-  (pcs_mesh_t *, const char *, PCSTREAM_BOOL);
-  PCSTREAM_RET(*read_from_file_ply)
-  (pcs_mesh_t *, const char *);
+  pcs_ret_t (*write_to_file_ply)(pcs_mesh_t *,
+                                 const char *,
+                                 pcs_bool_t);
+  pcs_ret_t (*read_from_file_ply)(pcs_mesh_t *, const char *);
 
-  PCSTREAM_RET(*screen_ratio)
-  (pcs_mesh_t *, const float *, float *);
+  pcs_ret_t (*screen_ratio)(pcs_mesh_t *, const float *, float *);
 };
 
-PCSTREAM_EXPORT PCSTREAM_RET pcs_mesh_init(pcs_mesh_t *self);
-PCSTREAM_EXPORT PCSTREAM_RET pcs_mesh_destroy(pcs_mesh_t *self);
+PCSTREAM_EXPORT pcs_ret_t pcs_mesh_init(pcs_mesh_t *self);
+PCSTREAM_EXPORT pcs_ret_t pcs_mesh_destroy(pcs_mesh_t *self);
 
-PCSTREAM_RET
-pcs_mesh_read_from_buff_serial(pcs_mesh_t    *self,
-                               const char    *data,
-                               PCSTREAM_COUNT size);
-PCSTREAM_RET
-pcs_mesh_write_to_buff_serial(pcs_mesh_t     *self,
-                              char          **data_out,
-                              PCSTREAM_COUNT *size_out);
+pcs_ret_t pcs_mesh_read_from_buff_serial(pcs_mesh_t *self,
+                                         const char *data,
+                                         pcs_count_t size);
+pcs_ret_t pcs_mesh_write_to_buff_serial(pcs_mesh_t  *self,
+                                        char       **data_out,
+                                        pcs_count_t *size_out);
 
-PCSTREAM_RET
-pcs_mesh_read_from_file_ply(pcs_mesh_t *self, const char *filepath);
-PCSTREAM_RET
-pcs_mesh_write_to_file_ply(pcs_mesh_t   *self,
-                           const char   *filepath,
-                           PCSTREAM_BOOL binary);
+pcs_ret_t pcs_mesh_read_from_file_ply(pcs_mesh_t *self,
+                                      const char *filepath);
+pcs_ret_t pcs_mesh_write_to_file_ply(pcs_mesh_t *self,
+                                     const char *filepath,
+                                     pcs_bool_t  binary);
 
-PCSTREAM_RET
-pcs_mesh_screen_ratio(pcs_mesh_t  *self,
-                      const float *mvp,
-                      float       *screen_ratio);
+pcs_ret_t pcs_mesh_screen_ratio(pcs_mesh_t  *self,
+                                const float *mvp,
+                                float       *screen_ratio);
 
 #endif

@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-static PCSTREAM_RET pcs_mesh_free_s(pcs_mesh_t *mesh)
+static pcs_ret_t pcs_mesh_free_s(pcs_mesh_t *mesh)
 {
   if (mesh->pos != PCSTREAM_NULL)
   {
@@ -23,9 +23,9 @@ static PCSTREAM_RET pcs_mesh_free_s(pcs_mesh_t *mesh)
   return PCSTREAM_RET_SUCCESS;
 }
 
-static PCSTREAM_RET pcs_mesh_alloc_s(pcs_mesh_t *mesh,
-                                     uint32_t    num_verts,
-                                     uint32_t    num_indices)
+static pcs_ret_t pcs_mesh_alloc_s(pcs_mesh_t *mesh,
+                                  uint32_t    num_verts,
+                                  uint32_t    num_indices)
 {
   if (mesh != PCSTREAM_NULL)
   {
@@ -39,7 +39,7 @@ static PCSTREAM_RET pcs_mesh_alloc_s(pcs_mesh_t *mesh,
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET pcs_mesh_init(pcs_mesh_t *self)
+pcs_ret_t pcs_mesh_init(pcs_mesh_t *self)
 {
   self->pos                   = PCSTREAM_NULL;
   self->num_verts             = 0;
@@ -56,17 +56,16 @@ PCSTREAM_RET pcs_mesh_init(pcs_mesh_t *self)
 
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET pcs_mesh_destroy(pcs_mesh_t *self)
+pcs_ret_t pcs_mesh_destroy(pcs_mesh_t *self)
 {
   pcs_mesh_free_s(self);
   *self = (pcs_mesh_t){0};
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET
-pcs_mesh_read_from_buff_serial(pcs_mesh_t    *self,
-                               const char    *data,
-                               PCSTREAM_COUNT size)
+pcs_ret_t pcs_mesh_read_from_buff_serial(pcs_mesh_t *self,
+                                         const char *data,
+                                         pcs_count_t size)
 {
   const uint8_t *curr     = (const uint8_t *)data;
   const uint8_t *end      = curr + size;
@@ -153,7 +152,7 @@ pcs_mesh_read_from_buff_serial(pcs_mesh_t    *self,
   return PCSTREAM_RET_SUCCESS;
 }
 
-static inline PCSTREAM_COUNT
+static inline pcs_count_t
 pcs_mesh_serial_size(const pcs_mesh_t *mesh)
 {
   return sizeof(uint32_t) +                     /* num verts  */
@@ -161,16 +160,15 @@ pcs_mesh_serial_size(const pcs_mesh_t *mesh)
          sizeof(uint32_t) +                     /* num idx    */
          mesh->num_indices * sizeof(uint32_t);  /* indices    */
 }
-PCSTREAM_RET
-pcs_mesh_write_to_buff_serial(pcs_mesh_t     *self,
-                              char          **data_out,
-                              PCSTREAM_COUNT *size_out)
+pcs_ret_t pcs_mesh_write_to_buff_serial(pcs_mesh_t  *self,
+                                        char       **data_out,
+                                        pcs_count_t *size_out)
 {
-  PCSTREAM_COUNT need     = 0;
-  size_t         pos_size = 0;
-  size_t         idx_size = 0;
-  uint8_t       *buf      = PCSTREAM_NULL;
-  uint8_t       *curr     = PCSTREAM_NULL;
+  pcs_count_t need     = 0;
+  size_t      pos_size = 0;
+  size_t      idx_size = 0;
+  uint8_t    *buf      = PCSTREAM_NULL;
+  uint8_t    *curr     = PCSTREAM_NULL;
 
   if (!self || !data_out || !size_out)
   {
@@ -211,8 +209,8 @@ pcs_mesh_write_to_buff_serial(pcs_mesh_t     *self,
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET pcs_mesh_read_from_file_ply(pcs_mesh_t *self,
-                                         const char *filepath)
+pcs_ret_t pcs_mesh_read_from_file_ply(pcs_mesh_t *self,
+                                      const char *filepath)
 {
   uint32_t numv = 0;
   uint32_t numf = 0;
@@ -232,9 +230,9 @@ PCSTREAM_RET pcs_mesh_read_from_file_ply(pcs_mesh_t *self,
   }
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET pcs_mesh_write_to_file_ply(pcs_mesh_t   *self,
-                                        const char   *filepath,
-                                        PCSTREAM_BOOL binary)
+pcs_ret_t pcs_mesh_write_to_file_ply(pcs_mesh_t *self,
+                                     const char *filepath,
+                                     pcs_bool_t  binary)
 {
   int ret = 0;
   if (!self || !filepath)
@@ -396,9 +394,9 @@ static float clipped_triangle_area_s(pcs_vec2f_t vec1,
   return polygon_area_s(polygon, polygon_size);
 }
 
-PCSTREAM_RET pcs_mesh_screen_ratio(pcs_mesh_t  *self,
-                                   const float *mvp,
-                                   float       *screen_ratio)
+pcs_ret_t pcs_mesh_screen_ratio(pcs_mesh_t  *self,
+                                const float *mvp,
+                                float       *screen_ratio)
 {
   pcs_vec3f_t *vertices = PCSTREAM_NULL;
   // need to be freed

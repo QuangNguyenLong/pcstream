@@ -96,8 +96,8 @@ static char *merge_url_path(const char *base, const char *path)
   return result;
 }
 
-PCSTREAM_RET pcs_request_handler_init(pcs_request_handler_t *self,
-                                      int                    type)
+pcs_ret_t pcs_request_handler_init(pcs_request_handler_t *self,
+                                   int                    type)
 {
   self->seq_count     = 0;
   self->seg_count     = 0;
@@ -143,7 +143,7 @@ PCSTREAM_RET pcs_request_handler_init(pcs_request_handler_t *self,
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET pcs_request_handler_destroy(pcs_request_handler_t *self)
+pcs_ret_t pcs_request_handler_destroy(pcs_request_handler_t *self)
 {
   if (self->bin_mpd != PCSTREAM_NULL)
     gf_mpd_del((GF_MPD *)self->bin_mpd);
@@ -151,15 +151,15 @@ PCSTREAM_RET pcs_request_handler_destroy(pcs_request_handler_t *self)
     free(self->base_url);
   if (self->info_list != PCSTREAM_NULL)
   {
-    for (PCSTREAM_COUNT i = 0; i < self->seg_count; i++)
+    for (pcs_count_t i = 0; i < self->seg_count; i++)
       pcs_buffer_destroy(&(self->info_list[i]));
     free(self->info_list);
   }
   if (self->hull_list != PCSTREAM_NULL)
   {
-    for (PCSTREAM_COUNT i = 0; i < self->seq_count; i++)
+    for (pcs_count_t i = 0; i < self->seq_count; i++)
     {
-      for (PCSTREAM_COUNT j = 0; j < self->seg_count; j++)
+      for (pcs_count_t j = 0; j < self->seg_count; j++)
         pcs_buffer_destroy(&(self->hull_list[i][j]));
       free(self->hull_list[i]);
     }
@@ -167,7 +167,7 @@ PCSTREAM_RET pcs_request_handler_destroy(pcs_request_handler_t *self)
   }
   if (self->curr_content != PCSTREAM_NULL)
   {
-    for (PCSTREAM_COUNT i = 0; i < self->seg_count; i++)
+    for (pcs_count_t i = 0; i < self->seg_count; i++)
       pcs_buffer_destroy(&(self->curr_content[i]));
     free(self->curr_content);
   }
@@ -193,7 +193,7 @@ PCSTREAM_RET pcs_request_handler_destroy(pcs_request_handler_t *self)
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET
+pcs_ret_t
 pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
                                  const char            *bin_mpd_url,
                                  const char            *info_mpd_url,
@@ -204,9 +204,9 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
   GF_XMLNode                  *info_xml_root = PCSTREAM_NULL;
   GF_XMLNode                  *hull_xml_root = PCSTREAM_NULL;
 
-  PCSTREAM_COUNT               n_seg         = 0;
-  PCSTREAM_LOD_VERSION         n_ver         = 0;
-  PCSTREAM_COUNT               n_seq         = 0;
+  pcs_count_t                  n_seg         = 0;
+  pcs_lod_version_t            n_ver         = 0;
+  pcs_count_t                  n_seq         = 0;
 
   GF_MPD_Period               *period_ptr    = PCSTREAM_NULL;
   GF_MPD_AdaptationSet        *seq_ptr       = PCSTREAM_NULL;
@@ -275,14 +275,13 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
 
   period_ptr = (GF_MPD_Period *)(gf_list_get(bin_mpd->periods, 0));
 
-  n_seq =
-      (PCSTREAM_COUNT)(gf_list_count(period_ptr->adaptation_sets));
+  n_seq = (pcs_count_t)(gf_list_count(period_ptr->adaptation_sets));
 
-  seq_ptr     = (GF_MPD_AdaptationSet *)(gf_list_get(
+  seq_ptr = (GF_MPD_AdaptationSet *)(gf_list_get(
       period_ptr->adaptation_sets, 0));
 
-  n_ver       = (PCSTREAM_LOD_VERSION)(gf_list_count(
-      seq_ptr->representations));
+  n_ver =
+      (pcs_lod_version_t)(gf_list_count(seq_ptr->representations));
 
   rep_ptr     = (GF_MPD_Representation *)(gf_list_get(
       seq_ptr->representations, 0));
@@ -295,7 +294,7 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
         (GF_MPD_SegmentTimelineEntry *)(gf_list_get(entries_ptr, i));
     n_seg += 1; // the entry itself
     if (entry_ptr->repeat_count > 0)
-      n_seg += (PCSTREAM_COUNT)(entry_ptr->repeat_count);
+      n_seg += (pcs_count_t)(entry_ptr->repeat_count);
   }
   n_seg += 1; // plus the init segment
 
@@ -317,10 +316,10 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
 
   self->info_list =
       (pcs_buffer_t *)malloc(sizeof(pcs_buffer_t) * self->seg_count);
-  for (PCSTREAM_COUNT i = 0; i < self->seq_count; i++)
+  for (pcs_count_t i = 0; i < self->seq_count; i++)
     pcs_buffer_init(&(self->info_list[i]));
 
-  for (PCSTREAM_COUNT i = 0; i < self->seg_count; i++)
+  for (pcs_count_t i = 0; i < self->seg_count; i++)
   {
     char *info_path = PCSTREAM_NULL;
     char *info_url  = PCSTREAM_NULL;
@@ -346,15 +345,15 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
 
   self->hull_list = (pcs_buffer_t **)malloc(sizeof(pcs_buffer_t *) *
                                             self->seq_count);
-  for (PCSTREAM_COUNT i = 0; i < self->seq_count; i++)
+  for (pcs_count_t i = 0; i < self->seq_count; i++)
   {
     self->hull_list[i] = (pcs_buffer_t *)malloc(
         sizeof(pcs_buffer_t) * self->seg_count);
-    for (PCSTREAM_COUNT j = 0; j < self->seg_count; j++)
+    for (pcs_count_t j = 0; j < self->seg_count; j++)
       pcs_buffer_init(&(self->hull_list[i][j]));
   }
 
-  for (PCSTREAM_COUNT seq = 0; seq < self->seq_count; seq++)
+  for (pcs_count_t seq = 0; seq < self->seq_count; seq++)
   {
     seq_ptr = (GF_MPD_AdaptationSet *)(gf_list_get(
         period_ptr->adaptation_sets, (unsigned int)seq));
@@ -364,7 +363,7 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
     media   = rep_ptr->segment_template->media;
     init    = rep_ptr->segment_template->initialization;
 
-    for (PCSTREAM_COUNT seg = 0; seg < self->seg_count; seg++)
+    for (pcs_count_t seg = 0; seg < self->seg_count; seg++)
     {
       char *hull_path = PCSTREAM_NULL;
       char *hull_url  = PCSTREAM_NULL;
@@ -389,12 +388,12 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
   // init current content binaries buffer (per segment)
   self->curr_content =
       (pcs_buffer_t *)malloc(sizeof(pcs_buffer_t) * self->seq_count);
-  for (PCSTREAM_COUNT i = 0; i < self->seq_count; i++)
+  for (pcs_count_t i = 0; i < self->seq_count; i++)
     pcs_buffer_init(&(self->curr_content[i]));
   // init dl_speeds
   self->dl_speeds =
-      (PCSTREAM_BW *)malloc(sizeof(PCSTREAM_BW) * self->seq_count);
-  for (PCSTREAM_COUNT i = 0; i < self->seq_count; i++)
+      (pcs_bw_t *)malloc(sizeof(pcs_bw_t) * self->seq_count);
+  for (pcs_count_t i = 0; i < self->seq_count; i++)
     self->dl_speeds[i] = 0;
 
   // free stuff
@@ -411,9 +410,9 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
   return PCSTREAM_RET_SUCCESS;
 }
 
-PCSTREAM_RET
+pcs_ret_t
 pcs_request_handler_post_segment_h2(pcs_request_handler_t *self,
-                                    PCSTREAM_LOD_VERSION  *selection)
+                                    pcs_lod_version_t     *selection)
 {
   GF_MPD                *mpd_ptr    = PCSTREAM_NULL;
   GF_MPD_Period         *period_ptr = PCSTREAM_NULL;
@@ -421,12 +420,12 @@ pcs_request_handler_post_segment_h2(pcs_request_handler_t *self,
   GF_MPD_Representation *rep_ptr    = PCSTREAM_NULL;
   char                  *media      = PCSTREAM_NULL;
   char                  *init       = PCSTREAM_NULL;
-  PCSTREAM_COUNT         seg        = 0;
+  pcs_count_t            seg        = 0;
   seg                               = self->curr_seg;
   mpd_ptr                           = (GF_MPD *)self->bin_mpd;
   period_ptr = (GF_MPD_Period *)(gf_list_get(mpd_ptr->periods, 0));
 
-  for (PCSTREAM_COUNT seq = 0; seq < self->seq_count; seq++)
+  for (pcs_count_t seq = 0; seq < self->seq_count; seq++)
   {
     char *bin_path = PCSTREAM_NULL;
     char *bin_url  = PCSTREAM_NULL;
@@ -458,7 +457,7 @@ pcs_request_handler_post_segment_h2(pcs_request_handler_t *self,
   self->curr_seg++;
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET
+pcs_ret_t
 pcs_request_handler_get_init_h2(pcs_request_handler_t *self,
                                 pcs_buffer_t         **info_list_ptr,
                                 pcs_buffer_t        ***hull_list_ptr)
@@ -470,7 +469,7 @@ pcs_request_handler_get_init_h2(pcs_request_handler_t *self,
   *hull_list_ptr = self->hull_list;
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET
+pcs_ret_t
 pcs_request_handler_get_segment_h2(pcs_request_handler_t *self,
                                    pcs_buffer_t **curr_content_ptr)
 {
@@ -479,9 +478,9 @@ pcs_request_handler_get_segment_h2(pcs_request_handler_t *self,
   *curr_content_ptr = self->curr_content;
   return PCSTREAM_RET_SUCCESS;
 }
-PCSTREAM_RET
+pcs_ret_t
 pcs_request_handler_get_dl_speeds_h2(pcs_request_handler_t *self,
-                                     PCSTREAM_BW **dl_speeds_ptr)
+                                     pcs_bw_t **dl_speeds_ptr)
 {
   if (self->dl_speeds == PCSTREAM_NULL)
     return PCSTREAM_RET_FAIL;

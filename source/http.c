@@ -28,10 +28,10 @@ write_callback(void *data, size_t size, size_t nmemb, void *userp)
   return total_size;
 }
 
-PCSTREAM_RET pcs_http_get_to_buffer(const char           *url,
-                                    PCSTREAM_HTTP_VERSION ver,
-                                    pcs_buffer_t         *des,
-                                    PCSTREAM_BW          *dl_speed)
+pcs_ret_t pcs_http_get_to_buffer(const char           *url,
+                                 PCSTREAM_HTTP_VERSION ver,
+                                 pcs_buffer_t         *des,
+                                 pcs_bw_t             *dl_speed)
 {
   CURL    *curl = PCSTREAM_NULL;
   CURLcode res  = 0;
