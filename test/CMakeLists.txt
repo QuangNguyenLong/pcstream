@@ -29,8 +29,7 @@ pcstream_add_test(
 pcstream_add_test(buffer_test "")
 pcstream_add_test(bw_estimator_test "")
 pcstream_add_test(gof_test "")
-
-# pcstream_add_test(http_test)
+pcstream_add_test(http_test "https://raw.githubusercontent.com/filrg/pcstream/refs/heads/main/assets/test/longdress.seg1.r1.bin")
 # pcstream_add_test(lod_selector_test)
 # pcstream_add_test(mesh_test)
 # pcstream_add_test(pcstream_test)
