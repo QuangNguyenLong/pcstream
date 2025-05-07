@@ -98,49 +98,66 @@ $(document).ready(function(){initNavTree('gof_8h_source.html',''); initResizable
   <div class="headertitle"><div class="title">gof.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="gof_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef PCSTREAM_GOF_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define PCSTREAM_GOF_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;<a class="code" href="def_8h.html">pcstream/def.h</a>&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="point__cloud_8h.html">pcstream/point_cloud.h</a>&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>  <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a> <a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a>;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="foldopen" id="foldopen00021" data-start="{" data-end="};">
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="structpcs__gof__t.html">   21</a></span>  <span class="keyword">struct </span><a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  {</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="structpcs__gof__t.html#a058e56e4aac8331185609ef10e9deafe">   25</a></span>    <a class="code hl_struct" href="structpcs__point__cloud__t.html">pcs_point_cloud_t</a> *<a class="code hl_variable" href="structpcs__gof__t.html#a058e56e4aac8331185609ef10e9deafe">frames</a>;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="structpcs__gof__t.html#a2c216b11d469ac0a18919593c205857b">   26</a></span>    <span class="keywordtype">size_t</span>             <a class="code hl_variable" href="structpcs__gof__t.html#a2c216b11d469ac0a18919593c205857b">size</a>;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="structpcs__gof__t.html#a16facca1e5b28df4546c7ffd1a000d4f">   27</a></span>    <a class="code hl_typedef" href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a> (*<a class="code hl_variable" href="structpcs__gof__t.html#a16facca1e5b28df4546c7ffd1a000d4f">copy</a>)(<a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a> *, <span class="keywordtype">void</span> *, <a class="code hl_enumeration" href="def_8h.html#a508fd5aef6dea375e8411ad23d924e89">PCSTREAM_VIDEO_DECODER</a>);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  };</div>
-</div>
+<a href="gof_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* This file is part of PCSTREAM.</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright (C) 2025 FIL Research Group, ANSA Laboratory</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * PCSTREAM is free software: you can redistribute it and/or modify</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * it under the terms of the GNU General Public License as published</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * by the Free Software Foundation, either version 3 of the License,</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * or (at your option) any later version.</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * This program is distributed in the hope that it will be useful,</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * GNU General Public License for more details.</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * You should have received a copy of the GNU General Public License</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * along with this program.  If not, see</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> * &lt;http://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#ifndef PCSTREAM_GOF_H</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#define PCSTREAM_GOF_H</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;<a class="code" href="def_8h.html">pcstream/def.h</a>&gt;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;<a class="code" href="point__cloud_8h.html">pcstream/point_cloud.h</a>&gt;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>{</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a> <a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a>;</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="gof_8h.html#a1394da06f1a0c095e111d2d48d6f6433">   30</a></span>  PCSTREAM_EXPORT <a class="code hl_typedef" href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a> <a class="code hl_function" href="gof_8h.html#a1394da06f1a0c095e111d2d48d6f6433">pcs_gof_init</a>(<a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a> *self);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="gof_8h.html#a8dc687cee2be0a9cb2cc36da4a034f4c">   31</a></span>  PCSTREAM_EXPORT <a class="code hl_typedef" href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a> <a class="code hl_function" href="gof_8h.html#a8dc687cee2be0a9cb2cc36da4a034f4c">pcs_gof_destroy</a>(<a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a> *self);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="gof_8h.html#a747d4d71d382167814c70745424eacaf">   32</a></span>  <a class="code hl_typedef" href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a>                 <a class="code hl_function" href="gof_8h.html#a747d4d71d382167814c70745424eacaf">pcs_gof_copy</a>(<a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a>             *self,</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                                         <span class="keywordtype">void</span>                  *src,</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                                         <a class="code hl_enumeration" href="def_8h.html#a508fd5aef6dea375e8411ad23d924e89">PCSTREAM_VIDEO_DECODER</a> decoder);</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>}</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#endif</span></div>
+<div class="foldopen" id="foldopen00038" data-start="{" data-end="};">
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="structpcs__gof__t.html">   38</a></span>  <span class="keyword">struct </span><a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="structpcs__gof__t.html#a058e56e4aac8331185609ef10e9deafe">   42</a></span>    <a class="code hl_struct" href="structpcs__point__cloud__t.html">pcs_point_cloud_t</a> *<a class="code hl_variable" href="structpcs__gof__t.html#a058e56e4aac8331185609ef10e9deafe">frames</a>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="structpcs__gof__t.html#a2c216b11d469ac0a18919593c205857b">   43</a></span>    <span class="keywordtype">size_t</span>             <a class="code hl_variable" href="structpcs__gof__t.html#a2c216b11d469ac0a18919593c205857b">size</a>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="structpcs__gof__t.html#a16facca1e5b28df4546c7ffd1a000d4f">   44</a></span>    <a class="code hl_typedef" href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a> (*<a class="code hl_variable" href="structpcs__gof__t.html#a16facca1e5b28df4546c7ffd1a000d4f">copy</a>)(<a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a> *, <span class="keywordtype">void</span> *, <a class="code hl_enumeration" href="def_8h.html#a508fd5aef6dea375e8411ad23d924e89">PCSTREAM_VIDEO_DECODER</a>);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  };</div>
+</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="gof_8h.html#a1394da06f1a0c095e111d2d48d6f6433">   47</a></span>  PCSTREAM_EXPORT <a class="code hl_typedef" href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a> <a class="code hl_function" href="gof_8h.html#a1394da06f1a0c095e111d2d48d6f6433">pcs_gof_init</a>(<a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a> *self);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="gof_8h.html#a8dc687cee2be0a9cb2cc36da4a034f4c">   48</a></span>  PCSTREAM_EXPORT <a class="code hl_typedef" href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a> <a class="code hl_function" href="gof_8h.html#a8dc687cee2be0a9cb2cc36da4a034f4c">pcs_gof_destroy</a>(<a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a> *self);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="gof_8h.html#a747d4d71d382167814c70745424eacaf">   49</a></span>  <a class="code hl_typedef" href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a>                 <a class="code hl_function" href="gof_8h.html#a747d4d71d382167814c70745424eacaf">pcs_gof_copy</a>(<a class="code hl_struct" href="structpcs__gof__t.html">pcs_gof_t</a>             *self,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                                         <span class="keywordtype">void</span>                  *src,</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                                         <a class="code hl_enumeration" href="def_8h.html#a508fd5aef6dea375e8411ad23d924e89">PCSTREAM_VIDEO_DECODER</a> decoder);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="adef_8h_html"><div class="ttname"><a href="def_8h.html">def.h</a></div></div>
-<div class="ttc" id="adef_8h_html_a508fd5aef6dea375e8411ad23d924e89"><div class="ttname"><a href="def_8h.html#a508fd5aef6dea375e8411ad23d924e89">PCSTREAM_VIDEO_DECODER</a></div><div class="ttdeci">PCSTREAM_VIDEO_DECODER</div><div class="ttdef"><b>Definition</b> def.h:106</div></div>
-<div class="ttc" id="adef_8h_html_ac333b6b28e894d8f32da9d922f65180d"><div class="ttname"><a href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a></div><div class="ttdeci">uint32_t pcs_ret_t</div><div class="ttdef"><b>Definition</b> def.h:46</div></div>
+<div class="ttc" id="adef_8h_html_a508fd5aef6dea375e8411ad23d924e89"><div class="ttname"><a href="def_8h.html#a508fd5aef6dea375e8411ad23d924e89">PCSTREAM_VIDEO_DECODER</a></div><div class="ttdeci">PCSTREAM_VIDEO_DECODER</div><div class="ttdef"><b>Definition</b> def.h:123</div></div>
+<div class="ttc" id="adef_8h_html_ac333b6b28e894d8f32da9d922f65180d"><div class="ttname"><a href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a></div><div class="ttdeci">uint32_t pcs_ret_t</div><div class="ttdef"><b>Definition</b> def.h:63</div></div>
 <div class="ttc" id="agof_8h_html_a1394da06f1a0c095e111d2d48d6f6433"><div class="ttname"><a href="gof_8h.html#a1394da06f1a0c095e111d2d48d6f6433">pcs_gof_init</a></div><div class="ttdeci">PCSTREAM_EXPORT pcs_ret_t pcs_gof_init(pcs_gof_t *self)</div></div>
 <div class="ttc" id="agof_8h_html_a747d4d71d382167814c70745424eacaf"><div class="ttname"><a href="gof_8h.html#a747d4d71d382167814c70745424eacaf">pcs_gof_copy</a></div><div class="ttdeci">pcs_ret_t pcs_gof_copy(pcs_gof_t *self, void *src, PCSTREAM_VIDEO_DECODER decoder)</div></div>
 <div class="ttc" id="agof_8h_html_a8dc687cee2be0a9cb2cc36da4a034f4c"><div class="ttname"><a href="gof_8h.html#a8dc687cee2be0a9cb2cc36da4a034f4c">pcs_gof_destroy</a></div><div class="ttdeci">PCSTREAM_EXPORT pcs_ret_t pcs_gof_destroy(pcs_gof_t *self)</div></div>
 <div class="ttc" id="apoint__cloud_8h_html"><div class="ttname"><a href="point__cloud_8h.html">point_cloud.h</a></div></div>
-<div class="ttc" id="astructpcs__gof__t_html"><div class="ttname"><a href="structpcs__gof__t.html">pcs_gof_t</a></div><div class="ttdoc">Structure representing a group of frames.</div><div class="ttdef"><b>Definition</b> gof.h:22</div></div>
-<div class="ttc" id="astructpcs__gof__t_html_a058e56e4aac8331185609ef10e9deafe"><div class="ttname"><a href="structpcs__gof__t.html#a058e56e4aac8331185609ef10e9deafe">pcs_gof_t::frames</a></div><div class="ttdeci">pcs_point_cloud_t * frames</div><div class="ttdoc">Pointer to the array of frames (pcs_point_cloud_t) in the group.</div><div class="ttdef"><b>Definition</b> gof.h:25</div></div>
-<div class="ttc" id="astructpcs__gof__t_html_a16facca1e5b28df4546c7ffd1a000d4f"><div class="ttname"><a href="structpcs__gof__t.html#a16facca1e5b28df4546c7ffd1a000d4f">pcs_gof_t::copy</a></div><div class="ttdeci">pcs_ret_t(* copy)(pcs_gof_t *, void *, PCSTREAM_VIDEO_DECODER)</div><div class="ttdef"><b>Definition</b> gof.h:27</div></div>
-<div class="ttc" id="astructpcs__gof__t_html_a2c216b11d469ac0a18919593c205857b"><div class="ttname"><a href="structpcs__gof__t.html#a2c216b11d469ac0a18919593c205857b">pcs_gof_t::size</a></div><div class="ttdeci">size_t size</div><div class="ttdef"><b>Definition</b> gof.h:26</div></div>
-<div class="ttc" id="astructpcs__point__cloud__t_html"><div class="ttname"><a href="structpcs__point__cloud__t.html">pcs_point_cloud_t</a></div><div class="ttdef"><b>Definition</b> point_cloud.h:13</div></div>
+<div class="ttc" id="astructpcs__gof__t_html"><div class="ttname"><a href="structpcs__gof__t.html">pcs_gof_t</a></div><div class="ttdoc">Structure representing a group of frames.</div><div class="ttdef"><b>Definition</b> gof.h:39</div></div>
+<div class="ttc" id="astructpcs__gof__t_html_a058e56e4aac8331185609ef10e9deafe"><div class="ttname"><a href="structpcs__gof__t.html#a058e56e4aac8331185609ef10e9deafe">pcs_gof_t::frames</a></div><div class="ttdeci">pcs_point_cloud_t * frames</div><div class="ttdoc">Pointer to the array of frames (pcs_point_cloud_t) in the group.</div><div class="ttdef"><b>Definition</b> gof.h:42</div></div>
+<div class="ttc" id="astructpcs__gof__t_html_a16facca1e5b28df4546c7ffd1a000d4f"><div class="ttname"><a href="structpcs__gof__t.html#a16facca1e5b28df4546c7ffd1a000d4f">pcs_gof_t::copy</a></div><div class="ttdeci">pcs_ret_t(* copy)(pcs_gof_t *, void *, PCSTREAM_VIDEO_DECODER)</div><div class="ttdef"><b>Definition</b> gof.h:44</div></div>
+<div class="ttc" id="astructpcs__gof__t_html_a2c216b11d469ac0a18919593c205857b"><div class="ttname"><a href="structpcs__gof__t.html#a2c216b11d469ac0a18919593c205857b">pcs_gof_t::size</a></div><div class="ttdeci">size_t size</div><div class="ttdef"><b>Definition</b> gof.h:43</div></div>
+<div class="ttc" id="astructpcs__point__cloud__t_html"><div class="ttname"><a href="structpcs__point__cloud__t.html">pcs_point_cloud_t</a></div><div class="ttdef"><b>Definition</b> point_cloud.h:30</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

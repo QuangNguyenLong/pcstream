@@ -98,26 +98,43 @@ $(document).ready(function(){initNavTree('http_8h_source.html',''); initResizabl
   <div class="headertitle"><div class="title">http.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="http_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef PCSTREAM_HTTP_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define PCSTREAM_HTTP_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;<a class="code" href="buffer_8h.html">pcstream/buffer.h</a>&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="def_8h.html">pcstream/def.h</a>&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>PCSTREAM_EXPORT <a class="code hl_typedef" href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="http_8h.html#a4bdbc656f6af4a0d140e723ec33c3e99">    8</a></span><a class="code hl_function" href="http_8h.html#a4bdbc656f6af4a0d140e723ec33c3e99">pcs_http_get_to_buffer</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>           *url,</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>                       <a class="code hl_enumeration" href="def_8h.html#aa9e3f91c8c47441bf853ece8d33e2722">PCSTREAM_HTTP_VERSION</a> ver,</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>                       <a class="code hl_struct" href="structpcs__buffer__t.html">pcs_buffer_t</a>         *des,</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>                       <a class="code hl_typedef" href="def_8h.html#a37a1c0637a974afb4e1359270e2c650f">pcs_bw_t</a>             *dl_speed);</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#endif</span></div>
+<a href="http_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* This file is part of PCSTREAM.</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright (C) 2025 FIL Research Group, ANSA Laboratory</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * PCSTREAM is free software: you can redistribute it and/or modify</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * it under the terms of the GNU General Public License as published</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * by the Free Software Foundation, either version 3 of the License,</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * or (at your option) any later version.</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * This program is distributed in the hope that it will be useful,</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * GNU General Public License for more details.</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * You should have received a copy of the GNU General Public License</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * along with this program.  If not, see</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> * &lt;http://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#ifndef PCSTREAM_HTTP_H</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#define PCSTREAM_HTTP_H</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;<a class="code" href="buffer_8h.html">pcstream/buffer.h</a>&gt;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;<a class="code" href="def_8h.html">pcstream/def.h</a>&gt;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>PCSTREAM_EXPORT <a class="code hl_typedef" href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="http_8h.html#a4bdbc656f6af4a0d140e723ec33c3e99">   25</a></span><a class="code hl_function" href="http_8h.html#a4bdbc656f6af4a0d140e723ec33c3e99">pcs_http_get_to_buffer</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>           *url,</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                       <a class="code hl_enumeration" href="def_8h.html#aa9e3f91c8c47441bf853ece8d33e2722">PCSTREAM_HTTP_VERSION</a> ver,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                       <a class="code hl_struct" href="structpcs__buffer__t.html">pcs_buffer_t</a>         *des,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                       <a class="code hl_typedef" href="def_8h.html#a37a1c0637a974afb4e1359270e2c650f">pcs_bw_t</a>             *dl_speed);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="abuffer_8h_html"><div class="ttname"><a href="buffer_8h.html">buffer.h</a></div></div>
 <div class="ttc" id="adef_8h_html"><div class="ttname"><a href="def_8h.html">def.h</a></div></div>
-<div class="ttc" id="adef_8h_html_a37a1c0637a974afb4e1359270e2c650f"><div class="ttname"><a href="def_8h.html#a37a1c0637a974afb4e1359270e2c650f">pcs_bw_t</a></div><div class="ttdeci">int64_t pcs_bw_t</div><div class="ttdef"><b>Definition</b> def.h:47</div></div>
-<div class="ttc" id="adef_8h_html_aa9e3f91c8c47441bf853ece8d33e2722"><div class="ttname"><a href="def_8h.html#aa9e3f91c8c47441bf853ece8d33e2722">PCSTREAM_HTTP_VERSION</a></div><div class="ttdeci">PCSTREAM_HTTP_VERSION</div><div class="ttdef"><b>Definition</b> def.h:77</div></div>
-<div class="ttc" id="adef_8h_html_ac333b6b28e894d8f32da9d922f65180d"><div class="ttname"><a href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a></div><div class="ttdeci">uint32_t pcs_ret_t</div><div class="ttdef"><b>Definition</b> def.h:46</div></div>
+<div class="ttc" id="adef_8h_html_a37a1c0637a974afb4e1359270e2c650f"><div class="ttname"><a href="def_8h.html#a37a1c0637a974afb4e1359270e2c650f">pcs_bw_t</a></div><div class="ttdeci">int64_t pcs_bw_t</div><div class="ttdef"><b>Definition</b> def.h:64</div></div>
+<div class="ttc" id="adef_8h_html_aa9e3f91c8c47441bf853ece8d33e2722"><div class="ttname"><a href="def_8h.html#aa9e3f91c8c47441bf853ece8d33e2722">PCSTREAM_HTTP_VERSION</a></div><div class="ttdeci">PCSTREAM_HTTP_VERSION</div><div class="ttdef"><b>Definition</b> def.h:94</div></div>
+<div class="ttc" id="adef_8h_html_ac333b6b28e894d8f32da9d922f65180d"><div class="ttname"><a href="def_8h.html#ac333b6b28e894d8f32da9d922f65180d">pcs_ret_t</a></div><div class="ttdeci">uint32_t pcs_ret_t</div><div class="ttdef"><b>Definition</b> def.h:63</div></div>
 <div class="ttc" id="ahttp_8h_html_a4bdbc656f6af4a0d140e723ec33c3e99"><div class="ttname"><a href="http_8h.html#a4bdbc656f6af4a0d140e723ec33c3e99">pcs_http_get_to_buffer</a></div><div class="ttdeci">PCSTREAM_EXPORT pcs_ret_t pcs_http_get_to_buffer(const char *url, PCSTREAM_HTTP_VERSION ver, pcs_buffer_t *des, pcs_bw_t *dl_speed)</div></div>
-<div class="ttc" id="astructpcs__buffer__t_html"><div class="ttname"><a href="structpcs__buffer__t.html">pcs_buffer_t</a></div><div class="ttdoc">Structure representing a memory buffer.</div><div class="ttdef"><b>Definition</b> buffer.h:16</div></div>
+<div class="ttc" id="astructpcs__buffer__t_html"><div class="ttname"><a href="structpcs__buffer__t.html">pcs_buffer_t</a></div><div class="ttdoc">Structure representing a memory buffer.</div><div class="ttdef"><b>Definition</b> buffer.h:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
