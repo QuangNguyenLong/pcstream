@@ -100,6 +100,8 @@ $(document).ready(function(){initNavTree('def_8h.html',''); initResizable(); });
 <div class="textblock"><code>#include &quot;pcstream/pcstream_export.h&quot;</code><br />
 <code>#include &lt;stddef.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for def.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -119,6 +121,20 @@ $(document).ready(function(){initNavTree('def_8h.html',''); initResizable(); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a093e8b3efa6528bee1c691a597bd7822" id="r_a093e8b3efa6528bee1c691a597bd7822"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="def_8h.html#a093e8b3efa6528bee1c691a597bd7822">PCSTREAM_WRAP_ACTION</a>(action)</td></tr>
+<tr class="separator:a093e8b3efa6528bee1c691a597bd7822"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0cf99dad4f1bf2ad5378a6cee92f155" id="r_ad0cf99dad4f1bf2ad5378a6cee92f155"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="def_8h.html#ad0cf99dad4f1bf2ad5378a6cee92f155">PCSTREAM_ACTION_EXIT</a>()&#160;&#160;&#160;  <a class="el" href="def_8h.html#a093e8b3efa6528bee1c691a597bd7822">PCSTREAM_WRAP_ACTION</a>(exit(EXIT_FAILURE))</td></tr>
+<tr class="separator:ad0cf99dad4f1bf2ad5378a6cee92f155"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af99ba3b38f0b8430c812b138966ec59d" id="r_af99ba3b38f0b8430c812b138966ec59d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="def_8h.html#af99ba3b38f0b8430c812b138966ec59d">PCSTREAM_ACTION_LOG_ERROR</a>()</td></tr>
+<tr class="separator:af99ba3b38f0b8430c812b138966ec59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d1c7488fd0ceb718514a2182c4817d7" id="r_a0d1c7488fd0ceb718514a2182c4817d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="def_8h.html#a0d1c7488fd0ceb718514a2182c4817d7">PCSTREAM_ACTION_EXIT_ERROR</a>()</td></tr>
+<tr class="separator:a0d1c7488fd0ceb718514a2182c4817d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7afa7533c21c580c5a2b4f167879ad52" id="r_a7afa7533c21c580c5a2b4f167879ad52"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="def_8h.html#a7afa7533c21c580c5a2b4f167879ad52">PCSTREAM_CHECK</a>(expr,  action)</td></tr>
+<tr class="separator:a7afa7533c21c580c5a2b4f167879ad52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af19d1831d782cad988cb86a88d8297f9" id="r_af19d1831d782cad988cb86a88d8297f9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="def_8h.html#af19d1831d782cad988cb86a88d8297f9">PCSTREAM_CHECK_ERROR</a>(expr)&#160;&#160;&#160;  <a class="el" href="def_8h.html#a7afa7533c21c580c5a2b4f167879ad52">PCSTREAM_CHECK</a>(expr, <a class="el" href="def_8h.html#af99ba3b38f0b8430c812b138966ec59d">PCSTREAM_ACTION_LOG_ERROR</a>())</td></tr>
+<tr class="separator:af19d1831d782cad988cb86a88d8297f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48eec2a6fa32b64fd035409bd0640e2a" id="r_a48eec2a6fa32b64fd035409bd0640e2a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="def_8h.html#a48eec2a6fa32b64fd035409bd0640e2a">PCSTREAM_CHECK_FATAL</a>(expr)&#160;&#160;&#160;  <a class="el" href="def_8h.html#a7afa7533c21c580c5a2b4f167879ad52">PCSTREAM_CHECK</a>(expr, <a class="el" href="def_8h.html#a0d1c7488fd0ceb718514a2182c4817d7">PCSTREAM_ACTION_EXIT_ERROR</a>())</td></tr>
+<tr class="separator:a48eec2a6fa32b64fd035409bd0640e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dc2db53d1be8a737fc95bcd62bda8e2" id="r_a5dc2db53d1be8a737fc95bcd62bda8e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="def_8h.html#a5dc2db53d1be8a737fc95bcd62bda8e2">PCSTREAM_UNINITIALIZED</a>&#160;&#160;&#160;(-1)</td></tr>
 <tr class="separator:a5dc2db53d1be8a737fc95bcd62bda8e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc240f99b7a726c591c91f92215a7102" id="r_acc240f99b7a726c591c91f92215a7102"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="def_8h.html#acc240f99b7a726c591c91f92215a7102">PCSTREAM_TRUE</a>&#160;&#160;&#160;(1)</td></tr>
@@ -202,6 +218,67 @@ Enumerations</h2></td></tr>
 <tr class="separator:a508fd5aef6dea375e8411ad23d924e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ad0cf99dad4f1bf2ad5378a6cee92f155" name="ad0cf99dad4f1bf2ad5378a6cee92f155"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0cf99dad4f1bf2ad5378a6cee92f155">&#9670;&#160;</a></span>PCSTREAM_ACTION_EXIT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PCSTREAM_ACTION_EXIT</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;  <a class="el" href="def_8h.html#a093e8b3efa6528bee1c691a597bd7822">PCSTREAM_WRAP_ACTION</a>(exit(EXIT_FAILURE))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0d1c7488fd0ceb718514a2182c4817d7" name="a0d1c7488fd0ceb718514a2182c4817d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d1c7488fd0ceb718514a2182c4817d7">&#9670;&#160;</a></span>PCSTREAM_ACTION_EXIT_ERROR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PCSTREAM_ACTION_EXIT_ERROR</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="def_8h.html#a093e8b3efa6528bee1c691a597bd7822">PCSTREAM_WRAP_ACTION</a>({             \</div>
+<div class="line">    PCSTREAM_ACTION_LOG_ERROR();     \</div>
+<div class="line">    PCSTREAM_ACTION_EXIT();          \</div>
+<div class="line">  })</div>
+<div class="ttc" id="adef_8h_html_a093e8b3efa6528bee1c691a597bd7822"><div class="ttname"><a href="def_8h.html#a093e8b3efa6528bee1c691a597bd7822">PCSTREAM_WRAP_ACTION</a></div><div class="ttdeci">#define PCSTREAM_WRAP_ACTION(action)</div><div class="ttdef"><b>Definition</b> def.h:10</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af99ba3b38f0b8430c812b138966ec59d" name="af99ba3b38f0b8430c812b138966ec59d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af99ba3b38f0b8430c812b138966ec59d">&#9670;&#160;</a></span>PCSTREAM_ACTION_LOG_ERROR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PCSTREAM_ACTION_LOG_ERROR</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="def_8h.html#a093e8b3efa6528bee1c691a597bd7822">PCSTREAM_WRAP_ACTION</a>(                             \</div>
+<div class="line">      fprintf(stderr,                               \</div>
+<div class="line">              <span class="stringliteral">&quot;[PCSTREAM ERROR] failed at %s:%d\n&quot;</span>, \</div>
+<div class="line">              __FILE__,                             \</div>
+<div class="line">              __LINE__))</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a9400f9d5efb1eff14a6a76abb2c11ad7" name="a9400f9d5efb1eff14a6a76abb2c11ad7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9400f9d5efb1eff14a6a76abb2c11ad7">&#9670;&#160;</a></span>PCSTREAM_BW_DEFAULT</h2>
 
@@ -210,6 +287,77 @@ Enumerations</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define PCSTREAM_BW_DEFAULT&#160;&#160;&#160;<a class="el" href="def_8h.html#a5dc2db53d1be8a737fc95bcd62bda8e2">PCSTREAM_UNINITIALIZED</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7afa7533c21c580c5a2b4f167879ad52" name="a7afa7533c21c580c5a2b4f167879ad52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7afa7533c21c580c5a2b4f167879ad52">&#9670;&#160;</a></span>PCSTREAM_CHECK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PCSTREAM_CHECK</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expr, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">action&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code hl_define" href="def_8h.html#a093e8b3efa6528bee1c691a597bd7822">PCSTREAM_WRAP_ACTION</a>({                \</div>
+<div class="line">    if ((expr) != <a class="code hl_define" href="def_8h.html#ab8150e0ed149ab1c10ecc09b937fa01f">PCSTREAM_RET_SUCCESS</a>) \</div>
+<div class="line">    {                                   \</div>
+<div class="line">      action;                           \</div>
+<div class="line">    }                                   \</div>
+<div class="line">  })</div>
+<div class="ttc" id="adef_8h_html_ab8150e0ed149ab1c10ecc09b937fa01f"><div class="ttname"><a href="def_8h.html#ab8150e0ed149ab1c10ecc09b937fa01f">PCSTREAM_RET_SUCCESS</a></div><div class="ttdeci">#define PCSTREAM_RET_SUCCESS</div><div class="ttdef"><b>Definition</b> def.h:67</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af19d1831d782cad988cb86a88d8297f9" name="af19d1831d782cad988cb86a88d8297f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af19d1831d782cad988cb86a88d8297f9">&#9670;&#160;</a></span>PCSTREAM_CHECK_ERROR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PCSTREAM_CHECK_ERROR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expr</td><td>)</td>
+          <td>&#160;&#160;&#160;  <a class="el" href="def_8h.html#a7afa7533c21c580c5a2b4f167879ad52">PCSTREAM_CHECK</a>(expr, <a class="el" href="def_8h.html#af99ba3b38f0b8430c812b138966ec59d">PCSTREAM_ACTION_LOG_ERROR</a>())</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a48eec2a6fa32b64fd035409bd0640e2a" name="a48eec2a6fa32b64fd035409bd0640e2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48eec2a6fa32b64fd035409bd0640e2a">&#9670;&#160;</a></span>PCSTREAM_CHECK_FATAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PCSTREAM_CHECK_FATAL</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expr</td><td>)</td>
+          <td>&#160;&#160;&#160;  <a class="el" href="def_8h.html#a7afa7533c21c580c5a2b4f167879ad52">PCSTREAM_CHECK</a>(expr, <a class="el" href="def_8h.html#a0d1c7488fd0ceb718514a2182c4817d7">PCSTREAM_ACTION_EXIT_ERROR</a>())</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -354,6 +502,28 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+</div>
+</div>
+<a id="a093e8b3efa6528bee1c691a597bd7822" name="a093e8b3efa6528bee1c691a597bd7822"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a093e8b3efa6528bee1c691a597bd7822">&#9670;&#160;</a></span>PCSTREAM_WRAP_ACTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PCSTREAM_WRAP_ACTION</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">action</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  <span class="keywordflow">do</span>                                 \</div>
+<div class="line">  {                                  \</div>
+<div class="line">    action;                          \</div>
+<div class="line">  } <span class="keywordflow">while</span> (0)</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>

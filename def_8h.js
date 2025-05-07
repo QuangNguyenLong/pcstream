@@ -1,6 +1,12 @@
 var def_8h =
 [
+    [ "PCSTREAM_ACTION_EXIT", "def_8h.html#ad0cf99dad4f1bf2ad5378a6cee92f155", null ],
+    [ "PCSTREAM_ACTION_EXIT_ERROR", "def_8h.html#a0d1c7488fd0ceb718514a2182c4817d7", null ],
+    [ "PCSTREAM_ACTION_LOG_ERROR", "def_8h.html#af99ba3b38f0b8430c812b138966ec59d", null ],
     [ "PCSTREAM_BW_DEFAULT", "def_8h.html#a9400f9d5efb1eff14a6a76abb2c11ad7", null ],
+    [ "PCSTREAM_CHECK", "def_8h.html#a7afa7533c21c580c5a2b4f167879ad52", null ],
+    [ "PCSTREAM_CHECK_ERROR", "def_8h.html#af19d1831d782cad988cb86a88d8297f9", null ],
+    [ "PCSTREAM_CHECK_FATAL", "def_8h.html#a48eec2a6fa32b64fd035409bd0640e2a", null ],
     [ "PCSTREAM_FALSE", "def_8h.html#a61406e26a4c5690e3a6498afaa13b792", null ],
     [ "PCSTREAM_FLOAT_ERROR", "def_8h.html#ae750f942df10a5dfebe8d8b77087d9cf", null ],
     [ "PCSTREAM_FLOAT_HALF", "def_8h.html#a3f46bde98bf53a0bda411a772fafb309", null ],
@@ -11,6 +17,7 @@ var def_8h =
     [ "PCSTREAM_RET_SUCCESS", "def_8h.html#ab8150e0ed149ab1c10ecc09b937fa01f", null ],
     [ "PCSTREAM_TRUE", "def_8h.html#acc240f99b7a726c591c91f92215a7102", null ],
     [ "PCSTREAM_UNINITIALIZED", "def_8h.html#a5dc2db53d1be8a737fc95bcd62bda8e2", null ],
+    [ "PCSTREAM_WRAP_ACTION", "def_8h.html#a093e8b3efa6528bee1c691a597bd7822", null ],
     [ "pcs_bool_t", "def_8h.html#a4e7b831c799a02ca60f19cb64be51562", null ],
     [ "pcs_bw_t", "def_8h.html#a37a1c0637a974afb4e1359270e2c650f", null ],
     [ "pcs_count_t", "def_8h.html#a16f0f7d7bb36b66477e5b1076acaee37", null ],
