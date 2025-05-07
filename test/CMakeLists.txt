@@ -26,9 +26,10 @@ pcstream_add_test(
     algorithm_test
     ${TEST_ASSETS}/algorithm/info.init.txt
     )
-# pcstream_add_test(buffer_test)
-# pcstream_add_test(bw_estimator_test)
-# pcstream_add_test(gof_test)
+pcstream_add_test(buffer_test "")
+pcstream_add_test(bw_estimator_test "")
+pcstream_add_test(gof_test "")
+
 # pcstream_add_test(http_test)
 # pcstream_add_test(lod_selector_test)
 # pcstream_add_test(mesh_test)

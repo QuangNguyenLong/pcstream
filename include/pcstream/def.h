@@ -4,6 +4,44 @@
 #include "pcstream/pcstream_export.h"
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define PCSTREAM_WRAP_ACTION(action) \
+  do                                 \
+  {                                  \
+    action;                          \
+  } while (0)
+
+#define PCSTREAM_ACTION_EXIT() \
+  PCSTREAM_WRAP_ACTION(exit(EXIT_FAILURE))
+
+#define PCSTREAM_ACTION_LOG_ERROR()                 \
+  PCSTREAM_WRAP_ACTION(                             \
+      fprintf(stderr,                               \
+              "[PCSTREAM ERROR] failed at %s:%d\n", \
+              __FILE__,                             \
+              __LINE__))
+
+#define PCSTREAM_ACTION_EXIT_ERROR() \
+  PCSTREAM_WRAP_ACTION({             \
+    PCSTREAM_ACTION_LOG_ERROR();     \
+    PCSTREAM_ACTION_EXIT();          \
+  })
+
+#define PCSTREAM_CHECK(expr, action)    \
+  PCSTREAM_WRAP_ACTION({                \
+    if ((expr) != PCSTREAM_RET_SUCCESS) \
+    {                                   \
+      action;                           \
+    }                                   \
+  })
+
+#define PCSTREAM_CHECK_ERROR(expr) \
+  PCSTREAM_CHECK(expr, PCSTREAM_ACTION_LOG_ERROR())
+
+#define PCSTREAM_CHECK_FATAL(expr) \
+  PCSTREAM_CHECK(expr, PCSTREAM_ACTION_EXIT_ERROR())
 
 typedef uint32_t pcs_ret_t;
 typedef int64_t  pcs_bw_t; // Bytes/s

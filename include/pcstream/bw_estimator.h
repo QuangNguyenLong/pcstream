@@ -31,7 +31,8 @@ typedef struct pcs_bw_estimator_t pcs_bw_estimator_t;
  *
  *    pcs_bw_estimator_init(&bwes, PCSTREAM_BW_ESTIMATOR_HARMONIC);
  *
- *    bwes.post(&bwes, dl_speeds, sizeof(dl_speeds));
+ *    bwes.post(&bwes, dl_speeds,
+ * sizeof(dl_speeds)/sizeof(dl_speeds[0]));
  *
  *    bwes.get(&bwes, &Ra);
  *

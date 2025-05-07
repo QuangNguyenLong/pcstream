@@ -67,18 +67,19 @@ pcs_ret_t pcs_gof_destroy(pcs_gof_t *self)
   return PCSTREAM_RET_SUCCESS;
 }
 
-pcs_ret_t
-pcs_gof_copy(pcs_gof_t *self, void *src, PCSTREAM_VIDEO_DECODER decoder)
+pcs_ret_t pcs_gof_copy(pcs_gof_t             *self,
+                       void                  *src,
+                       PCSTREAM_VIDEO_DECODER decoder)
 {
   switch (decoder)
   {
-#if defined(USE_MPEG_VPCC_CODEC)
   case PCSTREAM_VIDEO_DECODER_MPEG_VPCC:
+#if defined(USE_MPEG_VPCC_CODEC)
     return _pcs_gof_copy_mpeg_vpcc(self, src);
-    break;
 #endif
+    break;
   default:
-    return PCSTREAM_RET_FAIL;
+    return PCSTREAM_RET_SUCCESS;
     break;
   }
   return PCSTREAM_RET_FAIL;
