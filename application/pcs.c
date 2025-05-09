@@ -84,7 +84,6 @@ int main(int argc, char **argv)
   }
   hand.post_segment(&hand, selects);
   hand.get_segment(&hand, &curr_content_ptr);
-  /*decoder should start working here*/
 
   // loop
   screen_area =

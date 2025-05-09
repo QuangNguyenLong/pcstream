@@ -116,25 +116,7 @@ static char *merge_url_path(const char *base, const char *path)
 pcs_ret_t pcs_request_handler_init(pcs_request_handler_t *self,
                                    int                    type)
 {
-  self->seq_count     = 0;
-  self->seg_count     = 0;
-  self->rep_count     = 0;
-  self->curr_seg      = 0;
-  self->bin_mpd       = PCSTREAM_NULL;
-  self->base_url      = PCSTREAM_NULL;
-
-  self->info_list     = PCSTREAM_NULL;
-  self->hull_list     = PCSTREAM_NULL;
-  self->curr_content  = PCSTREAM_NULL;
-
-  self->dl_speeds     = PCSTREAM_NULL;
-
-  self->post_init     = PCSTREAM_NULL;
-  self->post_segment  = PCSTREAM_NULL;
-  self->get_init      = PCSTREAM_NULL;
-  self->get_segment   = PCSTREAM_NULL;
-  self->get_dl_speeds = PCSTREAM_NULL;
-
+  *self = (pcs_request_handler_t){0};
   switch (type)
   {
   case PCSTREAM_REQUEST_HANDLER_H2:
@@ -190,23 +172,7 @@ pcs_ret_t pcs_request_handler_destroy(pcs_request_handler_t *self)
   }
   if (self->dl_speeds != PCSTREAM_NULL)
     free(self->dl_speeds);
-  self->seq_count     = 0;
-  self->seg_count     = 0;
-  self->rep_count     = 0;
-
-  self->bin_mpd       = PCSTREAM_NULL;
-  self->base_url      = PCSTREAM_NULL;
-
-  self->info_list     = PCSTREAM_NULL;
-  self->hull_list     = PCSTREAM_NULL;
-  self->curr_content  = PCSTREAM_NULL;
-  self->dl_speeds     = PCSTREAM_NULL;
-
-  self->post_init     = PCSTREAM_NULL;
-  self->post_segment  = PCSTREAM_NULL;
-  self->get_init      = PCSTREAM_NULL;
-  self->get_segment   = PCSTREAM_NULL;
-  self->get_dl_speeds = PCSTREAM_NULL;
+  *self = (pcs_request_handler_t){0};
   return PCSTREAM_RET_SUCCESS;
 }
 
