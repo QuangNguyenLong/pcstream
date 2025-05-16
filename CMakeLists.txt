@@ -12,9 +12,13 @@ project(
 
 include(cmake/variables.cmake)
 
+option(USE_FILRG_PCC_CODEC "Use FILRG-PCC codec to encode and decode video" FALSE)
 option(USE_MPEG_VPCC_CODEC "Use MPEG-VPCC codec to encode and decode video" TRUE)
 option(USE_GOOGLE_DRACO_CODEC "Use Google-Draco codec to encode and decode video" FALSE)
 
+if(USE_FILRG_PCC_CODEC)
+    include(cmake/dependencies/filrg-pcc.cmake)
+endif()
 if(USE_MPEG_VPCC_CODEC)
     include(cmake/dependencies/mpeg-vpcc.cmake)
 endif()
@@ -43,6 +47,13 @@ target_link_libraries(
     PkgConfig::curl
     m
 )
+if(USE_FILRG_PCC_CODEC)
+    target_compile_definitions(pcstream_pcstream PRIVATE USE_FILRG_PCC_CODEC)
+    target_link_libraries(
+        pcstream_pcstream PRIVATE
+        pcc::pcc
+        )
+endif()
 
 if(USE_MPEG_VPCC_CODEC)
     set(_tbb_target "")

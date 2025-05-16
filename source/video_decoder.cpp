@@ -34,8 +34,11 @@
 #include <draco/compression/decode.h>
 #endif
 
-pcs_ret_t pcs_video_decoder_init(pcs_video_decoder_t *self,
-                                    int                  type)
+#if defined(USE_FILRG_PCC_CODEC)
+#include <pcc/pcc.h>
+#endif
+
+pcs_ret_t pcs_video_decoder_init(pcs_video_decoder_t *self, int type)
 {
   *self = (pcs_video_decoder_t){0};
   pcs_gof_init(&(self->reconstruct));
@@ -46,6 +49,14 @@ pcs_ret_t pcs_video_decoder_init(pcs_video_decoder_t *self,
   // of decoder
   switch (type)
   {
+#if defined(USE_FILRG_PCC_CODEC)
+  case PCSTREAM_VIDEO_DECODER_FILRG_PCC:
+  {
+    self->post = pcs_video_decoder_post_filrg_pcc;
+    self->get  = pcs_video_decoder_get_filrg_pcc;
+  }
+  break;
+#endif
 #if defined(USE_MPEG_VPCC_CODEC)
   case PCSTREAM_VIDEO_DECODER_MPEG_VPCC:
   {
@@ -75,6 +86,41 @@ pcs_ret_t pcs_video_decoder_destroy(pcs_video_decoder_t *self)
   *self = (pcs_video_decoder_t){0};
   return PCSTREAM_RET_SUCCESS;
 }
+
+#if defined(USE_FILRG_PCC_CODEC)
+pcs_ret_t pcs_video_decoder_post_filrg_pcc(pcs_video_decoder_t *self,
+                                           const char          *data,
+                                           const size_t         size)
+{
+  pcc_point_cloud_t *pcds     = PCSTREAM_NULL;
+  size_t             num_pcds = 0;
+
+  pcc_multiple_decode(data, size, &pcds, &num_pcds);
+
+  pcs_gof_destroy((&self->reconstruct));
+  pcs_gof_init((&self->reconstruct));
+
+  self->reconstruct.size   = num_pcds;
+  self->reconstruct.frames = (pcs_point_cloud_t *)malloc(
+      sizeof(pcs_point_cloud_t) * num_pcds);
+
+  for (size_t i = 0; i < num_pcds; i++)
+  {
+    pcs_point_cloud_init(&(self->reconstruct.frames[i]));
+
+    self->reconstruct.frames[i].positions = pcds[i].positions;
+    self->reconstruct.frames[i].colors    = pcds[i].colors;
+    self->reconstruct.frames[i].size      = (size_t)pcds[i].size;
+  }
+  return PCSTREAM_RET_SUCCESS;
+}
+pcs_ret_t pcs_video_decoder_get_filrg_pcc(pcs_video_decoder_t *self,
+                                          pcs_gof_t *reconstruct)
+{
+  *reconstruct = self->reconstruct;
+  return PCSTREAM_RET_SUCCESS;
+}
+#endif
 
 #if defined(USE_MPEG_VPCC_CODEC)
 
@@ -172,16 +218,14 @@ _decode_video(const char *data, const size_t size, pcs_gof_t *recons)
   return PCSTREAM_RET_SUCCESS;
 }
 
-pcs_ret_t
-pcs_video_decoder_post_mpeg_vpcc(pcs_video_decoder_t *self,
-                                 const char          *data,
-                                 const size_t         size)
+pcs_ret_t pcs_video_decoder_post_mpeg_vpcc(pcs_video_decoder_t *self,
+                                           const char          *data,
+                                           const size_t         size)
 {
   return _decode_video(data, size, &(self->reconstruct));
 }
-pcs_ret_t
-pcs_video_decoder_get_mpeg_vpcc(pcs_video_decoder_t *self,
-                                pcs_gof_t           *reconstruct)
+pcs_ret_t pcs_video_decoder_get_mpeg_vpcc(pcs_video_decoder_t *self,
+                                          pcs_gof_t *reconstruct)
 {
   *reconstruct = self->reconstruct;
   return PCSTREAM_RET_SUCCESS;
@@ -189,10 +233,8 @@ pcs_video_decoder_get_mpeg_vpcc(pcs_video_decoder_t *self,
 #endif
 
 #if defined(USE_GOOGLE_DRACO_CODEC)
-pcs_ret_t
-pcs_video_decoder_post_google_draco(pcs_video_decoder_t *self,
-                                    const char          *data,
-                                    const size_t         size)
+pcs_ret_t pcs_video_decoder_post_google_draco(
+    pcs_video_decoder_t *self, const char *data, const size_t size)
 {
   return PCSTREAM_RET_SUCCESS;
 }

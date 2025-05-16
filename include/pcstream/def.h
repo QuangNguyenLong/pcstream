@@ -121,6 +121,7 @@ typedef enum
 
 typedef enum
 {
+  PCSTREAM_VIDEO_DECODER_FILRG_PCC,
   PCSTREAM_VIDEO_DECODER_MPEG_VPCC,
   PCSTREAM_VIDEO_DECODER_MPEG_GPCC,
   PCSTREAM_VIDEO_DECODER_GOOGLE_DRACO,
@@ -128,6 +129,7 @@ typedef enum
   PCSTREAM_VIDEO_DECODER_COUNT
 } PCSTREAM_VIDEO_DECODER;
 
+typedef float   pcs_filrg_pcc_coord_t;
 typedef int16_t pcs_mpeg_vpcc_coord_t;
 typedef float   pcs_mpeg_gpcc_coord_t;
 typedef float   pcs_google_draco_coord_t;
