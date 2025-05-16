@@ -21,6 +21,7 @@ var def_8h =
     [ "pcs_bool_t", "def_8h.html#a4e7b831c799a02ca60f19cb64be51562", null ],
     [ "pcs_bw_t", "def_8h.html#a37a1c0637a974afb4e1359270e2c650f", null ],
     [ "pcs_count_t", "def_8h.html#a16f0f7d7bb36b66477e5b1076acaee37", null ],
+    [ "pcs_filrg_pcc_coord_t", "def_8h.html#ad844e1911aff199157d093c29cc92e7f", null ],
     [ "pcs_google_draco_coord_t", "def_8h.html#a5ab102fad112539d9fcc4f867a5dde38", null ],
     [ "pcs_lod_version_t", "def_8h.html#a0e695b0d98a9091cb43598ddd9e6ac09", null ],
     [ "pcs_mpeg_gpcc_coord_t", "def_8h.html#a2067da3aaab7819af65fb0ecf31d37e8", null ],
@@ -46,6 +47,7 @@ var def_8h =
       [ "PCSTREAM_REQUEST_HANDLER_H2", "def_8h.html#ad1ae103b71c7e45f4ff2bab31ba4e7dea771a21ddbf81a09fccb053b3cdf5f900", null ]
     ] ],
     [ "PCSTREAM_VIDEO_DECODER", "def_8h.html#a508fd5aef6dea375e8411ad23d924e89", [
+      [ "PCSTREAM_VIDEO_DECODER_FILRG_PCC", "def_8h.html#a508fd5aef6dea375e8411ad23d924e89a09d3e326e21fd186941d2da18ba9a13a", null ],
       [ "PCSTREAM_VIDEO_DECODER_MPEG_VPCC", "def_8h.html#a508fd5aef6dea375e8411ad23d924e89a7d94f96423cd6ff6602f7e143f2af22e", null ],
       [ "PCSTREAM_VIDEO_DECODER_MPEG_GPCC", "def_8h.html#a508fd5aef6dea375e8411ad23d924e89ae172bb574a68310d73e1cb15df31aa14", null ],
       [ "PCSTREAM_VIDEO_DECODER_GOOGLE_DRACO", "def_8h.html#a508fd5aef6dea375e8411ad23d924e89a1d27d75eecbfafc9ab358d6e5fd9e2c9", null ],
