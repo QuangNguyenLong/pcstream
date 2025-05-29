@@ -15,3 +15,24 @@
  * along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
+#include <pcstream/mesh.h>
+
+int main(int argc, char **argv)
+{
+  pcs_mesh_t  mesh = {0};
+  char       *buff = PCSTREAM_NULL;
+  pcs_count_t size = 0;
+  PCSTREAM_CHECK_FATAL(pcs_mesh_init(&mesh));
+
+  PCSTREAM_CHECK_FATAL(mesh.read_from_file_ply(&mesh, argv[1]));
+  PCSTREAM_CHECK_FATAL(
+      mesh.write_to_file_ply(&mesh, "test.ply", PCSTREAM_FALSE));
+
+  PCSTREAM_CHECK_FATAL(
+      mesh.write_to_buff_serial(&mesh, &buff, &size));
+  PCSTREAM_CHECK_FATAL(
+      mesh.read_from_buff_serial(&mesh, buff, size));
+
+  free(buff);
+  PCSTREAM_CHECK_FATAL(pcs_mesh_destroy(&mesh));
+}

@@ -166,7 +166,7 @@ pcs_ret_t pcs_request_handler_destroy(pcs_request_handler_t *self)
   }
   if (self->curr_content != PCSTREAM_NULL)
   {
-    for (pcs_count_t i = 0; i < self->seg_count; i++)
+    for (pcs_count_t i = 0; i < self->seq_count; i++)
       pcs_buffer_destroy(&(self->curr_content[i]));
     free(self->curr_content);
   }
@@ -299,8 +299,10 @@ pcs_request_handler_post_init_h2(pcs_request_handler_t *self,
 
   self->info_list =
       (pcs_buffer_t *)malloc(sizeof(pcs_buffer_t) * self->seg_count);
-  for (pcs_count_t i = 0; i < self->seq_count; i++)
+  for (pcs_count_t i = 0; i < self->seg_count; i++)
+  {
     pcs_buffer_init(&(self->info_list[i]));
+  }
 
   for (pcs_count_t i = 0; i < self->seg_count; i++)
   {
