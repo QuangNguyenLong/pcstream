@@ -6,7 +6,6 @@ var annotated_dup =
     [ "pcs_lod_selector_t", "structpcs__lod__selector__t.html", "structpcs__lod__selector__t" ],
     [ "pcs_mesh_t", "structpcs__mesh__t.html", "structpcs__mesh__t" ],
     [ "pcs_point_cloud_t", "structpcs__point__cloud__t.html", "structpcs__point__cloud__t" ],
-    [ "pcs_request_handler_t", "structpcs__request__handler__t.html", "structpcs__request__handler__t" ],
     [ "pcs_vec2f_t", "structpcs__vec2f__t.html", "structpcs__vec2f__t" ],
     [ "pcs_vec3f_t", "structpcs__vec3f__t.html", "structpcs__vec3f__t" ],
     [ "pcs_video_decoder_t", "structpcs__video__decoder__t.html", "structpcs__video__decoder__t" ],

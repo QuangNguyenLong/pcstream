@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['n_5fmod_0',['n_mod',['../structpcs__lod__selector__t.html#ad63058463766296d498c378abd0d42f9',1,'pcs_lod_selector_t']]],
-  ['n_5fver_1',['n_ver',['../structpcs__lod__selector__t.html#a17ab05d0c71a79e31357bb4b71b7aac3',1,'pcs_lod_selector_t']]],
-  ['num_5findices_2',['num_indices',['../structpcs__mesh__t.html#a6217ee348869e39f47c023be79fcebbc',1,'pcs_mesh_t']]],
-  ['num_5fverts_3',['num_verts',['../structpcs__mesh__t.html#a20250ab1d52149ce073c9d087394f260',1,'pcs_mesh_t']]]
+  ['ratio_0',['ratio',['../structpcs__visibility__computer__t.html#ad72c57a6ab44a007e4c9f56fd1961618',1,'pcs_visibility_computer_t']]],
+  ['read_5ffrom_5fbuff_5fserial_1',['read_from_buff_serial',['../structpcs__mesh__t.html#af71b3c2d1509476f622b55f8ff6d2fa9',1,'pcs_mesh_t']]],
+  ['read_5ffrom_5ffile_5fply_2',['read_from_file_ply',['../structpcs__mesh__t.html#a0efa0f2d991cad09ffda229183f835d2',1,'pcs_mesh_t']]],
+  ['reconstruct_3',['reconstruct',['../structpcs__video__decoder__t.html#abafa505c5d6250261b21c0311bef988f',1,'pcs_video_decoder_t']]]
 ];

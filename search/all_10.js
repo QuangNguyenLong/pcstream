@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['v_0',['v',['../structpcs__lod__selector__t.html#ac87f0df9ae7295d825ea7bf159d5eaf9',1,'pcs_lod_selector_t']]],
-  ['vec2f_2eh_1',['vec2f.h',['../vec2f_8h.html',1,'']]],
-  ['vec3f_2eh_2',['vec3f.h',['../vec3f_8h.html',1,'']]],
-  ['video_5fdecoder_2eh_3',['video_decoder.h',['../video__decoder_8h.html',1,'']]],
-  ['viewport_5festimator_2eh_4',['viewport_estimator.h',['../viewport__estimator_8h.html',1,'']]],
-  ['visibility_5fcomputer_2eh_5',['visibility_computer.h',['../visibility__computer_8h.html',1,'']]]
+  ['write_5fto_5fbuff_5fserial_0',['write_to_buff_serial',['../structpcs__mesh__t.html#a3868330f4d4935f64608accadd5e32e5',1,'pcs_mesh_t']]],
+  ['write_5fto_5ffile_5fply_1',['write_to_file_ply',['../structpcs__mesh__t.html#a8a1d5a8eb8ca0b9fd77b18f0bcc8dec6',1,'pcs_mesh_t']]]
 ];
