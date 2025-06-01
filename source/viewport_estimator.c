@@ -19,8 +19,8 @@
 #include <pcstream/viewport_estimator.h>
 #include <string.h>
 pcs_ret_t pcs_viewport_estimator_init(pcs_viewport_estimator_t *self,
-                                      long long deltat,
-                                      int       type)
+                                      uint32_t deltat,
+                                      int      type)
 {
   if (deltat <= 0)
     return PCSTREAM_RET_FAIL;
@@ -87,7 +87,7 @@ pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *self,
                                      pcs_vec3f_t               Pold,
                                      pcs_vec3f_t               Vcurr,
                                      pcs_vec3f_t               Vold,
-                                     long long                 dtec)
+                                     uint32_t                  dtec)
 {
   pcs_vec3f_t Pes    = {0};
   pcs_vec3f_t pvel   = {0};

@@ -17,7 +17,7 @@
  */
 #include <curl/curl.h>
 #include <pcstream/buffer.h>
-#include <pcstream/http.h>
+#include "http.h"
 
 #include <stdlib.h> /* for realloc */
 #include <string.h> /* for memcpy */

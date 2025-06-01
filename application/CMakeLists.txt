@@ -19,7 +19,27 @@ function(add_app NAME)
   add_dependencies(run-app "run_${NAME}")
 endfunction()
 
-add_app(pcs)
+# add_app(pcs)
+
+file(GLOB PCS_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/*.c)
+add_executable(pcs ${PCS_SOURCE})
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(gpac REQUIRED IMPORTED_TARGET gpac)
+pkg_check_modules(curl REQUIRED IMPORTED_TARGET libcurl)
+
+target_link_libraries(
+    pcs PRIVATE
+    pcstream::pcstream
+    PkgConfig::gpac
+    PkgConfig::curl
+    )
+
+target_compile_features(pcs PRIVATE c_std_17)
+add_custom_target("run_pcs" COMMAND pcs VERBATIM)
+add_dependencies("run_pcs" "pcs")
+add_dependencies(run-app "run_pcs")
+
 
 # TODO: remember to write a wrapper for gpac/mpd.h core modules.
 # add_example(genmpd)

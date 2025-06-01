@@ -20,6 +20,25 @@ function(add_example NAME)
 endfunction()
 
 add_example(hull)
-add_example(tmc2_decode)
+# add_example(tmc2_decode)
+
+if(EMSCRIPTEN)
+    add_example(pcs_wasm)
+    set_target_properties(pcs_wasm PROPERTIES
+        OUTPUT_NAME "pcs_wasm"
+        SUFFIX ".js"
+        )
+    target_compile_options(pcs_wasm PRIVATE
+    )
+
+    target_link_options(pcs_wasm PRIVATE
+        "-sMODULARIZE=1"
+        "-sEXPORT_ES6=1"
+        "-sEXPORT_NAME=pcs_wasm_init"
+        "-sEXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
+        "-sALLOW_MEMORY_GROWTH=1"
+    )
+
+endif()
 
 add_folders(Example)
