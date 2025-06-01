@@ -15,13 +15,8 @@
  * along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#include <pcstream/buffer.h>
-#include <pcstream/bw_estimator.h>
-#include <pcstream/lod_selector.h>
-#include <pcstream/request_handler.h>
-#include <pcstream/video_decoder.h>
-#include <pcstream/viewport_estimator.h>
-#include <pcstream/visibility_computer.h>
+#include "request_handler.h"
+#include <pcstream/pcstream.h>
 #include <stdio.h>
 
 #define PCS_DTEC 1000
@@ -43,8 +38,8 @@ int main(int argc, char **argv)
   pcs_buffer_t  *curr_content_ptr = PCSTREAM_NULL;
   pcs_bw_t      *dl_speeds_ptr    = PCSTREAM_NULL;
   float         *esMVP_ptr        = PCSTREAM_NULL;
-  long long      dtec             = 0;
-  long long      deltat           = 0;
+  uint32_t       dtec             = 0;
+  uint32_t       deltat           = 0;
   pcs_bw_t       dl_es            = 0;
 
   dtec   = PCS_DTEC; // 1000ms per each estimation, this should be

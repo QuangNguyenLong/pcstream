@@ -18,6 +18,13 @@
 #pragma once
 
 #include "pcstream/pcstream_export.h"
+#include <pcstream/buffer.h>
+#include <pcstream/bw_estimator.h>
+#include <pcstream/gof.h>
+#include <pcstream/lod_selector.h>
+#include <pcstream/video_decoder.h>
+#include <pcstream/viewport_estimator.h>
+#include <pcstream/visibility_computer.h>
 
 #ifdef __cplusplus
 extern "C"

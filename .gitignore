@@ -3,6 +3,7 @@
 .vs/
 .vscode/
 build/
+build.em/
 cmake-build-*/
 prefix/
 .clangd
@@ -11,8 +12,10 @@ CMakeUserPresets.json
 compile_commands.json
 env.bat
 env.ps1
-cscope.out
+cscope.*
 Testing/
 venv/
 TODO.txt
 _dec_*
+js/
+root/

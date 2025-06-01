@@ -15,8 +15,8 @@
  * along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#include <pcstream/http.h>
-#include <pcstream/request_handler.h>
+#include "http.h"
+#include "request_handler.h"
 #include <stdio.h>
 
 // for parsing mpd files

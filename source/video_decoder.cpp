@@ -93,9 +93,9 @@ pcs_ret_t pcs_video_decoder_post_filrg_pcc(pcs_video_decoder_t *self,
                                            const size_t         size)
 {
   pcc_point_cloud_t *pcds     = PCSTREAM_NULL;
-  size_t             num_pcds = 0;
+  uint64_t             num_pcds = 0;
 
-  pcc_multiple_decode(data, size, &pcds, &num_pcds);
+  pcc_multiple_decode(data, (uint64_t)size, &pcds, &num_pcds);
 
   pcs_gof_destroy((&self->reconstruct));
   pcs_gof_init((&self->reconstruct));
@@ -104,7 +104,7 @@ pcs_ret_t pcs_video_decoder_post_filrg_pcc(pcs_video_decoder_t *self,
   self->reconstruct.frames = (pcs_point_cloud_t *)malloc(
       sizeof(pcs_point_cloud_t) * num_pcds);
 
-  for (size_t i = 0; i < num_pcds; i++)
+  for (uint64_t i = 0; i < num_pcds; i++)
   {
     pcs_point_cloud_init(&(self->reconstruct.frames[i]));
 

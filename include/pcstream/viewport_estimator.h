@@ -25,15 +25,15 @@ typedef struct pcs_viewport_estimator_t pcs_viewport_estimator_t;
 
 struct pcs_viewport_estimator_t
 {
-  long long deltat; // time between 2 consecutive frame (ms)
-  float     esMVP[4][4];
+  uint32_t deltat; // time between 2 consecutive frame (ms)
+  float    esMVP[4][4];
 
   pcs_ret_t (*post)(pcs_viewport_estimator_t *,
                     pcs_vec3f_t, // Pcurr
                     pcs_vec3f_t, // Pold
                     pcs_vec3f_t, // Vcurr
                     pcs_vec3f_t, // Vold
-                    long long    // dtec = te - tc
+                    uint32_t     // dtec = te - tc
   );
   pcs_ret_t (*get)(pcs_viewport_estimator_t *,
                    float ** // MVP matrix ptr to change
@@ -41,7 +41,7 @@ struct pcs_viewport_estimator_t
 };
 
 PCSTREAM_EXPORT pcs_ret_t pcs_viewport_estimator_init(
-    pcs_viewport_estimator_t *self, long long deltat, int type);
+    pcs_viewport_estimator_t *self, uint32_t deltat, int type);
 
 PCSTREAM_EXPORT pcs_ret_t
 pcs_viewport_estimator_destroy(pcs_viewport_estimator_t *self);
@@ -52,7 +52,7 @@ pcs_viewport_estimator_post_velocity(pcs_viewport_estimator_t *self,
                                      pcs_vec3f_t               Pold,
                                      pcs_vec3f_t               Vcurr,
                                      pcs_vec3f_t               Vold,
-                                     long long                 dtec);
+                                     uint32_t                  dtec);
 
 pcs_ret_t
 pcs_viewport_estimator_get_velocity(pcs_viewport_estimator_t *self,
